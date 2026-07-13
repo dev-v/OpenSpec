@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>命令工作原理 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>命令工作原理</span>
+      </div>
+
+      <div class="page-header">
+        <h1>命令工作原理</h1>
+        <p class="subtitle">终端命令与斜杠命令的区别，以及它们各自在哪里运行</p>
+      </div>
+
+      <article>
+        <p><strong>需要知道的一件事：OpenSpec 有两种命令，它们在两个不同的地方运行。</strong></p>
+        <ul>
+          <li><code>openspec ...</code> 命令在你的<strong>终端</strong>中运行。（例如：<code>openspec init</code>。）</li>
+          <li><code>/opsx:...</code> 命令在你的<strong>AI 助手的聊天</strong>中运行。（例如：<code>/opsx:propose</code>。）</li>
+        </ul>
+        <p>如果你曾经在终端中输入 <code>/opsx:propose</code> 却什么也没发生，本文就是原因。你在跟 OpenSpec 的另一半说话。斜杠命令不是终端命令。它们是你给 AI 编程助手的指令，在你平时输入"添加一个登录表单"的同一个对话框中。</p>
+
+        <p>这个区分是新用户最常见的绊脚石，所以让我们把它讲得非常清楚。</p>
+
+        <h2>两个半边</h2>
+        <p>OpenSpec 是一个项目戴着两顶帽子。</p>
+
+        <p><strong>CLI（终端半边）。</strong>一个名为 <code>openspec</code> 的程序，你从 shell 安装和运行。它设置你的项目、列出和验证变更、显示仪表板，并归档完成的工作。你在 iTerm、VS Code 终端、PowerShell 等任何运行 <code>git</code> 或 <code>npm</code> 的地方输入这些命令。</p>
+        <pre><code>openspec init        # set up OpenSpec in this project
+openspec list        # see active changes
+openspec view        # open the interactive dashboard</code></pre>
+
+        <p><strong>斜杠命令（聊天半边）。</strong>像 <code>/opsx:propose</code> 和 <code>/opsx:apply</code> 这样的短命令，你在 AI 助手中输入。这些命令告诉 AI 遵循 OpenSpec 工作流：草拟提案、编写规格、根据任务清单构建、完成后归档。你在 Claude Code、Cursor、Windsurf、Copilot 或任何你使用的助手中输入这些命令。</p>
+        <pre><code>/opsx:propose add-dark-mode    (typed in your AI chat)
+/opsx:apply                    (typed in your AI chat)
+/opsx:archive                  (typed in your AI chat)</code></pre>
+
+        <p>这是用一张图展示的心智模型：</p>
+        <pre><code>        YOUR TERMINAL                         YOUR AI ASSISTANT'S CHAT
+   ┌──────────────────────┐               ┌──────────────────────────────┐
+   │  $ openspec init     │   installs    │  /opsx:propose add-dark-mode  │
+   │  $ openspec list     │  ──────────►  │  /opsx:apply                  │
+   │  $ openspec view     │   commands    │  /opsx:archive                │
+   └──────────────────────┘    &amp; skills   └──────────────────────────────┘
+        run openspec here                       run /opsx:* here</code></pre>
+
+        <p>注意那个箭头。在终端中运行 <code>openspec init</code> 正是<em>安装</em>斜杠命令到你的 AI 工具中的方式。终端半边设置了聊天半边。之后，日常操作主要在聊天中进行。</p>
+
+        <h2>"如何启动交互模式？"</h2>
+        <p><strong>没有单独的交互模式需要启动。</strong>这个问题经常出现，所以需要一个明确的答案。</p>
+
+        <p>你不需要进入特殊的 OpenSpec 模式。你只需像往常一样打开你的 AI 编程助手，然后在聊天中输入一个斜杠命令。斜杠命令<em>就是</em>你"进入" OpenSpec 的方式。你的助手识别它，加载匹配的 OpenSpec 技能，并开始遵循工作流。</p>
+
+        <p>所以真正的指令是：</p>
+        <ol>
+          <li>在你的项目中打开你的 AI 编程助手（Claude Code、Cursor、Windsurf 等）。</li>
+          <li>在其聊天中输入 <code>/opsx:propose</code>，和你输入任何其他请求的地方一样。</li>
+          <li>观察自动补全：如果 OpenSpec 已安装，你会看到 <code>/opsx:propose</code>、<code>/opsx:apply</code> 等在你输入斜杠时出现。</li>
+        </ol>
+
+        <p>就是这样。没有模式切换，没有守护进程启动，没有单独的窗口。</p>
+
+        <p>有一件事<em>确实是</em>交互的，它位于终端中：<code>openspec view</code>。它打开一个仪表板来浏览你的规格和变更。但那是一个查看器，不是你用来提议和构建的工具。构建是通过聊天中的斜杠命令完成的。</p>
+
+        <h2>为什么存在这种分离</h2>
+        <p>这值得理解，因为它解释了为什么 OpenSpec 能与 25+ 种不同的 AI 工具配合工作。</p>
+
+        <p>CLI 是<strong>引擎</strong>。它知道规则：变更文件夹长什么样，哪些工件依赖哪些，如何将增量规格合并到你的真相来源中。它在任何地方都一样。</p>
+
+        <p>斜杠命令是<strong>方向盘</strong>，每个 AI 工具的方向盘略有不同。Claude Code 称之为命令。Cursor 和 Windsurf 有自己的格式。有些工具称之为技能。当你运行 <code>openspec init</code> 时，OpenSpec 会为你选择的每个工具生成正确类型的文件，所以同样的 <code>/opsx:propose</code> 意图无论你用哪个助手都能工作。</p>
+
+        <p>这个设计的优势：你学一次工作流就能跨工具使用。权衡是：命令的确切语法在不同工具之间可能略有不同，这是下一节的内容。</p>
+
+        <h2>各工具的斜杠命令语法</h2>
+        <p>意图在任何地方都相同。标点符号不同。使用与你的助手匹配的形式。</p>
+        <table>
+          <thead>
+            <tr><th>工具</th><th>输入方式</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Claude Code</td><td><code>/opsx:propose</code>, <code>/opsx:apply</code></td></tr>
+            <tr><td>Cursor</td><td><code>/opsx-propose</code>, <code>/opsx-apply</code></td></tr>
+            <tr><td>Windsurf</td><td><code>/opsx-propose</code>, <code>/opsx-apply</code></td></tr>
+            <tr><td>GitHub Copilot (IDE)</td><td><code>/opsx-propose</code>, <code>/opsx-apply</code></td></tr>
+            <tr><td>Oh My Pi</td><td><code>/opsx-propose</code>, <code>/opsx-apply</code></td></tr>
+            <tr><td>Kimi CLI</td><td>skill-style, e.g. <code>/skill:openspec-propose</code></td></tr>
+            <tr><td>Trae</td><td><code>/opsx-propose</code>, <code>/opsx-apply</code></td></tr>
+          </tbody>
+        </table>
+        <p>大多数工具使用冒号形式（<code>/opsx:propose</code>）或短横线形式（<code>/opsx-propose</code>）。少数工具将 OpenSpec 作为命名技能而非斜杠命令呈现；对于这些工具，你按名称调用技能。完整的每个工具列表，包括确切哪些文件写到哪里，请参见 <a href="supported-tools.html">支持的工具</a>。</p>
+
+        <p>不确定时，在 AI 聊天中输入一个斜杠并查看自动补全。你的工具会显示它期望的形式。</p>
+
+        <h2>命令是怎么来的：技能和命令</h2>
+        <p>当你运行 <code>openspec init</code>（或 <code>openspec update</code>）时，OpenSpec 在你的项目中写入小文件，让你的 AI 工具能找到工作流。根据你的工具和设置，这些是<strong>技能</strong>、<strong>命令</strong>或两者兼有。</p>
+        <ul>
+          <li><strong>技能</strong>位于 <code>.claude/skills/openspec-*/SKILL.md</code> 等位置。它们是新兴的跨工具标准：一个你的助手自动检测的指令文件夹。</li>
+          <li><strong>命令</strong>位于 <code>.claude/commands/opsx/&lt;id&gt;.md</code> 等位置。它们是较早的每工具斜杠命令文件。</li>
+        </ul>
+        <p>你不必关心你的工具用哪种。你只需输入斜杠命令就能工作。但知道这些文件存在有助于在出问题时排查：如果你的命令消失了，通常意味着这些文件缺失或过时，<code>openspec update</code> 会重新生成它们。</p>
+
+        <p>参见 <a href="supported-tools.html">支持的工具</a>了解每个工具的确切路径，以及<a href="migration-guide.html">迁移指南</a>了解技能如何取代了较早的纯命令方式。</p>
+
+        <h2>确认已安装</h2>
+        <p>快速检查，从快到慢：</p>
+        <ol>
+          <li><strong>在 AI 聊天中输入一个斜杠。</strong>开始输入 <code>/opsx</code> 并观察自动补全建议。如果出现，就设置好了。</li>
+          <li><strong>查看文件。</strong>对于 Claude Code，检查 <code>.claude/skills/</code> 是否包含 <code>openspec-*</code> 文件夹。其他工具有自己的目录（<a href="supported-tools.html">支持的工具</a>列出了它们）。</li>
+          <li><strong>重新运行设置。</strong>从项目根目录运行 <code>openspec update</code>。这会重新生成你配置的工具的技能和命令文件。</li>
+          <li><strong>重启你的助手。</strong>许多工具在启动时扫描技能和命令，所以一个新窗口可能就是缺少的步骤。</li>
+        </ol>
+
+        <h2>我到底有哪些命令？</h2>
+        <p>默认情况下，OpenSpec 安装 <strong>core</strong> 斜杠命令集：</p>
+        <ul>
+          <li><code>/opsx:explore</code>：在确定变更之前与 AI 一起理清想法（不确定时是最好的第一步）</li>
+          <li><code>/opsx:propose</code>：创建变更并一步草拟所有规划工件</li>
+          <li><code>/opsx:apply</code>：通过执行任务清单来构建变更</li>
+          <li><code>/opsx:sync</code>：将变更的规格更新合并到主规格中（通常是自动的）</li>
+          <li><code>/opsx:archive</code>：完成变更并归档</li>
+        </ul>
+        <p>一个好的默认节奏：不确定做什么时用 <code>explore</code>，然后 <code>propose</code>、<code>apply</code>、<code>archive</code>。<a href="explore.html">探索优先</a>指南解释了为什么那个起始步骤值得。</p>
+
+        <p>还有一个 <strong>expanded</strong> 命令集，面向需要更精细控制的人（<code>/opsx:new</code>、<code>/opsx:continue</code>、<code>/opsx:ff</code>、<code>/opsx:verify</code>、<code>/opsx:bulk-archive</code>、<code>/opsx:onboard</code>）。你用 <code>openspec config profile</code> 开启它，然后用 <code>openspec update</code> 应用。</p>
+
+        <p>刚接触这些？<code>/opsx:onboard</code>（在扩展命令集中）会在你自己的代码库上带你走完一个完整的变更，并讲解每个步骤。这是最友好的入门介绍。</p>
+
+        <p>每个命令的详细说明，请参见 <a href="commands.html">命令</a>。何时用哪个，请参见 <a href="workflows.html">工作流</a>。</p>
+
+        <h2>一次干净的首次运行</h2>
+        <p>整合起来，这是整个序列，每步标注了它在哪里执行。</p>
+        <pre><code>TERMINAL   $ npm install -g @fission-ai/openspec@latest
+TERMINAL   $ cd your-project
+TERMINAL   $ openspec init
+              (installs slash commands into your AI tool)
+
+AI CHAT      /opsx:explore
+              (optional: think the idea through with the AI first)
+
+AI CHAT      /opsx:propose add-dark-mode
+              (AI drafts proposal, specs, design, tasks)
+
+AI CHAT      /opsx:apply
+              (AI builds it, checking off tasks)
+
+AI CHAT      /opsx:archive
+              (change is merged into your specs and filed away)</code></pre>
+        <p>两个终端步骤完成设置。然后你在聊天中操作。这就是节奏。</p>
+
+        <h2>相关内容</h2>
+        <ul>
+          <li><a href="getting-started.html">快速开始</a>：完整的首次变更走查</li>
+          <li><a href="commands.html">命令</a>：每个斜杠命令的详细说明</li>
+          <li><a href="cli.html">CLI</a>：每个终端命令的详细说明</li>
+          <li><a href="supported-tools.html">支持的工具</a>：每个工具的语法和文件位置</li>
+          <li><a href="faq.html">常见问题</a>：更多快速解答</li>
+          <li><a href="troubleshooting.html">故障排除</a>：命令不显示时的修复方法</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="explore.html">← 上一页：探索优先</a>
+        </div>
+        <div>
+          <a href="overview.html">下一页：核心概念一览 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

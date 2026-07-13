@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>命令参考 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item active"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>命令参考</span>
+      </div>
+
+      <div class="page-header">
+        <h1>命令参考</h1>
+        <p class="subtitle">OpenSpec 斜杠命令的完整参考</p>
+      </div>
+
+      <article>
+        <p>这是 OpenSpec 斜杠命令的参考。这些命令在你的 AI 编码助手的聊天界面中调用（例如 Claude Code、Cursor、Windsurf）。</p>
+
+        <p>关于工作流模式和何时使用每个命令，参见<a href="workflows.html">工作流</a>。关于 CLI 命令，参见<a href="cli.html">CLI</a>。</p>
+
+        <h2>快速参考</h2>
+
+        <h3>默认快速路径（<code>core</code> 配置）</h3>
+
+        <table>
+          <thead>
+            <tr><th>命令</th><th>用途</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/opsx:propose</code></td><td>创建变更并一步生成规划制品</td></tr>
+            <tr><td><code>/opsx:explore</code></td><td>在提交变更前思考想法</td></tr>
+            <tr><td><code>/opsx:apply</code></td><td>实现变更中的任务</td></tr>
+            <tr><td><code>/opsx:update</code></td><td>修改变更的规划制品并保持一致</td></tr>
+            <tr><td><code>/opsx:sync</code></td><td>将增量规格合并到主规格</td></tr>
+            <tr><td><code>/opsx:archive</code></td><td>归档已完成的变更</td></tr>
+          </tbody>
+        </table>
+
+        <h3>扩展工作流命令（自定义工作流选择）</h3>
+
+        <table>
+          <thead>
+            <tr><th>命令</th><th>用途</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/opsx:new</code></td><td>开始一个新变更脚手架</td></tr>
+            <tr><td><code>/opsx:continue</code></td><td>基于依赖关系创建下一个制品</td></tr>
+            <tr><td><code>/opsx:ff</code></td><td>快进：一次创建所有规划制品</td></tr>
+            <tr><td><code>/opsx:verify</code></td><td>验证实现是否匹配制品</td></tr>
+            <tr><td><code>/opsx:bulk-archive</code></td><td>一次归档多个变更</td></tr>
+            <tr><td><code>/opsx:onboard</code></td><td>完整工作流的引导教程</td></tr>
+          </tbody>
+        </table>
+
+        <p>默认全局配置是 <code>core</code>。要启用扩展工作流命令，运行 <code>openspec config profile</code>，选择工作流，然后在你的项目中运行 <code>openspec update</code>。</p>
+
+        <hr>
+
+        <h2>命令参考</h2>
+
+        <h3><code>/opsx:propose</code></h3>
+
+        <p>创建一个新变更并一步生成规划制品。这是 <code>core</code> 配置中的默认起始命令。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:propose [change-name-or-description]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-name-or-description</code></td><td>否</td><td>kebab-case 名称或自然语言的变更描述</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>创建 <code>openspec/changes/&lt;change-name&gt;/</code></li>
+          <li>生成实现前所需的制品（<code>spec-driven</code>：proposal、specs、design、tasks）</li>
+          <li>当变更准备好进行 <code>/opsx:apply</code> 时停止</li>
+        </ul>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:propose add-dark-mode
+
+AI:  Created openspec/changes/add-dark-mode/
+     ✓ proposal.md
+     ✓ specs/ui/spec.md
+     ✓ design.md
+     ✓ tasks.md
+     Ready for implementation. Run /opsx:apply.
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>用于最快端到端路径</li>
+          <li>如果你想逐步控制制品创建，启用扩展工作流并使用 <code>/opsx:new</code> + <code>/opsx:continue</code></li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:explore</code></h3>
+
+        <blockquote><p><strong>当你不确定时从这里开始。</strong>Explore 是一个无风险的思考伙伴：它读取你的代码库，比较选项，在任何变更存在之前将模糊的想法提炼成具体计划。它在默认配置中提供。关于完整案例和更多示例，参见<a href="explore.html">探索优先</a>指南。</p></blockquote>
+
+        <p>在提交变更前思考想法、调查问题、澄清需求。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:explore [topic]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>topic</code></td><td>否</td><td>你想探索或调查的内容</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>开启探索性对话，不需要结构</li>
+          <li>调查代码库以回答问题</li>
+          <li>比较选项和方法</li>
+          <li>创建可视化图表以理清思路</li>
+          <li>可以在洞察明确后转入 <code>/opsx:propose</code>（默认）或 <code>/opsx:new</code>（扩展工作流）</li>
+        </ul>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:explore
+
+AI:  What would you like to explore?
+
+You: How should we handle authentication for the mobile app?
+
+AI:  Let me investigate your current auth setup...
+     [Analyzes codebase]
+
+     I see you're using session-based auth for the web app.
+     For mobile, we have three main options:
+
+     1. JWT tokens (stateless, works offline)
+     2. OAuth2 (if you need third-party login)
+     3. Extend current sessions (simpler, but requires connectivity)
+
+     Your API already has CORS configured. Which direction interests you?
+
+You: Let's go with JWT. Can we start a change for that?
+
+AI:  Ready when you are. Run /opsx:propose add-jwt-auth to begin.
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>当需求不明确或需要调查时使用</li>
+          <li>探索期间不创建任何制品</li>
+          <li>适合在决定前比较多种方法</li>
+          <li>可以读取文件和搜索代码库</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:new</code></h3>
+
+        <p>开始一个新变更脚手架。创建变更文件夹，等待你通过 <code>/opsx:continue</code> 或 <code>/opsx:ff</code> 生成制品。</p>
+
+        <p>此命令属于扩展工作流集（不包含在默认 <code>core</code> 配置中）。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:new [change-name] [--schema &lt;schema-name&gt;]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>change-name</code></td><td>否</td><td>变更文件夹的名称（未提供则提示输入）</td></tr>
+            <tr><td><code>--schema</code></td><td>否</td><td>使用的工作流模式（默认：从配置或 <code>spec-driven</code>）</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>创建 <code>openspec/changes/&lt;change-name&gt;/</code> 目录</li>
+          <li>在变更文件夹中创建 <code>.openspec.yaml</code> 元数据文件</li>
+          <li>显示准备好创建的第一个制品模板</li>
+          <li>未提供时提示输入变更名称和模式</li>
+        </ul>
+
+        <p><strong>创建的内容：</strong></p>
+<pre><code>openspec/changes/&lt;change-name&gt;/
+└── .openspec.yaml    # 变更元数据（schema, created date）
+</code></pre>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:new add-dark-mode
+
+AI:  Created openspec/changes/add-dark-mode/
+     Schema: spec-driven
+
+     Ready to create: proposal
+     Use /opsx:continue to create it, or /opsx:ff to create all artifacts.
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>使用描述性名称：<code>add-feature</code>、<code>fix-bug</code>、<code>refactor-module</code></li>
+          <li>避免通用名称如 <code>update</code>、<code>changes</code>、<code>wip</code></li>
+          <li>模式也可以在项目配置中设置（<code>openspec/config.yaml</code>）</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:continue</code></h3>
+
+        <p>在依赖链中创建下一个制品。一次创建一个制品，用于渐进式进展。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:continue [change-name]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-name</code></td><td>否</td><td>继续哪个变更（未提供则从上下文推断）</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>查询制品依赖图</li>
+          <li>显示哪些制品已就绪 vs 被阻塞</li>
+          <li>创建第一个就绪的制品</li>
+          <li>读取依赖文件作为上下文</li>
+          <li>显示创建后什么变得可用</li>
+        </ul>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:continue
+
+AI:  Change: add-dark-mode
+
+     Artifact status:
+     ✓ proposal    (done)
+     ◆ specs       (ready)
+     ◆ design      (ready)
+     ○ tasks       (blocked - needs: specs)
+
+     Creating specs...
+
+     [Reads proposal.md, creates specs based on requirements]
+
+     ✓ Created openspec/changes/add-dark-mode/specs/ui/spec.md
+
+     Now available: tasks
+     Run /opsx:continue to create the next artifact.
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>想在继续前审查每个制品时使用</li>
+          <li>适合想要控制权的复杂变更</li>
+          <li>多个制品可能同时就绪</li>
+          <li>你可以在继续之前编辑已创建的制品</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:ff</code></h3>
+
+        <p>快进通过制品创建。一次创建所有规划制品。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:ff [change-name]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-name</code></td><td>否</td><td>快进哪个变更（未提供则从上下文推断）</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>按依赖顺序创建所有制品</li>
+          <li>通过待办清单跟踪进度</li>
+          <li>当所有 <code>apply-required</code> 制品完成时停止</li>
+          <li>在创建下一个制品前读取每个依赖</li>
+        </ul>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:ff add-dark-mode
+
+AI:  Fast-forwarding add-dark-mode...
+
+     ✓ Creating proposal.md
+     ✓ Creating specs/ui/spec.md
+     ✓ Creating design.md
+     ✓ Creating tasks.md
+
+     All planning artifacts complete!
+     Ready for implementation. Run /opsx:apply to begin.
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>当你清楚要构建什么时使用</li>
+          <li>对于直接变更比 <code>/opsx:continue</code> 更快</li>
+          <li>你仍可在之后编辑制品</li>
+          <li>适合中小型功能</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:apply</code></h3>
+
+        <p>实现变更中的任务。遍历任务清单，编写代码并勾选项。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:apply [change-name]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-name</code></td><td>否</td><td>实现哪个变更（未提供则从上下文推断）</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>读取 <code>tasks.md</code> 并识别未完成的任务</li>
+          <li>逐个处理任务</li>
+          <li>编写代码、创建文件、按需运行测试</li>
+          <li>用复选框 <code>[x]</code> 标记任务完成</li>
+        </ul>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:apply
+
+AI:  Implementing add-dark-mode...
+
+     Reading tasks.md:
+     - [ ] 1.1 Create ThemeContext
+     - [ ] 1.2 Add CSS custom properties
+     - [ ] 1.3 Implement localStorage persistence
+
+     Working on 1.1: Create ThemeContext...
+     [Creates src/context/ThemeContext.tsx]
+
+     ✓ 1.1 Complete
+
+     Working on 1.2: Add CSS custom properties...
+     [Updates src/styles/globals.css]
+
+     ✓ 1.2 Complete
+     ...
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>如果中断可以在你离开的地方恢复</li>
+          <li>通过指定变更名称来用于并行变更</li>
+          <li>完成状态在 <code>tasks.md</code> 复选框中跟踪</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:update</code></h3>
+
+        <p>修改变更的现有规划制品并保持彼此一致。仅限规划制品——它从不编辑代码。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:update [change-name]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-name</code></td><td>否</td><td>更新哪个变更（未提供则从上下文推断）</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>通过 <code>openspec status --change &lt;name&gt; --json</code> 读取变更的制品</li>
+          <li>应用你请求的修改，或如果你没有指定则审查制品中的矛盾</li>
+          <li>在任何方向上协调其他现有制品（设计编辑可能波及回提案）</li>
+          <li>在写入前逐一与你确认每个编辑</li>
+          <li>结束时推荐下一步：<code>/opsx:continue</code>（缺少制品）、<code>/opsx:apply</code>（将修改后的计划带入代码）或 <code>/opsx:archive</code>（全部完成）</li>
+        </ul>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:update add-dark-mode - we're storing the theme in a cookie now, not localStorage
+
+AI:  Reading add-dark-mode artifacts...
+
+     The design references localStorage in two places; tasks 1.3 covers
+     localStorage persistence; the proposal doesn't mention storage.
+
+     Proposed revisions:
+     1. design.md - swap localStorage decision for cookie storage
+     2. tasks.md - reword task 1.3 to cookie persistence
+
+     Apply revision 1? (design.md)
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>它不会创建缺少的制品——那是 <code>/opsx:continue</code></li>
+          <li>如果变更已经实现，跟随 <code>/opsx:apply</code> 让代码匹配修改后的计划</li>
+          <li>如果你的修改改变了变更的<em>意图</em>，用一个新变更重新开始（参见<a href="opsx.html#when-to-update-vs-start-fresh">何时更新 vs. 开始新变更</a>）</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:verify</code></h3>
+
+        <p>验证实现是否匹配你的变更制品。检查完整性、正确性和一致性。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:verify [change-name]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-name</code></td><td>否</td><td>验证哪个变更（未提供则从上下文推断）</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>检查实现质量的三个维度</li>
+          <li>在代码库中搜索实现证据</li>
+          <li>将问题分类为 CRITICAL、WARNING 或 SUGGESTION</li>
+          <li>不阻止归档，但揭示问题</li>
+        </ul>
+
+        <p><strong>验证维度：</strong></p>
+        <table>
+          <thead><tr><th>维度</th><th>验证内容</th></tr></thead>
+          <tbody>
+            <tr><td><strong>完整性</strong></td><td>所有任务完成，所有需求实现，场景覆盖</td></tr>
+            <tr><td><strong>正确性</strong></td><td>实现匹配规格意图，边界情况处理</td></tr>
+            <tr><td><strong>一致性</strong></td><td>设计决策反映在代码中，模式一致</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:verify
+
+AI:  Verifying add-dark-mode...
+
+     COMPLETENESS
+     ✓ All 8 tasks in tasks.md are checked
+     ✓ All requirements in specs have corresponding code
+     ⚠ Scenario "System preference detection" has no test coverage
+
+     CORRECTNESS
+     ✓ Implementation matches spec intent
+     ✓ Edge cases from scenarios are handled
+     ✓ Error states match spec definitions
+
+     COHERENCE
+     ✓ Design decisions reflected in code structure
+     ✓ Naming conventions consistent with design.md
+     ⚠ Design mentions "CSS variables" but implementation uses Tailwind classes
+
+     SUMMARY
+     ─────────────────────────────
+     Critical issues: 0
+     Warnings: 2
+     Ready to archive: Yes (with warnings)
+
+     Recommendations:
+     1. Add test for system preference detection
+     2. Update design.md to reflect Tailwind usage, or refactor to use CSS variables
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>在归档前运行以尽早发现不匹配</li>
+          <li>警告不阻止归档但指示潜在问题</li>
+          <li>适合在提交前审查 AI 的工作</li>
+          <li>可以揭示制品和实现之间的偏差</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:sync</code></h3>
+
+        <p><strong>可选命令。</strong>将变更的增量规格合并到主规格。归档时如果需要会提示同步，所以你通常不需要手动运行。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:sync [change-name]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-name</code></td><td>否</td><td>同步哪个变更（未提供则从上下文推断）</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>从变更文件夹读取增量规格</li>
+          <li>解析 ADDED/MODIFIED/REMOVED/RENAMED 部分</li>
+          <li>将变更合并到主 <code>openspec/specs/</code> 目录</li>
+          <li>保留增量中未提及的现有内容</li>
+          <li>不归档变更（保持活动）</li>
+        </ul>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:sync
+
+AI:  Syncing add-dark-mode delta specs...
+
+     Reading: openspec/changes/add-dark-mode/specs/ui/spec.md
+     Target:  openspec/specs/ui/spec.md
+
+     Changes to apply:
+     ✓ ADDED: Theme Selection requirement (2 scenarios)
+     ✓ ADDED: Accessibility requirement (1 scenario)
+
+     Merging...
+     ✓ openspec/specs/ui/spec.md updated
+
+     Change remains active. Run /opsx:archive when ready to complete.
+</code></pre>
+
+        <p><strong>何时手动使用：</strong></p>
+        <table>
+          <thead><tr><th>场景</th><th>使用 sync？</th></tr></thead>
+          <tbody>
+            <tr><td>长时间运行的变更，想在归档前让规格进入主目录</td><td>是</td></tr>
+            <tr><td>多个并行变更需要更新的基础规格</td><td>是</td></tr>
+            <tr><td>想单独预览/审查合并</td><td>是</td></tr>
+            <tr><td>快速变更，直接归档</td><td>否（归档会处理）</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>Sync 是智能的，不是复制粘贴</li>
+          <li>可以向现有需求添加场景而不会重复</li>
+          <li>同步后变更保持活动（不归档）</li>
+          <li>大多数用户永远不需要直接调用——归档会在需要时提示</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:archive</code></h3>
+
+        <p>归档已完成的变更。完成变更并将其移动到归档文件夹。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:archive [change-name]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-name</code></td><td>否</td><td>归档哪个变更（未提供则从上下文推断）</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>检查制品完成状态</li>
+          <li>检查任务完成情况（未完成则警告）</li>
+          <li>如果增量规格尚未同步则提议同步</li>
+          <li>将变更文件夹移至 <code>openspec/changes/archive/YYYY-MM-DD-&lt;name&gt;/</code></li>
+          <li>保留所有制品用于审计追踪</li>
+        </ul>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:archive
+
+AI:  Archiving add-dark-mode...
+
+     Artifact status:
+     ✓ proposal.md exists
+     ✓ specs/ exists
+     ✓ design.md exists
+     ✓ tasks.md exists (8/8 tasks complete)
+
+     Delta specs: Not yet synced
+     → Sync now? (recommended)
+
+You: Yes
+
+AI:  ✓ Synced specs to openspec/specs/ui/spec.md
+     ✓ Moved to openspec/changes/archive/2025-01-24-add-dark-mode/
+
+     Change archived successfully.
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>归档不会因任务未完成而阻止，但会警告</li>
+          <li>增量规格可以在归档时或之前同步</li>
+          <li>归档的变更为历史保留</li>
+          <li>先使用 <code>/opsx:verify</code> 发现问题</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:bulk-archive</code></h3>
+
+        <p>一次归档多个已完成的变更。处理变更之间的规格冲突。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:bulk-archive [change-names...]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-names</code></td><td>否</td><td>指定要归档的变更（未提供则提示选择）</td></tr></tbody>
+        </table>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>列出所有已完成的变更</li>
+          <li>归档前验证每个变更</li>
+          <li>检测变更之间的规格冲突</li>
+          <li>通过检查实际实现来解决冲突</li>
+          <li>按时间顺序归档</li>
+        </ul>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:bulk-archive
+
+AI:  Found 3 completed changes:
+     - add-dark-mode (8/8 tasks complete)
+     - fix-login-bug (3/3 tasks complete)
+     - update-footer (2/2 tasks complete)
+
+     Checking for spec conflicts...
+     ⚠ add-dark-mode and update-footer both touch specs/ui/
+
+     Inspecting codebase to resolve...
+     Both changes are implemented. Will merge in chronological order:
+     1. add-dark-mode (created Jan 20)
+     2. update-footer (created Jan 22)
+
+     Archive all 3 changes?
+
+You: Yes
+
+AI:  ✓ Archived add-dark-mode
+     ✓ Archived fix-login-bug
+     ✓ Archived update-footer
+     Specs merged: add-dark-mode → update-footer
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>适合并行工作流</li>
+          <li>冲突解决是智能的（检查代码库）</li>
+          <li>变更按创建顺序归档</li>
+          <li>覆盖规格内容前会提示</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>/opsx:onboard</code></h3>
+
+        <p>引导式入门，贯穿完整的 OpenSpec 工作流。使用你的真实代码库的交互式教程。</p>
+
+        <p><strong>语法：</strong></p>
+<pre><code>/opsx:onboard
+</code></pre>
+
+        <p><strong>它的作用：</strong></p>
+        <ul>
+          <li>带解说地走完一个完整的工作流周期</li>
+          <li>扫描你的代码库寻找真实的改进机会</li>
+          <li>创建带有真实制品的实际变更</li>
+          <li>实现实际工作（小的、安全的变更）</li>
+          <li>归档已完成的变更</li>
+          <li>每一步都有解释</li>
+        </ul>
+
+        <p><strong>阶段：</strong></p>
+        <ol>
+          <li>欢迎和代码库分析</li>
+          <li>寻找改进机会</li>
+          <li>创建变更（<code>/opsx:new</code>）</li>
+          <li>编写提案</li>
+          <li>创建规格</li>
+          <li>编写设计</li>
+          <li>创建任务</li>
+          <li>实现任务（<code>/opsx:apply</code>）</li>
+          <li>验证实现</li>
+          <li>归档变更</li>
+          <li>总结和后续步骤</li>
+        </ol>
+
+        <p><strong>示例：</strong></p>
+<pre><code>You: /opsx:onboard
+
+AI:  Welcome to OpenSpec!
+
+     I'll walk you through the complete workflow using your actual codebase.
+     We'll find something small to improve, create a proper change for it,
+     implement it, and archive it.
+
+     Let me scan your codebase for opportunities...
+
+     [Analyzes codebase]
+
+     I found a few things we could work on:
+     1. Add input validation to the contact form
+     2. Improve error messages in the auth flow
+     3. Add loading states to async buttons
+
+     Which interests you? (or suggest something else)
+</code></pre>
+
+        <p><strong>提示：</strong></p>
+        <ul>
+          <li>最适合新用户学习工作流</li>
+          <li>使用真实代码，不是玩具示例</li>
+          <li>创建一个你可以保留或丢弃的真实变更</li>
+          <li>需要 15-30 分钟完成</li>
+        </ul>
+
+        <hr>
+
+        <h2>按 AI 工具的命令语法</h2>
+
+        <p>不同 AI 工具使用略有不同的命令语法。使用匹配你工具的格式：</p>
+
+        <table>
+          <thead><tr><th>工具</th><th>语法示例</th></tr></thead>
+          <tbody>
+            <tr><td>Claude Code</td><td><code>/opsx:propose</code>、<code>/opsx:apply</code></td></tr>
+            <tr><td>Cursor</td><td><code>/opsx-propose</code>、<code>/opsx-apply</code></td></tr>
+            <tr><td>Windsurf</td><td><code>/opsx-propose</code>、<code>/opsx-apply</code></td></tr>
+            <tr><td>Copilot (IDE)</td><td><code>/opsx-propose</code>、<code>/opsx-apply</code></td></tr>
+            <tr><td>Oh My Pi</td><td><code>/opsx-propose</code>、<code>/opsx-apply</code></td></tr>
+            <tr><td>Kimi CLI</td><td>基于技能的调用如 <code>/skill:openspec-propose</code>、<code>/skill:openspec-apply-change</code>（无生成的 <code>opsx-*</code> 命令文件）</td></tr>
+            <tr><td>Trae</td><td><code>/opsx-propose</code>、<code>/opsx-apply</code></td></tr>
+          </tbody>
+        </table>
+
+        <p>各工具的意图相同，但命令的展现方式可能因集成而异。</p>
+
+        <blockquote><p><strong>注意：</strong>GitHub Copilot 命令（<code>.github/prompts/*.prompt.md</code>）仅在 IDE 扩展中可用（VS Code、JetBrains、Visual Studio）。GitHub Copilot CLI 目前不支持自定义提示文件——参见<a href="supported-tools.html">支持的工具</a>了解详情和变通方案。</p></blockquote>
+
+        <hr>
+
+        <h2>旧版命令</h2>
+
+        <p>这些命令使用旧的"一次性全部"工作流。它们仍然可用，但推荐使用 OPSX 命令。</p>
+
+        <table>
+          <thead><tr><th>命令</th><th>作用</th></tr></thead>
+          <tbody>
+            <tr><td><code>/openspec:proposal</code></td><td>一次创建所有制品（proposal、specs、design、tasks）</td></tr>
+            <tr><td><code>/openspec:apply</code></td><td>实现变更</td></tr>
+            <tr><td><code>/openspec:archive</code></td><td>归档变更</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>何时使用旧版命令：</strong></p>
+        <ul>
+          <li>使用旧工作流的现有项目</li>
+          <li>不需要增量制品创建的简单变更</li>
+          <li>偏好一次性方法的场景</li>
+        </ul>
+
+        <p><strong>迁移到 OPSX：</strong></p>
+        <p>旧版变更可以用 OPSX 命令继续。制品结构是兼容的。</p>
+
+        <hr>
+
+        <h2>故障排除</h2>
+
+        <h3>"找不到变更"</h3>
+
+        <p>命令无法识别要在哪个变更上工作。</p>
+
+        <p><strong>解决方案：</strong></p>
+        <ul>
+          <li>显式指定变更名称：<code>/opsx:apply add-dark-mode</code></li>
+          <li>检查变更文件夹是否存在：<code>openspec list</code></li>
+          <li>确认你在正确的项目目录中</li>
+        </ul>
+
+        <h3>"没有制品就绪"</h3>
+
+        <p>所有制品要么已完成要么被缺少的依赖阻塞。</p>
+
+        <p><strong>解决方案：</strong></p>
+        <ul>
+          <li>运行 <code>openspec status --change &lt;name&gt;</code> 查看什么被阻塞</li>
+          <li>检查所需制品是否存在</li>
+          <li>先创建缺少的依赖制品</li>
+        </ul>
+
+        <h3>"找不到模式"</h3>
+
+        <p>指定的模式不存在。</p>
+
+        <p><strong>解决方案：</strong></p>
+        <ul>
+          <li>列出可用模式：<code>openspec schemas</code></li>
+          <li>检查模式名称拼写</li>
+          <li>如果是自定义模式则创建它：<code>openspec schema init &lt;name&gt;</code></li>
+        </ul>
+
+        <h3>命令不被识别</h3>
+
+        <p>AI 工具不识别 OpenSpec 命令。</p>
+
+        <p><strong>解决方案：</strong></p>
+        <ul>
+          <li>确保 OpenSpec 已初始化：<code>openspec init</code></li>
+          <li>重新生成技能：<code>openspec update</code></li>
+          <li>检查 <code>.claude/skills/</code> 目录是否存在（对于 Claude Code）</li>
+          <li>重启你的 AI 工具以加载新技能</li>
+        </ul>
+
+        <h3>制品生成不正确</h3>
+
+        <p>AI 创建了不完整或不正确的制品。</p>
+
+        <p><strong>解决方案：</strong></p>
+        <ul>
+          <li>在 <code>openspec/config.yaml</code> 中添加项目上下文</li>
+          <li>为特定指导添加按制品的规则</li>
+          <li>在变更描述中提供更多细节</li>
+          <li>使用 <code>/opsx:continue</code> 而非 <code>/opsx:ff</code> 以获得更多控制</li>
+        </ul>
+
+        <hr>
+
+        <h2>后续步骤</h2>
+
+        <ul>
+          <li><a href="workflows.html">工作流</a> - 常见模式和何时使用每个命令</li>
+          <li><a href="cli.html">CLI</a> - 管理和验证的终端命令</li>
+          <li><a href="customization.html">自定义配置</a> - 创建自定义模式和工作流</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="editing-changes.html">← 上一页：编辑与迭代变更</a>
+        </div>
+        <div>
+          <a href="cli.html">下一页：CLI 参考 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

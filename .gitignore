@@ -163,3 +163,9 @@ opencode.json
 
 # Trae
 .trae/
+/.idea/.gitignore
+/.idea/MarsCodeWorkspaceAppSettings.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/OpenSpec.iml
+/.idea/vcs.xml

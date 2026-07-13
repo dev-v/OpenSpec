@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <span>首页</span>
+      </div>
+
+      <div class="page-header">
+        <h1>OpenSpec 中文文档</h1>
+        <p class="subtitle">一个轻量级的规格驱动框架</p>
+      </div>
+
+      <article>
+        <p>OpenSpec 帮助你和你的 AI 编程助手<strong>在编写任何代码之前就就构建内容达成共识。</strong>你描述变更，AI 草拟一份简短的规格说明和任务清单，你们一起查看同一份计划，然后才开始工作。再也不用在半途才发现 AI 构建了错误的东西。</p>
+
+        <div class="callout callout-tip">
+          <p><strong>最值得养成的第一个习惯：当你不确定要构建什么时，先用 <code>/opsx:explore</code> 开始。</strong>它是一个零成本的思考伙伴，会阅读你的代码、权衡选项，并在任何工件或代码存在之前，将模糊的想法磨砺成具体的计划。<a href="explore.html">探索优先</a>指南说明了为什么这样做。</p>
+        </div>
+
+        <h2>核心特性</h2>
+        <ul>
+          <li><strong>规格即真相</strong> — 规格说明描述系统当前的行为，作为唯一的共同认知来源</li>
+          <li><strong>变更即单元</strong> — 每次变更都是一个独立的文件夹，包含提案、设计、任务清单和规格增量</li>
+          <li><strong>增量规格</strong> — 只描述变化的部分（ADDED/MODIFIED/REMOVED），而非重写整个规格</li>
+          <li><strong>工件有序</strong> — 提案 → 规格 → 设计 → 任务，按自然顺序推进，且随时可回溯修改</li>
+          <li><strong>归档闭环</strong> — 完成后归档变更，增量规格合并入主规格，形成完整的历史记录</li>
+        </ul>
+
+        <h2>从这里开始</h2>
+        <div class="doc-cards">
+          <a href="getting-started.html" class="doc-card">
+            <h3>快速开始</h3>
+            <p>安装、初始化，并端到端运行你的第一次变更</p>
+          </a>
+          <a href="explore.html" class="doc-card">
+            <h3>探索优先</h3>
+            <p>在确定方案之前用 <code>/opsx:explore</code> 来理清思路</p>
+          </a>
+          <a href="how-commands-work.html" class="doc-card">
+            <h3>命令工作原理</h3>
+            <p>斜杠命令在哪里运行、"交互模式"是什么意思、终端与聊天的区别</p>
+          </a>
+          <a href="overview.html" class="doc-card">
+            <h3>核心概念一览</h3>
+            <p>一页纸呈现整个心智模型：规格、变更、增量、归档</p>
+          </a>
+          <a href="installation.html" class="doc-card">
+            <h3>安装指南</h3>
+            <p>npm、pnpm、yarn、bun、Nix，以及如何验证安装成功</p>
+          </a>
+        </div>
+
+        <h2>日常使用</h2>
+        <div class="doc-cards">
+          <a href="workflows.html" class="doc-card">
+            <h3>工作流</h3>
+            <p>常见模式以及何时使用每个命令</p>
+          </a>
+          <a href="examples.html" class="doc-card">
+            <h3>示例与配方</h3>
+            <p>真实变更的完整走查，可直接复制</p>
+          </a>
+          <a href="writing-specs.html" class="doc-card">
+            <h3>编写优质规格说明</h3>
+            <p>什么是好的需求和场景，如何把握变更的粒度</p>
+          </a>
+          <a href="reviewing-changes.html" class="doc-card">
+            <h3>审查变更</h3>
+            <p>在编写代码前对草拟计划进行两分钟审查</p>
+          </a>
+          <a href="team-workflow.html" class="doc-card">
+            <h3>团队协作</h3>
+            <p>变更如何映射到分支、拉取请求和审查</p>
+          </a>
+          <a href="existing-projects.html" class="doc-card">
+            <h3>在现有项目中使用</h3>
+            <p>在大型存量代码库中采用 OpenSpec</p>
+          </a>
+          <a href="editing-changes.html" class="doc-card">
+            <h3>编辑与迭代变更</h3>
+            <p>更新工件、回退、协调手动编辑</p>
+          </a>
+          <a href="commands.html" class="doc-card">
+            <h3>命令参考</h3>
+            <p>每个 <code>/opsx:*</code> 斜杠命令的参考文档</p>
+          </a>
+          <a href="cli.html" class="doc-card">
+            <h3>CLI 参考</h3>
+            <p>每个 <code>openspec</code> 终端命令的参考文档</p>
+          </a>
+        </div>
+
+        <h2>深入理解</h2>
+        <div class="doc-cards">
+          <a href="concepts.html" class="doc-card">
+            <h3>概念详解</h3>
+            <p>规格、变更、工件、模式和归档的详细解释</p>
+          </a>
+          <a href="opsx.html" class="doc-card">
+            <h3>OPSX 工作流</h3>
+            <p>为什么工作流是流动的而非阶段锁定的，以及架构深度剖析</p>
+          </a>
+          <a href="glossary.html" class="doc-card">
+            <h3>术语表</h3>
+            <p>所有术语在同一个页面定义</p>
+          </a>
+        </div>
+
+        <h2>个性化定制</h2>
+        <div class="doc-cards">
+          <a href="customization.html" class="doc-card">
+            <h3>自定义配置</h3>
+            <p>项目配置、自定义模式、共享上下文</p>
+          </a>
+          <a href="multi-language.html" class="doc-card">
+            <h3>多语言支持</h3>
+            <p>用英语以外的语言生成工件</p>
+          </a>
+          <a href="supported-tools.html" class="doc-card">
+            <h3>支持的工具</h3>
+            <p>OpenSpec 集成的 25+ AI 工具，以及文件落地位置</p>
+          </a>
+        </div>
+
+        <h2>获取帮助</h2>
+        <div class="doc-cards">
+          <a href="faq.html" class="doc-card">
+            <h3>常见问题</h3>
+            <p>最常被问到的问题的快速解答</p>
+          </a>
+          <a href="troubleshooting.html" class="doc-card">
+            <h3>故障排除</h3>
+            <p>针对具体失败的具体修复方案</p>
+          </a>
+          <a href="migration-guide.html" class="doc-card">
+            <h3>迁移指南</h3>
+            <p>从旧工作流迁移到 OPSX</p>
+          </a>
+        </div>
+
+        <h2>跨仓库协作（Beta）</h2>
+        <div class="doc-cards">
+          <a href="stores-beta-user-guide.html" class="doc-card">
+            <h3>Stores 用户指南</h3>
+            <p>当工作跨仓库或团队时，将计划放在独立的仓库中</p>
+          </a>
+          <a href="agent-contract.html" class="doc-card">
+            <h3>Agent 契约</h3>
+            <p>Agent 驱动的机器可读 CLI 接口</p>
+          </a>
+        </div>
+
+        <h2>三十秒速览</h2>
+        <pre><code>1. Install        npm install -g @fission-ai/openspec@latest
+2. Initialize     cd your-project && openspec init
+3. Explore        (in your AI chat)  /opsx:explore           ← optional, but a great habit
+4. Propose        (in your AI chat)  /opsx:propose add-dark-mode
+5. Build          (in your AI chat)  /opsx:apply
+6. Archive        (in your AI chat)  /opsx:archive</code></pre>
+        <p>第 1、2 步在终端中执行，其余步骤在 AI 助手的聊天中完成。这个分工是最值得记住的一点，<a href="how-commands-work.html">命令工作原理</a>详细解释了原因。第 3 步是可选的，但在不确定时以 <code>/opsx:explore</code> 开始是最值得养成的习惯。</p>
+
+        <h2>其他获取帮助的途径</h2>
+        <ul>
+          <li><strong>Discord：</strong> <a href="https://discord.gg/YctCnvvshC">discord.gg/YctCnvvshC</a> 用于提问、分享想法和获取帮助。</li>
+          <li><strong>GitHub Issues：</strong> <a href="https://github.com/Fission-AI/OpenSpec/issues">github.com/Fission-AI/OpenSpec/issues</a> 用于报告 Bug 和功能请求。</li>
+          <li><strong><code>openspec feedback "your message"</code></strong> 直接从终端发送反馈（它会创建一个 GitHub Issue）。</li>
+        </ul>
+        <p>发现文档中有错误、过时或令人困惑的内容？那就是一个 Bug。请提交 Issue 或 PR。改进文档是你能做出的最有价值的贡献之一。</p>
+      </article>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

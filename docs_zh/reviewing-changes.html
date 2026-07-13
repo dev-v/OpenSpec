@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>审查变更 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item active"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>审查变更</span>
+      </div>
+
+      <div class="page-header">
+        <h1>审查变更</h1>
+        <p class="subtitle">在编写任何代码之前，花两分钟检查 AI 起草的计划</p>
+      </div>
+
+      <article>
+        <p>OpenSpec 的全部承诺在于：你和你的 AI 在<strong>编写任何代码之前就构建什么达成一致</strong>。这个协议只有在你真正阅读了 AI 起草的内容后才具有实际意义。本页讲述的就是你做这件事的那两分钟——打开什么、按什么顺序、寻找什么。</p>
+
+        <p>道理很简单：在一段话的计划中抓住一个错误方向几乎不花成本。而在 300 行代码中抓住同样的错误方向则代价不菲。审查就是你收回这笔投资的时刻。</p>
+
+        <h2>你审查的两个时刻</h2>
+
+        <p>恰好有两个时刻：</p>
+
+<pre><code>/opsx:propose ──► 审查计划 ──► /opsx:apply ──► 审查代码 ──► /opsx:archive
+                  (在编写代码之前)                    (/opsx:verify)
+</code></pre>
+
+        <ol>
+          <li><strong>在 <code>/opsx:propose</code> 之后</strong>（或 <code>/opsx:ff</code>），在 <code>/opsx:apply</code> 之前——趁计划还只是文字时阅读它。</li>
+          <li><strong>在构建完成后</strong>，使用 <code>/opsx:verify</code>——检查代码是否真正执行了计划所说的内容。</li>
+        </ol>
+
+        <p>第一次审查是为你节省最多的那次，也是人们最容易跳过的那次。本页大部分篇幅都在讲它。</p>
+
+        <h2>按此顺序阅读</h2>
+
+        <p>一个变更就是 <code>openspec/changes/&lt;name&gt;/</code> 中的一组纯 Markdown 文件。按能让你最早发现问题就停下来的顺序阅读：</p>
+
+<pre><code>openspec/changes/add-dark-mode/
+├── proposal.md      1. 意图和范围   ← 如果这里错了，到此为止
+├── specs/…/spec.md  2. 需求         ← 审查的核心
+├── design.md        (仅适用于较大的变更) — 技术方案
+└── tasks.md         3. 工作计划
+</code></pre>
+
+        <p>你不需要逐行阅读。你需要回答三个问题，每个文件一个。</p>
+
+        <h2>提案：这是正确的问题吗？</h2>
+
+        <p>首先打开 <code>proposal.md</code>。它记录了"为什么"和"什么"——意图、范围、一两段话的方案。</p>
+
+        <p><strong>好的样子：</strong>一个清晰的意图，一个你认可的范围，以及一个值得现在做的理由。</p>
+
+        <p><strong>危险信号：</strong></p>
+
+        <ul>
+          <li>它解决的问题与你要求解决的<em>略有不同</em>。</li>
+          <li>范围扩大了——你要求一个主题切换，提案却"顺便"也涉及了认证功能。</li>
+          <li>含糊不清。"改进设置页面"不是范围；"添加一个尊重操作系统偏好的暗色模式切换"才是。</li>
+        </ul>
+
+        <p><strong>要回答的问题：</strong><em>这是否与我实际要求的一致？有没有什么东西悄悄混进来了？</em>如果答案是否定的，停下来——不要继续往下读，修改提案（参见<a href="#pushing-back-is-cheap">反馈修正</a>）。</p>
+
+        <h2>规格增量："完成"定义正确吗？</h2>
+
+        <p>这是审查的核心。<code>specs/</code> 下的增量规格说明了变更交付后什么是<em>真实</em>的——以需求和证明需求的场景来表述：</p>
+
+<pre><code>## ADDED Requirements
+
+### Requirement: Dark Mode Toggle
+The system SHALL let a user switch between light and dark themes.
+
+#### Scenario: Respects the OS preference on first load
+- GIVEN a user who has never set a theme
+- WHEN they open the app on a device set to dark mode
+- THEN the app renders in dark mode
+</code></pre>
+
+        <p><strong>好的需求是什么样的：</strong>一个清晰的 <code>SHALL</code>/<code>MUST</code> 声明，你可以交给测试人员，至少一个场景的 GIVEN/WHEN/THEN 真正验证了该声明。</p>
+
+        <p><strong>危险信号：</strong></p>
+
+        <ul>
+          <li><strong>含糊的需求。</strong>"系统 SHALL 快速"无法构建或测试。什么是快速？</li>
+          <li><strong>没有场景的需求</strong>，或者场景没有测试它所在的需求。</li>
+          <li><strong>最有价值的发现：遗漏了什么。</strong>AI 忠实地写下你<em>说的</em>。你的工作是注意到你<em>忘了说</em>的。如果你最关心操作系统偏好的场景而没有场景提到它，这就是审查在发挥作用。</li>
+        </ul>
+
+        <p>阅读增量时问自己<em>如果系统恰好做了——而且只做了——这些，我会满意吗？</em>这里还没有涉及代码，所以修改成本很低。</p>
+
+        <h2>任务：工作计划合理吗？</h2>
+
+        <p>最后打开 <code>tasks.md</code>。它是 AI 将要执行的实施清单。</p>
+
+        <p><strong>好的样子：</strong>有序的步骤，每一步可追溯到需求，没有神秘内容。</p>
+
+        <p><strong>危险信号：</strong></p>
+
+        <ul>
+          <li>一个任务没有对应的需求（它从哪来的？）。</li>
+          <li>一个巨大的"实现功能"任务隐藏了所有真正的决策。</li>
+          <li>一个任务涉及你刚刚批准的范围之外的东西。</li>
+        </ul>
+
+        <p>你不是在做估算或微管理——你在检查计划是否匹配你已经接受的需求。</p>
+
+        <h2 id="pushing-back-is-cheap">反馈修正成本很低</h2>
+
+        <p>如果三个问题中任何一个的答案不对，直接说出来。没有阶段也没有什么被锁定——你修复它然后继续。两种方式，正如<a href="editing-changes.html">编辑变更</a>中所述：</p>
+
+        <ul>
+          <li><strong>自己编辑文件。</strong>它是纯 Markdown；修改范围行，收紧需求，删除任务。</li>
+          <li><strong>告诉 AI 哪里不对</strong>让它修改：<em>"去掉认证变更——超出范围"</em>，<em>"为用户已选择主题的情况添加一个场景"</em>，<em>"把任务 3 拆分为 schema 和 UI"</em>。</li>
+        </ul>
+
+        <p>然后重新阅读你修改的部分。反复修改直到你愿意签名的计划。这种来回<em>就是</em>产品在运作。</p>
+
+        <h2>代码完成后：验证</h2>
+
+        <p>工作构建完成后，<code>/opsx:verify</code> 是你的第二次审查。它会重新阅读制品和代码，并在三个维度上报告不匹配之处：</p>
+
+        <table>
+          <thead>
+            <tr><th>维度</th><th>检查内容</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>完整性</strong></td><td>每个任务都已完成，每个需求都已实现，场景已覆盖</td></tr>
+            <tr><td><strong>正确性</strong></td><td>实现与规格意图匹配，边界情况已处理</td></tr>
+            <tr><td><strong>一致性</strong></td><td>设计决策真正体现在代码中</td></tr>
+          </tbody>
+        </table>
+
+<pre><code>You: /opsx:verify
+
+AI:  Verifying add-dark-mode...
+
+     COMPLETENESS
+     ✓ All 8 tasks in tasks.md are checked
+     ✓ All requirements in specs have corresponding code
+     ⚠ Scenario "Respects the OS preference on first load" has no test coverage
+</code></pre>
+
+        <p>它将问题标记为 CRITICAL、WARNING 或 SUGGESTION，并且<strong>不会</strong>阻止归档——它会揭示差距并把决定权留给你。这就是"AI 是否编写了代码"和"AI 是否构建了我们商定的内容"之间的区别。</p>
+
+        <p><code>/opsx:verify</code> 属于扩展配置。如果你没有它，用 <code>openspec config profile</code>（然后 <code>openspec update</code>）开启，或者自己重新阅读变更和代码差异。</p>
+
+        <h2>审查的力度要适当</h2>
+
+        <p>不是每个变更都值得完整的审查流程。一个单文件错别字修复只需要 20 秒的扫视。涉及认证、支付或不可恢复数据的变更值得上面每一个问题。重点从来不是仪式感——而是把注意力花在出错代价高的地方，在不会出错的地方快速浏览。</p>
+
+        <h2>两分钟清单</h2>
+
+        <ul>
+          <li>☐ 提案的意图与我要求的一致。</li>
+          <li>☐ 范围中没有悄悄混入额外内容。</li>
+          <li>☐ 每个需求都足够具体，可以测试。</li>
+          <li>☐ 每个需求都有一个真正验证它的场景。</li>
+          <li>☐ 我最关心的场景已被覆盖。</li>
+          <li>☐ 任务映射到需求；没有神秘或超范围的内容。</li>
+          <li>☐ 如果 AI 恰好构建这个而且只构建这个，我会感到满意。</li>
+        </ul>
+
+        <p>如果七项全部通过，放心运行 <code>/opsx:apply</code>。如果任何一项失败，那不是挫折——而是这两分钟在发挥作用。</p>
+
+        <h2>接下来去哪里</h2>
+
+        <ul>
+          <li><a href="writing-specs.html">编写优质规格说明</a>——另一面：如何起草值得批准的需求和场景。</li>
+          <li><a href="editing-changes.html">编辑与迭代变更</a>——在你开始后修改计划的机制。</li>
+          <li><a href="workflows.html">工作流</a>——审查在更大循环中的位置。</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="writing-specs.html">← 上一页：编写优质规格说明</a>
+        </div>
+        <div>
+          <a href="team-workflow.html">下一页：团队协作 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

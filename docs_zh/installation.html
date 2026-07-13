@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>安装指南 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>安装指南</span>
+      </div>
+
+      <div class="page-header">
+        <h1>安装指南</h1>
+        <p class="subtitle">npm、pnpm、yarn、bun、Nix，以及如何验证安装成功</p>
+      </div>
+
+      <article>
+        <h2>前置条件</h2>
+        <ul>
+          <li><strong>Node.js 20.19.0 或更高版本</strong> — 检查你的版本：<code>node --version</code></li>
+        </ul>
+
+        <h2>包管理器</h2>
+
+        <h3>npm</h3>
+        <pre><code>npm install -g @fission-ai/openspec@latest</code></pre>
+
+        <h3>pnpm</h3>
+        <pre><code>pnpm add -g @fission-ai/openspec@latest</code></pre>
+
+        <h3>yarn</h3>
+        <pre><code>yarn global add @fission-ai/openspec@latest</code></pre>
+
+        <h3>bun</h3>
+        <p>Bun 可以全局安装 OpenSpec，但 OpenSpec 目前运行在 Node.js 上。你仍需确保 Node.js 20.19.0 或更高版本在 <code>PATH</code> 中可用。</p>
+        <pre><code>bun add -g @fission-ai/openspec@latest</code></pre>
+
+        <h2>Nix</h2>
+        <p>直接运行 OpenSpec 而无需安装：</p>
+        <pre><code>nix run github:Fission-AI/OpenSpec -- init</code></pre>
+
+        <p>或安装到你的 profile：</p>
+        <pre><code>nix profile install github:Fission-AI/OpenSpec</code></pre>
+
+        <p>或添加到你的开发环境中的 <code>flake.nix</code>：</p>
+        <pre><code>{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    openspec.url = "github:Fission-AI/OpenSpec";
+  };
+
+  outputs = { nixpkgs, openspec, ... }: {
+    devShells.x86_64-linux.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
+      buildInputs = [ openspec.packages.x86_64-linux.default ];
+    };
+  };
+}</code></pre>
+
+        <h2>验证安装</h2>
+        <pre><code>openspec --version</code></pre>
+
+        <h2>更新</h2>
+        <p>升级包，然后刷新每个项目的生成文件：</p>
+        <pre><code>npm install -g @fission-ai/openspec@latest   # or pnpm/yarn/bun equivalent
+openspec update                              # run inside each project</code></pre>
+        <p><code>openspec update</code> 会重新生成你已配置工具的技能和命令文件，让你的斜杠命令与已安装版本保持同步。</p>
+
+        <h2>卸载</h2>
+        <p>没有 <code>openspec uninstall</code> 命令，因为 OpenSpec 只是一个全局包加上你项目中的某些文件。移除它只需几步手动操作，且这里不会触及你的源代码。</p>
+
+        <p><strong>1. 移除全局包：</strong></p>
+        <pre><code>npm uninstall -g @fission-ai/openspec   # or: pnpm rm -g / yarn global remove / bun rm -g</code></pre>
+
+        <p><strong>2. 从项目中移除 OpenSpec（可选）。</strong>如果你不再需要其规格和变更，删除 <code>openspec/</code> 目录：</p>
+        <pre><code>rm -rf openspec/</code></pre>
+        <p>操作前请三思：<code>openspec/specs/</code> 和 <code>openspec/changes/archive/</code> 是你系统行为及其变更原因的记录。如果你可能需要这些历史，请保留文件夹（或将其保留在 git 中），即使卸载后。</p>
+
+        <p><strong>3. 移除生成的 AI 工具文件（可选）。</strong>OpenSpec 会将技能和命令文件写入各工具的目录，如 <code>.claude/skills/openspec-*/</code>、<code>.cursor/commands/opsx-*</code> 等。为你配置的工具删除 <code>openspec-*</code> 技能和 <code>opsx-*</code> 命令。每个工具的确切路径请参见 <a href="supported-tools.html">支持的工具</a>。</p>
+
+        <p>如果你在 <code>CLAUDE.md</code> 或 <code>AGENTS.md</code> 等文件中还有 OpenSpec 标记块，请手动移除这些块；这些文件中你自己的内容仍然属于你。</p>
+
+        <h2>后续步骤</h2>
+        <p>安装后，在你的项目中初始化 OpenSpec：</p>
+        <pre><code>cd your-project
+openspec init</code></pre>
+        <p>完整走查请参见 <a href="getting-started.html">快速开始</a>。</p>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="overview.html">← 上一页：核心概念一览</a>
+        </div>
+        <div>
+          <a href="workflows.html">下一页：工作流 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

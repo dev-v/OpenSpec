@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>支持的工具 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item active"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>支持的工具</span>
+      </div>
+
+      <div class="page-header">
+        <h1>支持的工具</h1>
+        <p class="subtitle">OpenSpec 与 25+ AI 编码助手的兼容列表</p>
+      </div>
+
+      <article>
+        <p>OpenSpec 与许多 AI 编码助手兼容。当你运行 <code>openspec init</code> 时，OpenSpec 会使用你选择的活跃配置/工作流选择和交付模式来配置选定的工具。</p>
+
+        <h2 id="how-it-works">工作原理</h2>
+
+        <p>对于每个选定的工具，OpenSpec 可以安装：</p>
+
+        <ol>
+          <li><strong>Skills（技能）</strong>（如果交付包含技能）：<code>.../skills/openspec-*/SKILL.md</code></li>
+          <li><strong>Commands（命令）</strong>（如果交付包含命令）：特定工具的 <code>opsx-*</code> 命令文件</li>
+        </ol>
+
+        <p>默认情况下，OpenSpec 使用 <code>core</code> 配置，包括：</p>
+        <ul>
+          <li><code>propose</code></li>
+          <li><code>explore</code></li>
+          <li><code>apply</code></li>
+          <li><code>sync</code></li>
+          <li><code>archive</code></li>
+        </ul>
+
+        <p>你可以通过 <code>openspec config profile</code> 启用扩展工作流（<code>new</code>、<code>continue</code>、<code>ff</code>、<code>verify</code>、<code>bulk-archive</code>、<code>onboard</code>），然后运行 <code>openspec update</code>。</p>
+
+        <h2 id="tool-directory-reference">工具目录参考</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>工具（ID）</th>
+              <th>Skills 路径模式</th>
+              <th>Command 路径模式</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Amazon Q Developer (<code>amazon-q</code>)</td><td><code>.amazonq/skills/openspec-*/SKILL.md</code></td><td><code>.amazonq/prompts/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Antigravity (<code>antigravity</code>)</td><td><code>.agent/skills/openspec-*/SKILL.md</code></td><td><code>.agent/workflows/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Auggie (<code>auggie</code>)</td><td><code>.augment/skills/openspec-*/SKILL.md</code></td><td><code>.augment/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>IBM Bob Shell (<code>bob</code>)</td><td><code>.bob/skills/openspec-*/SKILL.md</code></td><td><code>.bob/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Claude Code (<code>claude</code>)</td><td><code>.claude/skills/openspec-*/SKILL.md</code></td><td><code>.claude/commands/opsx/&lt;id&gt;.md</code></td></tr>
+            <tr><td>Cline (<code>cline</code>)</td><td><code>.cline/skills/openspec-*/SKILL.md</code></td><td><code>.clinerules/workflows/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>CodeBuddy (<code>codebuddy</code>)</td><td><code>.codebuddy/skills/openspec-*/SKILL.md</code></td><td><code>.codebuddy/commands/opsx/&lt;id&gt;.md</code></td></tr>
+            <tr><td>Codex (<code>codex</code>)</td><td><code>.codex/skills/openspec-*/SKILL.md</code></td><td><code>$CODEX_HOME/prompts/opsx-&lt;id&gt;.md</code>*</td></tr>
+            <tr><td>ForgeCode (<code>forgecode</code>)</td><td><code>.forge/skills/openspec-*/SKILL.md</code></td><td>不生成（无命令适配器；使用基于技能的 <code>/openspec-*</code> 调用）</td></tr>
+            <tr><td>Continue (<code>continue</code>)</td><td><code>.continue/skills/openspec-*/SKILL.md</code></td><td><code>.continue/prompts/opsx-&lt;id&gt;.prompt</code></td></tr>
+            <tr><td>CoStrict (<code>costrict</code>)</td><td><code>.cospec/skills/openspec-*/SKILL.md</code></td><td><code>.cospec/openspec/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Crush (<code>crush</code>)</td><td><code>.crush/skills/openspec-*/SKILL.md</code></td><td><code>.crush/commands/opsx/&lt;id&gt;.md</code></td></tr>
+            <tr><td>Cursor (<code>cursor</code>)</td><td><code>.cursor/skills/openspec-*/SKILL.md</code></td><td><code>.cursor/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Factory Droid (<code>factory</code>)</td><td><code>.factory/skills/openspec-*/SKILL.md</code></td><td><code>.factory/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Gemini CLI (<code>gemini</code>)</td><td><code>.gemini/skills/openspec-*/SKILL.md</code></td><td><code>.gemini/commands/opsx/&lt;id&gt;.toml</code></td></tr>
+            <tr><td>GitHub Copilot (<code>github-copilot</code>)</td><td><code>.github/skills/openspec-*/SKILL.md</code></td><td><code>.github/prompts/opsx-&lt;id&gt;.prompt.md</code>**</td></tr>
+            <tr><td>iFlow (<code>iflow</code>)</td><td><code>.iflow/skills/openspec-*/SKILL.md</code></td><td><code>.iflow/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Junie (<code>junie</code>)</td><td><code>.junie/skills/openspec-*/SKILL.md</code></td><td><code>.junie/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Kilo Code (<code>kilocode</code>)</td><td><code>.kilocode/skills/openspec-*/SKILL.md</code></td><td><code>.kilocode/workflows/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Kimi CLI (<code>kimi</code>)</td><td><code>.kimi/skills/openspec-*/SKILL.md</code></td><td>不生成（无命令适配器；使用基于技能的 <code>/skill:openspec-*</code> 调用）</td></tr>
+            <tr><td>Kiro (<code>kiro</code>)</td><td><code>.kiro/skills/openspec-*/SKILL.md</code></td><td><code>.kiro/prompts/opsx-&lt;id&gt;.prompt.md</code></td></tr>
+            <tr><td>Lingma (<code>lingma</code>)</td><td><code>.lingma/skills/openspec-*/SKILL.md</code></td><td><code>.lingma/commands/opsx/&lt;id&gt;.md</code></td></tr>
+            <tr><td>Mistral Vibe (<code>vibe</code>)</td><td><code>.vibe/skills/openspec-*/SKILL.md</code></td><td>不生成（无命令适配器；使用基于技能的 <code>/openspec-*</code> 调用）</td></tr>
+            <tr><td>Oh My Pi (<code>oh-my-pi</code>)</td><td><code>.omp/skills/openspec-*/SKILL.md</code></td><td><code>.omp/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>OpenCode (<code>opencode</code>)</td><td><code>.opencode/skills/openspec-*/SKILL.md</code></td><td><code>.opencode/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Pi (<code>pi</code>)</td><td><code>.pi/skills/openspec-*/SKILL.md</code></td><td><code>.pi/prompts/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Qoder (<code>qoder</code>)</td><td><code>.qoder/skills/openspec-*/SKILL.md</code></td><td><code>.qoder/commands/opsx/&lt;id&gt;.md</code></td></tr>
+            <tr><td>Qwen Code (<code>qwen</code>)</td><td><code>.qwen/skills/openspec-*/SKILL.md</code></td><td><code>.qwen/commands/opsx-&lt;id&gt;.toml</code></td></tr>
+            <tr><td>RooCode (<code>roocode</code>)</td><td><code>.roo/skills/openspec-*/SKILL.md</code></td><td><code>.roo/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Trae (<code>trae</code>)</td><td><code>.trae/skills/openspec-*/SKILL.md</code></td><td><code>.trae/commands/opsx-&lt;id&gt;.md</code></td></tr>
+            <tr><td>Windsurf (<code>windsurf</code>)</td><td><code>.windsurf/skills/openspec-*/SKILL.md</code></td><td><code>.windsurf/workflows/opsx-&lt;id&gt;.md</code></td></tr>
+          </tbody>
+        </table>
+
+        <p>* Codex 命令安装在全局 Codex 主目录中（如果设置了 <code>$CODEX_HOME/prompts/</code>，否则为 <code>~/.codex/prompts/</code>），而不是你的项目目录。</p>
+
+        <p>** GitHub Copilot 提示词文件在 IDE 扩展（VS Code、JetBrains、Visual Studio）中被识别为自定义斜杠命令。Copilot CLI 目前不直接使用 <code>.github/prompts/*.prompt.md</code>。</p>
+
+        <h2 id="non-interactive-setup">非交互式设置</h2>
+
+        <p>对于 CI/CD 或脚本化设置，使用 <code>--tools</code>（以及可选的 <code>--profile</code>）：</p>
+
+<pre><code># Configure specific tools
+openspec init --tools claude,cursor
+
+# Configure all supported tools
+openspec init --tools all
+
+# Skip tool configuration
+openspec init --tools none
+
+# Override profile for this init run
+openspec init --profile core
+</code></pre>
+
+        <p><strong>可用的工具 ID（<code>--tools</code>）：</strong> <code>amazon-q</code>, <code>antigravity</code>, <code>auggie</code>, <code>bob</code>, <code>claude</code>, <code>cline</code>, <code>codex</code>, <code>forgecode</code>, <code>codebuddy</code>, <code>continue</code>, <code>costrict</code>, <code>crush</code>, <code>cursor</code>, <code>factory</code>, <code>gemini</code>, <code>github-copilot</code>, <code>iflow</code>, <code>junie</code>, <code>kilocode</code>, <code>kimi</code>, <code>kiro</code>, <code>lingma</code>, <code>vibe</code>, <code>oh-my-pi</code>, <code>opencode</code>, <code>pi</code>, <code>qoder</code>, <code>qwen</code>, <code>roocode</code>, <code>trae</code>, <code>windsurf</code></p>
+
+        <h2 id="workflow-dependent-installation">依赖工作流的安装</h2>
+
+        <p>OpenSpec 根据所选工作流安装工作流产物：</p>
+
+        <ul>
+          <li><strong>Core 配置（默认）：</strong> <code>propose</code>, <code>explore</code>, <code>apply</code>, <code>sync</code>, <code>archive</code></li>
+          <li><strong>自定义选择：</strong> 所有工作流 ID 的任意子集：
+            <code>propose</code>, <code>explore</code>, <code>new</code>, <code>continue</code>, <code>apply</code>, <code>ff</code>, <code>sync</code>, <code>archive</code>, <code>bulk-archive</code>, <code>verify</code>, <code>onboard</code></li>
+        </ul>
+
+        <p>换句话说，技能/命令的数量取决于配置和交付方式，不是固定的。</p>
+
+        <h2 id="generated-skill-names">生成的技能名称</h2>
+
+        <p>当根据配置/工作流选择后，OpenSpec 生成这些技能：</p>
+
+        <ul>
+          <li><code>openspec-propose</code></li>
+          <li><code>openspec-explore</code></li>
+          <li><code>openspec-new-change</code></li>
+          <li><code>openspec-continue-change</code></li>
+          <li><code>openspec-apply-change</code></li>
+          <li><code>openspec-update-change</code></li>
+          <li><code>openspec-ff-change</code></li>
+          <li><code>openspec-sync-specs</code></li>
+          <li><code>openspec-archive-change</code></li>
+          <li><code>openspec-bulk-archive-change</code></li>
+          <li><code>openspec-verify-change</code></li>
+          <li><code>openspec-onboard</code></li>
+        </ul>
+
+        <p>参见<a href="commands.html">命令</a>了解命令行为，参见<a href="cli.html">CLI</a>了解 <code>init</code>/<code>update</code> 选项。</p>
+
+        <h2 id="related">相关文档</h2>
+
+        <ul>
+          <li><a href="cli.html">CLI 参考</a> — 终端命令</li>
+          <li><a href="commands.html">命令</a> — 斜杠命令和技能</li>
+          <li><a href="getting-started.html">快速开始</a> — 首次设置</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="multi-language.html">← 上一页：多语言支持</a>
+        </div>
+        <div>
+          <a href="faq.html">下一页：常见问题 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

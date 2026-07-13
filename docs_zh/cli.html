@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLI 参考 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item active"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>CLI 参考</span>
+      </div>
+
+      <div class="page-header">
+        <h1>CLI 参考</h1>
+        <p class="subtitle">OpenSpec CLI (<code>openspec</code>) 终端命令的完整参考</p>
+      </div>
+
+      <article>
+        <p>OpenSpec CLI（<code>openspec</code>）提供用于项目设置、验证、状态检查和管理的终端命令。这些命令补充了在<a href="commands.html">命令</a>中记录的 AI 斜杠命令（如 <code>/opsx:propose</code>）。</p>
+
+        <h2>总览</h2>
+
+        <table>
+          <thead><tr><th>类别</th><th>命令</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td><strong>设置</strong></td><td><code>init</code>、<code>update</code></td><td>在你的项目中初始化和更新 OpenSpec</td></tr>
+            <tr><td><strong>Stores（独立 OpenSpec 仓库）</strong></td><td><code>store setup</code>、<code>store register</code>、<code>store unregister</code>、<code>store remove</code>、<code>store list</code>、<code>store doctor</code></td><td>管理 stores — 你已注册的独立 OpenSpec 仓库</td></tr>
+            <tr><td><strong>健康检查</strong></td><td><code>doctor</code></td><td>报告已解析根的关系健康状态</td></tr>
+            <tr><td><strong>工作上下文</strong></td><td><code>context</code></td><td>组装工作集（根 + 引用的 stores）</td></tr>
+            <tr><td><strong>个人工作集</strong></td><td><code>workset create</code>、<code>workset list</code>、<code>workset open</code>、<code>workset remove</code></td><td>在工具中保存和打开个人的本地工作视图</td></tr>
+            <tr><td><strong>浏览</strong></td><td><code>list</code>、<code>view</code>、<code>show</code></td><td>探索变更和规格</td></tr>
+            <tr><td><strong>验证</strong></td><td><code>validate</code></td><td>检查变更和规格的问题</td></tr>
+            <tr><td><strong>生命周期</strong></td><td><code>archive</code></td><td>完成已完成的变更</td></tr>
+            <tr><td><strong>工作流</strong></td><td><code>new change</code>、<code>status</code>、<code>instructions</code>、<code>templates</code>、<code>schemas</code></td><td>制品驱动的工作流支持</td></tr>
+            <tr><td><strong>模式</strong></td><td><code>schema init</code>、<code>schema fork</code>、<code>schema validate</code>、<code>schema which</code></td><td>创建和管理自定义工作流</td></tr>
+            <tr><td><strong>配置</strong></td><td><code>config</code></td><td>查看和修改设置</td></tr>
+            <tr><td><strong>实用工具</strong></td><td><code>feedback</code>、<code>completion</code></td><td>反馈和 shell 集成</td></tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2>人类 vs Agent 命令</h2>
+
+        <p>大多数 CLI 命令设计用于终端中的<strong>人类使用</strong>。一些命令也通过 JSON 输出支持<strong>agent/脚本使用</strong>。</p>
+
+        <h3>仅人类使用的命令</h3>
+
+        <p>这些命令是交互式的，设计用于终端：</p>
+
+        <table>
+          <thead><tr><th>命令</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td><code>openspec init</code></td><td>初始化项目（交互式提示）</td></tr>
+            <tr><td><code>openspec view</code></td><td>交互式仪表板</td></tr>
+            <tr><td><code>openspec workset open &lt;name&gt;</code></td><td>打开保存的工作集（编辑器窗口或终端 agent 会话）</td></tr>
+            <tr><td><code>openspec config edit</code></td><td>在编辑器中打开配置</td></tr>
+            <tr><td><code>openspec feedback</code></td><td>通过 GitHub 提交反馈</td></tr>
+            <tr><td><code>openspec completion install</code></td><td>安装 shell 补全</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Agent 兼容命令</h3>
+
+        <p>这些命令支持 <code>--json</code> 输出，供 AI agent 和脚本程序化使用：</p>
+
+        <table>
+          <thead><tr><th>命令</th><th>人类使用</th><th>Agent 使用</th></tr></thead>
+          <tbody>
+            <tr><td><code>openspec list</code></td><td>浏览变更/规格</td><td><code>--json</code> 获取结构化数据</td></tr>
+            <tr><td><code>openspec show &lt;item&gt;</code></td><td>阅读内容</td><td><code>--json</code> 用于解析</td></tr>
+            <tr><td><code>openspec validate</code></td><td>检查问题</td><td><code>--all --json</code> 批量验证</td></tr>
+            <tr><td><code>openspec status</code></td><td>查看制品进度</td><td><code>--json</code> 结构化状态</td></tr>
+            <tr><td><code>openspec instructions</code></td><td>获取下一步</td><td><code>--json</code> agent 指令</td></tr>
+            <tr><td><code>openspec templates</code></td><td>查找模板路径</td><td><code>--json</code> 路径解析</td></tr>
+            <tr><td><code>openspec schemas</code></td><td>列出可用模式</td><td><code>--json</code> 模式发现</td></tr>
+            <tr><td><code>openspec store setup &lt;id&gt;</code></td><td>创建并注册本地 store</td><td><code>--json</code> 带显式输入的结构化输出</td></tr>
+            <tr><td><code>openspec store register &lt;path&gt;</code></td><td>注册现有 store</td><td><code>--json</code> 结构化注册输出</td></tr>
+            <tr><td><code>openspec store unregister &lt;id&gt;</code></td><td>遗忘本地 store 注册</td><td><code>--json</code> 结构化清理输出</td></tr>
+            <tr><td><code>openspec store remove &lt;id&gt;</code></td><td>删除已注册的本地 store 文件夹</td><td><code>--yes --json</code> 非交互删除</td></tr>
+            <tr><td><code>openspec store list</code></td><td>浏览已注册的 stores</td><td><code>--json</code> 结构化注册列表</td></tr>
+            <tr><td><code>openspec store doctor</code></td><td>检查本地 store 设置</td><td><code>--json</code> 结构化诊断</td></tr>
+            <tr><td><code>openspec new change &lt;id&gt;</code></td><td>创建仓库本地变更脚手架</td><td><code>--json</code>，加 <code>--store &lt;id&gt;</code> 使用注册的 store 作为 OpenSpec 根</td></tr>
+            <tr><td><code>openspec workset create [name]</code></td><td>组合个人工作视图</td><td><code>--member &lt;path&gt; --json</code> 非交互组合</td></tr>
+            <tr><td><code>openspec workset list</code></td><td>浏览保存的工作集</td><td><code>--json</code> 结构化视图</td></tr>
+            <tr><td><code>openspec workset remove &lt;name&gt;</code></td><td>删除保存的视图</td><td><code>--yes --json</code> 非交互删除</td></tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2>全局选项</h2>
+
+        <p>这些选项适用于所有命令：</p>
+
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--version</code>、<code>-V</code></td><td>显示版本号</td></tr>
+            <tr><td><code>--no-color</code></td><td>禁用颜色输出</td></tr>
+            <tr><td><code>--help</code>、<code>-h</code></td><td>显示命令帮助</td></tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2>设置命令</h2>
+
+        <h3><code>openspec init</code></h3>
+
+        <p>在你的项目中初始化 OpenSpec。创建文件夹结构并配置 AI 工具集成。</p>
+
+        <p>默认行为使用全局配置默认值：profile <code>core</code>、delivery <code>both</code>、workflows <code>propose, explore, apply, sync, archive</code>。</p>
+
+<pre><code>openspec init [path] [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>path</code></td><td>否</td><td>目标目录（默认：当前目录）</td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--tools &lt;list&gt;</code></td><td>非交互式配置 AI 工具。使用 <code>all</code>、<code>none</code> 或逗号分隔列表</td></tr>
+            <tr><td><code>--force</code></td><td>自动清理遗留文件无需提示</td></tr>
+            <tr><td><code>--profile &lt;profile&gt;</code></td><td>为此次初始化覆盖全局 profile（<code>core</code> 或 <code>custom</code>）</td></tr>
+          </tbody>
+        </table>
+
+        <p><code>--profile custom</code> 使用当前在全局配置中选中的工作流（<code>openspec config profile</code>）。</p>
+
+        <p><strong>支持的工具 ID（<code>--tools</code>）：</strong><code>amazon-q</code>、<code>antigravity</code>、<code>auggie</code>、<code>bob</code>、<code>claude</code>、<code>cline</code>、<code>codex</code>、<code>forgecode</code>、<code>codebuddy</code>、<code>continue</code>、<code>costrict</code>、<code>crush</code>、<code>cursor</code>、<code>factory</code>、<code>gemini</code>、<code>github-copilot</code>、<code>iflow</code>、<code>junie</code>、<code>kilocode</code>、<code>kimi</code>、<code>kiro</code>、<code>lingma</code>、<code>vibe</code>、<code>oh-my-pi</code>、<code>opencode</code>、<code>pi</code>、<code>qoder</code>、<code>qwen</code>、<code>roocode</code>、<code>trae</code>、<code>windsurf</code></p>
+
+        <blockquote><p>此列表反映 <code>src/core/config.ts</code> 中的 <code>AI_TOOLS</code>。参见<a href="supported-tools.html">支持的工具</a>了解每个工具的技能和命令路径。</p></blockquote>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 交互式初始化
+openspec init
+
+# 在特定目录初始化
+openspec init ./my-project
+
+# 非交互式：配置 Claude 和 Cursor
+openspec init --tools claude,cursor
+
+# 为所有支持的工具配置
+openspec init --tools all
+
+# 为此次运行覆盖 profile
+openspec init --profile core
+
+# 跳过提示并自动清理遗留文件
+openspec init --force
+</code></pre>
+
+        <p><strong>创建的内容：</strong></p>
+<pre><code>openspec/
+├── specs/              # 你的规格说明（真相来源）
+├── changes/            # 提议的变更
+└── config.yaml         # 项目配置
+
+.claude/skills/         # Claude Code 技能（如果选择了 claude）
+.cursor/skills/         # Cursor 技能（如果选择了 cursor）
+.cursor/commands/       # Cursor OPSX 命令（如果 delivery 包含命令）
+... (其他工具配置)
+</code></pre>
+
+        <hr>
+
+        <h3><code>openspec update</code></h3>
+
+        <p>升级 CLI 后更新 OpenSpec 指令文件。使用你当前的全局 profile、选中的工作流和交付模式重新生成 AI 工具配置文件。</p>
+
+<pre><code>openspec update [path] [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>path</code></td><td>否</td><td>目标目录（默认：当前目录）</td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>--force</code></td><td>即使文件已是最新也强制更新</td></tr></tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># npm 升级后更新指令文件
+npm update @fission-ai/openspec
+openspec update
+</code></pre>
+
+        <hr>
+
+        <h2>Stores（独立 OpenSpec 仓库）</h2>
+
+        <blockquote><p><strong>Beta。</strong>Stores 和基于它们构建的功能（references、working context、worksets）是新的；命令名称、标志、文件格式和 JSON 输出可能在版本间变化。关于从问题出发的演练，参见<a href="stores-beta-user-guide.html">stores 指南</a>。</p></blockquote>
+
+        <p>Store 是你在此机器上注册的独立 OpenSpec 仓库——例如一个规划仓库或合约仓库。注册一个 store 让普通命令（<code>list</code>、<code>show</code>、<code>status</code>、<code>validate</code>、<code>new change</code>、<code>archive</code> 等）通过传递 <code>--store &lt;id&gt;</code> 从任何地方在其中操作。</p>
+
+        <h3><code>openspec store setup</code></h3>
+
+        <p>创建并注册一个本地 store。在终端中无参数时，OpenSpec 会引导用户完成设置。Agent 和脚本应传递显式输入并使用 <code>--json</code>。</p>
+
+<pre><code>openspec store setup [id] [options]
+</code></pre>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--path &lt;path&gt;</code></td><td>store 应该存放的文件夹（例如 <code>~/openspec/&lt;id&gt;</code>）</td></tr>
+            <tr><td><code>--remote &lt;url&gt;</code></td><td>在新 store 的 <code>store.yaml</code> 中记录规范远程地址</td></tr>
+            <tr><td><code>--init-git</code></td><td>初始化 Git 仓库并带初始提交（默认）</td></tr>
+            <tr><td><code>--no-init-git</code></td><td>跳过所有 Git 操作：不 init，不初始提交</td></tr>
+            <tr><td><code>--json</code></td><td>输出 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p>非交互运行（<code>--json</code>、脚本、agent）必须同时传递 store id 和 <code>--path</code>。在交互终端中，setup 会提示位置，带有一个在可见的、用户拥有的位置的可用建议（例如 <code>~/openspec/&lt;id&gt;</code>）；它从不默认到 OpenSpec 的管理数据目录。</p>
+
+        <p>示例：</p>
+<pre><code>openspec store setup
+openspec store setup team-context
+openspec store setup team-context --path ~/openspec/team-context --no-init-git
+openspec store setup team-context --path ~/openspec/team-context --no-init-git --json
+</code></pre>
+
+        <h3><code>openspec store register</code></h3>
+
+        <p>注册一个现有的本地 store 文件夹。在 stores beta 期间，根可能在任何变更存在、规格被应用或变更被归档之前就注册了；在这种情况下，<code>openspec/changes/</code>、<code>openspec/specs/</code> 和 <code>openspec/changes/archive/</code> 可能在普通命令创建它们之前不存在。一个只声明 <code>store: &lt;id&gt;</code> 的配置仓库仍然是指向另一个 store 的指针，除非该指针被移除，否则不会被注册为 store 根。</p>
+
+<pre><code>openspec store register [path] [options]
+</code></pre>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--id &lt;id&gt;</code></td><td>Store id；默认为 store 元数据或文件夹名</td></tr>
+            <tr><td><code>--yes</code></td><td>确认为一个健康的 OpenSpec 根创建 store 身份元数据</td></tr>
+            <tr><td><code>--json</code></td><td>输出 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <h3><code>openspec store unregister</code></h3>
+
+        <p>遗忘一个本地 store 注册而不删除文件。</p>
+
+<pre><code>openspec store unregister &lt;id&gt; [--json]
+</code></pre>
+
+        <p>当一个 store 被移动、克隆到其他地方，或不应该再被此机器上的 OpenSpec 显示时使用。</p>
+
+        <h3><code>openspec store remove</code></h3>
+
+        <p>遗忘一个本地 store 注册并删除其本地文件夹。</p>
+
+<pre><code>openspec store remove &lt;id&gt; [--yes] [--json]
+</code></pre>
+
+        <p>在交互终端中，<code>remove</code> 在删除前显示确切的文件夹。Agent、脚本和 JSON 调用者必须传递 <code>--yes</code> 确认删除。OpenSpec 拒绝删除不包含匹配 store 元数据的文件夹。</p>
+
+        <h3><code>openspec store list</code></h3>
+
+        <p>列出本地已注册的 stores。</p>
+
+<pre><code>openspec store list [--json]
+openspec store ls [--json]
+</code></pre>
+
+        <h3><code>openspec store doctor</code></h3>
+
+        <p>检查本地 store 注册、元数据和 Git 存在性。</p>
+
+<pre><code>openspec store doctor [id] [--json]
+</code></pre>
+
+        <p>Doctor 仅为诊断；它报告缺失的根、元数据不匹配和无效的本地注册状态而不修改 store。</p>
+
+        <h3>从项目中引用 stores</h3>
+
+        <p>一个项目仓库可以在 <code>openspec/config.yaml</code> 中声明其工作所依赖的 stores：</p>
+
+<pre><code>schema: spec-driven
+references:
+  - team-context
+</code></pre>
+
+        <p>此后，该仓库中的 <code>openspec instructions</code> 输出（包括每个制品和 <code>apply</code> 表面，JSON 和人类模式）携带每个引用 store 规格的索引——规格 id、每个规格 Purpose 部分的一句话摘要，以及获取命令（<code>openspec show &lt;spec-id&gt; --type spec --store &lt;id&gt;</code>）。索引在每次运行时从注册的检出现场构建；规格内容从不复制到输出中。</p>
+
+        <p>References 是只读上下文。它们从不改变命令在哪里操作：工作留在仓库自己的根中，向引用的 store 写入仍然是显式的 <code>--store</code> 操作。无法解析的引用（例如，此机器上未注册的 store）在索引中降级为警告，带确切修复，指令仍然生成。<code>openspec doctor</code> 在一处报告引用健康状态。</p>
+
+        <h3>记录 store 的克隆来源</h3>
+
+        <p>一个 store 可以在其提交的身份文件中记录其规范克隆源，这样入门永远不会在"注册 store"处死路一条：</p>
+
+<pre><code>openspec store setup team-context --path ~/openspec/team-context \
+  --remote git@github.com:acme/team-context.git
+</code></pre>
+
+        <p>远程地址落在初始提交中的 <code>.openspec-store/store.yaml</code> 里，所以每个克隆天生就知道它。对于已存在的 store，手动编辑 <code>store.yaml</code> 并提交。<code>store doctor</code> 显示记录的远程地址（和检出观察到的 Git origin）；setup/register 的共享指导会提到它；register 在机器本地注册中记录检出的 origin。</p>
+
+        <p>引用声明也可以携带克隆源，这样还没有 store 的队友获得一个完整的、可粘贴的修复（<code>git clone &lt;remote&gt; &lt;path&gt; && openspec store register &lt;path&gt; --id &lt;id&gt;</code>）：</p>
+
+<pre><code>references:
+  - { id: team-context, remote: "git@github.com:acme/team-context.git" }
+</code></pre>
+
+        <p>记录远程地址不是同步：OpenSpec 从不自行克隆、拉取或推送。</p>
+
+        <h3>声明默认 store</h3>
+
+        <p>一个规划完全外置的仓库——没有本地 <code>openspec/specs/</code> 或 <code>openspec/changes/</code>——可以一次性声明其 store 而不必在每个命令上传递 <code>--store</code>：</p>
+
+<pre><code># openspec/config.yaml（openspec/ 下的唯一文件）
+store: team-context
+</code></pre>
+
+        <p>此后普通命令自动解析到声明的 store；根横幅和 JSON <code>root</code> 块报告 <code>source: "declared"</code> 带 store id，打印的提示仍携带 <code>--store &lt;id&gt;</code>。声明是回退，从不覆盖：显式 <code>--store</code> 总是优先，有实际规划文件夹的目录忽略指针（带警告）。要将指针仓库转换为本地 OpenSpec 根，移除 <code>store:</code> 行并运行 <code>openspec init</code>——init 在声明存在时拒绝搭建脚手架。</p>
+
+        <h2>Doctor（关系健康）</h2>
+
+        <p>一个只读问题，一处：OpenSpec 根是否健康，它引用的 stores 在此机器上是否可用？</p>
+
+<pre><code>openspec doctor [--store &lt;id&gt;] [--json]
+</code></pre>
+
+        <p>报告区分根健康、store 元数据健康（包括记录的远程和检出 origin 不一致时的说明），以及引用健康（指令显示的相同诊断，带未解析引用的克隆修复）。任何严重程度的健康发现都退出 0——agent 读取 <code>status</code> 数组；只有命令失败（无根、未知 store）退出 1。Doctor 从不克隆、同步或修复。要获取组装的集合本身而非其健康状态，使用 <code>openspec context</code>。</p>
+
+        <h2>工作上下文（组装的集合）</h2>
+
+        <p>此工作通过 OpenSpec 声明关联的所有内容，在一个工作集中：OpenSpec 根和它引用的 stores。</p>
+
+<pre><code>openspec context [--store &lt;id&gt;] [--json] [--code-workspace &lt;path&gt; [--force]]
+</code></pre>
+
+        <p>JSON 摘要是 agent 可消费的（每个可用的引用 store 携带其获取配方；未解析的成员携带相同的修复指令和 doctor 显示）。<code>--code-workspace</code> 额外写入一个 VS Code 工作区文件，包含根加上可用的引用 stores（<code>ref:&lt;id&gt;</code> 文件夹）——这是此命令执行的唯一写入操作，如果文件存在则无 <code>--force</code> 拒绝。不可用的成员被报告，从不猜测。</p>
+
+        <p>"工作上下文"是组装的集合；<code>openspec/config.yaml</code> 中的 <code>context:</code> 字段是注入到指令中的项目背景——两件不同的东西。<code>openspec doctor</code> 回答集合是否健康；<code>openspec context</code> 回答集合是什么。</p>
+
+        <h2>个人工作集</h2>
+
+        <blockquote><p><strong>Beta。</strong>Worksets 是新 beta 表面的一部分；命令、标志和文件格式可能在版本间变化。关于演练，参见<a href="stores-beta-user-guide.html#worksets-reopen-the-folders-you-work-on-together">stores 指南</a>。</p></blockquote>
+
+        <p>Workset 是一个个人的、命名的视图，包含你一起工作的文件夹——一个规划根加上你选择的其他任何东西——保存在你的机器上并按名称在你的工具中重新打开。它纯粹是本地的：从不提交、从不共享、从不从声明推导，删除一个从不触及成员文件夹。</p>
+
+<pre><code>openspec workset create [name] [--member &lt;path&gt; | --member &lt;name&gt;=&lt;path&gt;]... [--tool &lt;id&gt;] [--json]
+openspec workset list [--json]
+openspec workset open &lt;name&gt; [--tool &lt;id&gt;]
+openspec workset remove &lt;name&gt; [--yes] [--json]
+</code></pre>
+
+        <p><code>create</code> 运行一个简短的引导流程（或非交互地接受 <code>--member</code> 标志；第一个成员是主要的——会话从那里开始）。<code>open</code> 启动选择的工具：编辑器（VS Code、Cursor）打开一个包含每个成员的窗口并返回；CLI agent（Claude Code、codex）接管此终端作为带每个成员附加的会话，没有预填提示，在你退出时结束。打开时缺失的成员文件夹会被跳过并注明；其余的正常打开。保存的工具偏好可通过每次打开的 <code>--tool</code> 覆盖。</p>
+
+        <p>支持新工具是配置，不是代码。每个工具是两种启动风格之一——<code>workspace-file</code>（用生成的 <code>.code-workspace</code> 启动）或 <code>attach-dirs</code>（每个成员一个 attach 标志）——全局 <code>config.json</code> 中的 <code>openers</code> 键（用 <code>openspec config edit</code> 打开）按字段添加工具或调整内置工具：</p>
+
+<pre><code>{
+  "openers": {
+    "zed": { "style": "workspace-file" },
+    "claude": { "attach_flag": "--dir" }
+  }
+}
+</code></pre>
+
+        <p>所有 workset 状态存在于全局数据目录的 <code>worksets/</code> 文件夹下（保存的视图加上生成的 <code>&lt;name&gt;.code-workspace</code> 文件，每次打开时重新生成）；删除该文件夹会移除所有痕迹。</p>
+
+        <hr>
+
+        <h2>浏览命令</h2>
+
+        <h3><code>openspec list</code></h3>
+
+        <p>列出你项目中的变更或规格。</p>
+
+<pre><code>openspec list [options]
+</code></pre>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--specs</code></td><td>列出规格而非变更</td></tr>
+            <tr><td><code>--changes</code></td><td>列出变更（默认）</td></tr>
+            <tr><td><code>--sort &lt;order&gt;</code></td><td>按 <code>recent</code>（默认）或 <code>name</code> 排序</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 列出所有活动变更
+openspec list
+
+# 列出所有规格
+openspec list --specs
+
+# JSON 输出用于脚本
+openspec list --json
+</code></pre>
+
+        <p><strong>输出（文本）：</strong></p>
+<pre><code>Changes:
+  add-dark-mode     No tasks      just now
+</code></pre>
+
+        <hr>
+
+        <h3><code>openspec view</code></h3>
+
+        <p>显示交互式仪表板，用于探索规格和变更。</p>
+
+<pre><code>openspec view
+</code></pre>
+
+        <p>打开基于终端的界面，用于导航你项目的规格和变更。</p>
+
+        <hr>
+
+        <h3><code>openspec show</code></h3>
+
+        <p>显示变更或规格的详情。</p>
+
+<pre><code>openspec show [item-name] [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>item-name</code></td><td>否</td><td>变更或规格的名称（省略则提示）</td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--type &lt;type&gt;</code></td><td>指定类型：<code>change</code> 或 <code>spec</code>（不明确时自动检测）</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+            <tr><td><code>--no-interactive</code></td><td>禁用提示</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>变更特定选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>--deltas-only</code></td><td>仅显示增量规格（JSON 模式）</td></tr></tbody>
+        </table>
+
+        <p><strong>规格特定选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--requirements</code></td><td>仅显示需求，排除场景（JSON 模式）</td></tr>
+            <tr><td><code>--no-scenarios</code></td><td>排除场景内容（JSON 模式）</td></tr>
+            <tr><td><code>-r, --requirement &lt;id&gt;</code></td><td>按 1-based 索引显示特定需求（JSON 模式）</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 交互式选择
+openspec show
+
+# 显示特定变更
+openspec show add-dark-mode
+
+# 显示特定规格
+openspec show auth --type spec
+
+# JSON 输出用于解析
+openspec show add-dark-mode --json
+</code></pre>
+
+        <hr>
+
+        <h2>验证命令</h2>
+
+        <h3><code>openspec validate</code></h3>
+
+        <p>验证变更和规格的结构性问题。</p>
+
+<pre><code>openspec validate [item-name] [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>item-name</code></td><td>否</td><td>要验证的特定项目（省略则提示）</td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--all</code></td><td>验证所有变更和规格</td></tr>
+            <tr><td><code>--changes</code></td><td>验证所有变更</td></tr>
+            <tr><td><code>--specs</code></td><td>验证所有规格</td></tr>
+            <tr><td><code>--type &lt;type&gt;</code></td><td>名称不明确时指定类型：<code>change</code> 或 <code>spec</code></td></tr>
+            <tr><td><code>--strict</code></td><td>启用严格验证模式</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+            <tr><td><code>--concurrency &lt;n&gt;</code></td><td>最大并行验证数（默认：6，或 <code>OPENSPEC_CONCURRENCY</code> 环境变量）</td></tr>
+            <tr><td><code>--no-interactive</code></td><td>禁用提示</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 交互式验证
+openspec validate
+
+# 验证特定变更
+openspec validate add-dark-mode
+
+# 验证所有变更
+openspec validate --changes
+
+# 验证所有内容并输出 JSON（用于 CI/脚本）
+openspec validate --all --json
+
+# 严格验证并增加并行度
+openspec validate --all --strict --concurrency 12
+</code></pre>
+
+        <p><strong>输出（文本）：</strong></p>
+<pre><code>Validating add-dark-mode...
+  ✓ proposal.md valid
+  ✓ specs/ui/spec.md valid
+  ⚠ design.md: missing "Technical Approach" section
+
+1 warning found
+</code></pre>
+
+        <p><strong>输出（JSON）：</strong></p>
+<pre><code>{
+  "version": "1.0.0",
+  "results": {
+    "changes": [
+      {
+        "name": "add-dark-mode",
+        "valid": true,
+        "warnings": ["design.md: missing 'Technical Approach' section"]
+      }
+    ]
+  },
+  "summary": {
+    "total": 1,
+    "valid": 1,
+    "invalid": 0
+  }
+}
+</code></pre>
+
+        <hr>
+
+        <h2>生命周期命令</h2>
+
+        <h3><code>openspec archive</code></h3>
+
+        <p>归档已完成的变更并将增量规格合并到主规格。</p>
+
+<pre><code>openspec archive [change-name] [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>change-name</code></td><td>否</td><td>要归档的变更（省略则提示）</td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>-y, --yes</code></td><td>跳过确认提示</td></tr>
+            <tr><td><code>--skip-specs</code></td><td>跳过规格更新（用于基础设施/工具/仅文档变更）</td></tr>
+            <tr><td><code>--no-validate</code></td><td>跳过验证（需要确认）</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 交互式归档
+openspec archive
+
+# 归档特定变更
+openspec archive add-dark-mode
+
+# 无提示归档（CI/脚本）
+openspec archive add-dark-mode --yes
+
+# 归档不影响规格的工具变更
+openspec archive update-ci-config --skip-specs
+</code></pre>
+
+        <p><strong>它的作用：</strong></p>
+        <ol>
+          <li>验证变更（除非 <code>--no-validate</code>）</li>
+          <li>提示确认（除非 <code>--yes</code>）</li>
+          <li>将增量规格合并到 <code>openspec/specs/</code></li>
+          <li>将变更文件夹移至 <code>openspec/changes/archive/YYYY-MM-DD-&lt;name&gt;/</code></li>
+        </ol>
+
+        <hr>
+
+        <h2>工作流命令</h2>
+
+        <p>这些命令支持制品驱动的 OPSX 工作流。它们对人类检查进度和 agent 确定下一步都很有用。</p>
+
+        <h3><code>openspec new change</code></h3>
+
+        <p>在解析的 OpenSpec 根中创建变更目录和可选的签入元数据。</p>
+
+<pre><code>openspec new change &lt;name&gt; [options]
+</code></pre>
+
+        <p>变更名称必须使用小写 kebab-case。以小写字母开头，然后包含小写字母、数字和单个连字符。不能以数字开头，不能包含空格、下划线、大写字母、连续连字符或前后连字符。包含外部工单 ID 时，用一个词前缀，例如 <code>ticket-123-add-notifications</code> 而非 <code>123-add-notifications</code>。</p>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--description &lt;text&gt;</code></td><td>添加到 <code>README.md</code> 的描述</td></tr>
+            <tr><td><code>--goal &lt;text&gt;</code></td><td>随变更存储的可选目标元数据</td></tr>
+            <tr><td><code>--schema &lt;name&gt;</code></td><td>使用的工作流模式</td></tr>
+            <tr><td><code>--store &lt;id&gt;</code></td><td>用作 OpenSpec 根的 store id（store 是你已注册的独立 OpenSpec 仓库）</td></tr>
+            <tr><td><code>--json</code></td><td>输出 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p>示例：</p>
+<pre><code>openspec new change add-billing-api
+openspec new change add-billing-api --store team-context --json
+</code></pre>
+
+        <h3><code>openspec status</code></h3>
+
+        <p>显示变更的制品完成状态。</p>
+
+<pre><code>openspec status [options]
+</code></pre>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--change &lt;id&gt;</code></td><td>变更名称（省略则提示）</td></tr>
+            <tr><td><code>--schema &lt;name&gt;</code></td><td>模式覆盖（从变更配置自动检测）</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 交互式状态检查
+openspec status
+
+# 特定变更状态
+openspec status --change add-dark-mode
+
+# JSON 用于 agent 使用
+openspec status --change add-dark-mode --json
+</code></pre>
+
+        <p><strong>输出（文本）：</strong></p>
+<pre><code>Change: add-dark-mode
+Schema: spec-driven
+Progress: 2/4 artifacts complete
+
+[x] proposal
+[ ] design
+[x] specs
+[-] tasks (blocked by: design)
+</code></pre>
+
+        <p><strong>输出（JSON）：</strong></p>
+<pre><code>{
+  "changeName": "add-dark-mode",
+  "schemaName": "spec-driven",
+  "isComplete": false,
+  "applyRequires": ["tasks"],
+  "artifacts": [
+    {"id": "proposal", "outputPath": "proposal.md", "status": "done"},
+    {"id": "design", "outputPath": "design.md", "status": "ready"},
+    {"id": "specs", "outputPath": "specs/**/*.md", "status": "done"},
+    {"id": "tasks", "outputPath": "tasks.md", "status": "blocked", "missingDeps": ["design"]}
+  ]
+}
+</code></pre>
+
+        <hr>
+
+        <h3><code>openspec instructions</code></h3>
+
+        <p>获取创建制品或应用任务的增强指令。AI agent 用于了解下一步创建什么。</p>
+
+<pre><code>openspec instructions [artifact] [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>artifact</code></td><td>否</td><td>制品 ID：<code>proposal</code>、<code>specs</code>、<code>design</code>、<code>tasks</code> 或 <code>apply</code></td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--change &lt;id&gt;</code></td><td>变更名称（非交互模式下必需）</td></tr>
+            <tr><td><code>--schema &lt;name&gt;</code></td><td>模式覆盖</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>特殊情况：</strong>使用 <code>apply</code> 作为制品获取任务实现指令。</p>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 获取下一个制品的指令
+openspec instructions --change add-dark-mode
+
+# 获取特定制品指令
+openspec instructions design --change add-dark-mode
+
+# 获取 apply/实现指令
+openspec instructions apply --change add-dark-mode
+
+# JSON 供 agent 消费
+openspec instructions design --change add-dark-mode --json
+</code></pre>
+
+        <p><strong>输出包括：</strong></p>
+        <ul>
+          <li>制品的模板内容</li>
+          <li>来自配置的项目上下文</li>
+          <li>来自依赖制品的内容</li>
+          <li>来自配置的按制品规则</li>
+        </ul>
+
+        <hr>
+
+        <h3><code>openspec templates</code></h3>
+
+        <p>显示模式中所有制品的已解析模板路径。</p>
+
+<pre><code>openspec templates [options]
+</code></pre>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--schema &lt;name&gt;</code></td><td>要检查的模式（默认：<code>spec-driven</code>）</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 显示默认模式的模板路径
+openspec templates
+
+# 显示自定义模式的模板
+openspec templates --schema my-workflow
+
+# JSON 用于程序化使用
+openspec templates --json
+</code></pre>
+
+        <p><strong>输出（文本）：</strong></p>
+<pre><code>Schema: spec-driven
+
+Templates:
+  proposal  → ~/.openspec/schemas/spec-driven/templates/proposal.md
+  specs     → ~/.openspec/schemas/spec-driven/templates/specs.md
+  design    → ~/.openspec/schemas/spec-driven/templates/design.md
+  tasks     → ~/.openspec/schemas/spec-driven/templates/tasks.md
+</code></pre>
+
+        <hr>
+
+        <h3><code>openspec schemas</code></h3>
+
+        <p>列出可用的工作流模式及其描述和制品流程。</p>
+
+<pre><code>openspec schemas [options]
+</code></pre>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>--json</code></td><td>输出为 JSON</td></tr></tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code>openspec schemas
+</code></pre>
+
+        <p><strong>输出：</strong></p>
+<pre><code>Available schemas:
+
+  spec-driven (package)
+    The default spec-driven development workflow
+    Flow: proposal → specs → design → tasks
+
+  my-custom (project)
+    Custom workflow for this project
+    Flow: research → proposal → tasks
+</code></pre>
+
+        <hr>
+
+        <h2>模式命令</h2>
+
+        <p>用于创建和管理自定义工作流模式的命令。</p>
+
+        <h3><code>openspec schema init</code></h3>
+
+        <p>创建一个新的项目本地模式。</p>
+
+<pre><code>openspec schema init &lt;name&gt; [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>name</code></td><td>是</td><td>模式名称（kebab-case）</td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--description &lt;text&gt;</code></td><td>模式描述</td></tr>
+            <tr><td><code>--artifacts &lt;list&gt;</code></td><td>逗号分隔的制品 ID（默认：<code>proposal,specs,design,tasks</code>）</td></tr>
+            <tr><td><code>--default</code></td><td>设为项目默认模式</td></tr>
+            <tr><td><code>--no-default</code></td><td>不提示设为默认</td></tr>
+            <tr><td><code>--force</code></td><td>覆盖现有模式</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 交互式模式创建
+openspec schema init research-first
+
+# 非交互式指定制品
+openspec schema init rapid \
+  --description "Rapid iteration workflow" \
+  --artifacts "proposal,tasks" \
+  --default
+</code></pre>
+
+        <p><strong>创建的内容：</strong></p>
+<pre><code>openspec/schemas/&lt;name&gt;/
+├── schema.yaml           # 模式定义
+└── templates/
+    ├── proposal.md       # 每个制品的模板
+    ├── specs.md
+    ├── design.md
+    └── tasks.md
+</code></pre>
+
+        <hr>
+
+        <h3><code>openspec schema fork</code></h3>
+
+        <p>复制现有模式到你的项目以进行自定义。</p>
+
+<pre><code>openspec schema fork &lt;source&gt; [name] [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>source</code></td><td>是</td><td>要复制的模式</td></tr>
+            <tr><td><code>name</code></td><td>否</td><td>新模式名称（默认：<code>&lt;source&gt;-custom</code>）</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--force</code></td><td>覆盖现有目标</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># Fork 内置的 spec-driven 模式
+openspec schema fork spec-driven my-workflow
+</code></pre>
+
+        <hr>
+
+        <h3><code>openspec schema validate</code></h3>
+
+        <p>验证模式的结构和模板。</p>
+
+<pre><code>openspec schema validate [name] [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>name</code></td><td>否</td><td>要验证的模式（省略则验证所有）</td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--verbose</code></td><td>显示详细验证步骤</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 验证特定模式
+openspec schema validate my-workflow
+
+# 验证所有模式
+openspec schema validate
+</code></pre>
+
+        <hr>
+
+        <h3><code>openspec schema which</code></h3>
+
+        <p>显示模式从哪里解析（用于调试优先级）。</p>
+
+<pre><code>openspec schema which [name] [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>name</code></td><td>否</td><td>模式名称</td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>--all</code></td><td>列出所有模式及其来源</td></tr>
+            <tr><td><code>--json</code></td><td>输出为 JSON</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 检查模式来源
+openspec schema which spec-driven
+</code></pre>
+
+        <p><strong>输出：</strong></p>
+<pre><code>spec-driven resolves from: package
+  Source: /usr/local/lib/node_modules/@fission-ai/openspec/schemas/spec-driven
+</code></pre>
+
+        <p><strong>模式优先级：</strong></p>
+        <ol>
+          <li>项目：<code>openspec/schemas/&lt;name&gt;/</code></li>
+          <li>用户：<code>~/.local/share/openspec/schemas/&lt;name&gt;/</code></li>
+          <li>包：内置模式</li>
+        </ol>
+
+        <hr>
+
+        <h2>配置命令</h2>
+
+        <h3><code>openspec config</code></h3>
+
+        <p>查看和修改全局 OpenSpec 配置。</p>
+
+<pre><code>openspec config &lt;subcommand&gt; [options]
+</code></pre>
+
+        <p><strong>子命令：</strong></p>
+        <table>
+          <thead><tr><th>子命令</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>path</code></td><td>显示配置文件位置</td></tr>
+            <tr><td><code>list</code></td><td>显示所有当前设置</td></tr>
+            <tr><td><code>get &lt;key&gt;</code></td><td>获取特定值</td></tr>
+            <tr><td><code>set &lt;key&gt; &lt;value&gt;</code></td><td>设置值</td></tr>
+            <tr><td><code>unset &lt;key&gt;</code></td><td>移除键</td></tr>
+            <tr><td><code>reset</code></td><td>重置为默认</td></tr>
+            <tr><td><code>edit</code></td><td>在 <code>$EDITOR</code> 中打开</td></tr>
+            <tr><td><code>profile [preset]</code></td><td>交互式或通过预设配置工作流 profile</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 显示配置文件路径
+openspec config path
+
+# 列出所有设置
+openspec config list
+
+# 获取特定值
+openspec config get telemetry.enabled
+
+# 设置值
+openspec config set telemetry.enabled false
+
+# 显式设置字符串值
+openspec config set user.name "My Name" --string
+
+# 移除自定义设置
+openspec config unset user.name
+
+# 重置所有配置
+openspec config reset --all --yes
+
+# 在编辑器中编辑配置
+openspec config edit
+
+# 用基于动作的向导配置 profile
+openspec config profile
+
+# 快速预设：切换工作流到 core（保持交付模式）
+openspec config profile core
+</code></pre>
+
+        <p><code>openspec config profile</code> 以当前状态摘要开始，然后让你选择：</p>
+        <ul>
+          <li>更改交付 + 工作流</li>
+          <li>仅更改交付</li>
+          <li>仅更改工作流</li>
+          <li>保持当前设置（退出）</li>
+        </ul>
+
+        <p>如果你保持当前设置，不会写入任何更改也不会显示更新提示。如果没有配置更改但当前项目文件与你的全局 profile/交付不同步，OpenSpec 会显示警告并建议 <code>openspec update</code>。按 <code>Ctrl+C</code> 也会干净地取消流程（无堆栈跟踪）并退出代码 <code>130</code>。在工作流清单中，<code>[x]</code> 表示该工作流在全局配置中已选中。要将这些选择应用到项目文件，运行 <code>openspec update</code>（或在项目内时选择"现在将更改应用到此项目？"）。</p>
+
+        <p><strong>交互式示例：</strong></p>
+<pre><code># 仅交付更新
+openspec config profile
+# 选择：仅更改交付
+# 选择交付：仅 Skills
+
+# 仅工作流更新
+openspec config profile
+# 选择：仅更改工作流
+# 在清单中切换工作流，然后确认
+</code></pre>
+
+        <hr>
+
+        <h2>实用工具命令</h2>
+
+        <h3><code>openspec feedback</code></h3>
+
+        <p>提交关于 OpenSpec 的反馈。创建一个 GitHub issue。</p>
+
+<pre><code>openspec feedback &lt;message&gt; [options]
+</code></pre>
+
+        <p><strong>参数：</strong></p>
+        <table>
+          <thead><tr><th>参数</th><th>必需</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>message</code></td><td>是</td><td>反馈消息</td></tr></tbody>
+        </table>
+
+        <p><strong>选项：</strong></p>
+        <table>
+          <thead><tr><th>选项</th><th>描述</th></tr></thead>
+          <tbody><tr><td><code>--body &lt;text&gt;</code></td><td>详细描述</td></tr></tbody>
+        </table>
+
+        <p><strong>要求：</strong>必须安装并认证 GitHub CLI（<code>gh</code>）。</p>
+
+        <p><strong>示例：</strong></p>
+<pre><code>openspec feedback "Add support for custom artifact types" \
+  --body "I'd like to define my own artifact types beyond the built-in ones."
+</code></pre>
+
+        <hr>
+
+        <h3><code>openspec completion</code></h3>
+
+        <p>管理 OpenSpec CLI 的 shell 补全。</p>
+
+<pre><code>openspec completion &lt;subcommand&gt; [shell]
+</code></pre>
+
+        <p><strong>子命令：</strong></p>
+        <table>
+          <thead><tr><th>子命令</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>generate [shell]</code></td><td>输出补全脚本到 stdout</td></tr>
+            <tr><td><code>install [shell]</code></td><td>为你的 shell 安装补全</td></tr>
+            <tr><td><code>uninstall [shell]</code></td><td>移除已安装的补全</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>支持的 shell：</strong><code>bash</code>、<code>zsh</code>、<code>fish</code>、<code>powershell</code></p>
+
+        <p><strong>示例：</strong></p>
+<pre><code># 安装补全（自动检测 shell）
+openspec completion install
+
+# 为特定 shell 安装
+openspec completion install zsh
+
+# 生成脚本用于手动安装
+openspec completion generate bash &gt; ~/.bash_completion.d/openspec
+
+# 卸载
+openspec completion uninstall
+</code></pre>
+
+        <hr>
+
+        <h2>退出代码</h2>
+
+        <table>
+          <thead><tr><th>代码</th><th>含义</th></tr></thead>
+          <tbody>
+            <tr><td><code>0</code></td><td>成功</td></tr>
+            <tr><td><code>1</code></td><td>错误（验证失败、文件缺失等）</td></tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2>环境变量</h2>
+
+        <table>
+          <thead><tr><th>变量</th><th>描述</th></tr></thead>
+          <tbody>
+            <tr><td><code>OPENSPEC_TELEMETRY</code></td><td>设为 <code>0</code> 禁用遥测</td></tr>
+            <tr><td><code>DO_NOT_TRACK</code></td><td>设为 <code>1</code> 禁用遥测（标准 DNT 信号）</td></tr>
+            <tr><td><code>OPENSPEC_CONCURRENCY</code></td><td>批量验证的默认并发（默认：6）</td></tr>
+            <tr><td><code>EDITOR</code> 或 <code>VISUAL</code></td><td><code>openspec config edit</code> 的编辑器</td></tr>
+            <tr><td><code>NO_COLOR</code></td><td>设置时禁用颜色输出</td></tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2>相关文档</h2>
+
+        <ul>
+          <li><a href="commands.html">命令</a> - AI 斜杠命令（<code>/opsx:propose</code>、<code>/opsx:apply</code> 等）</li>
+          <li><a href="workflows.html">工作流</a> - 常见模式和何时使用每个命令</li>
+          <li><a href="customization.html">自定义配置</a> - 创建自定义模式和模板</li>
+          <li><a href="getting-started.html">快速开始</a> - 首次设置指南</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="commands.html">← 上一页：命令参考</a>
+        </div>
+        <div>
+          <a href="concepts.html">下一页：概念详解 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

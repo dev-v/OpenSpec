@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>术语表 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item active"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>术语表</span>
+      </div>
+
+      <div class="page-header">
+        <h1>术语表</h1>
+        <p class="subtitle">所有 OpenSpec 术语一处定义，通俗语言</p>
+      </div>
+
+      <article>
+        <p>每个 OpenSpec 术语集中在一处，用通俗语言定义。浏览一次，其余文档读得更快。</p>
+
+        <p>术语按主题分组，每组内按字母排序。</p>
+
+        <h2>核心名词</h2>
+
+        <p><strong>规格（Spec）。</strong>描述你的系统某部分行为的文档。规格存在于 <code>openspec/specs/</code>，按领域组织，由需求和场景组成。规格是对"这个软件做什么？"的商定答案。参见<a href="concepts.html#specs">概念：规格</a>。</p>
+
+        <p><strong>真相来源（Source of truth）。</strong><code>openspec/specs/</code> 目录整体。它持有你系统当前商定的行为。变更提议对其编辑；归档应用它们。</p>
+
+        <p><strong>变更（Change）。</strong>一个工作单元，打包为 <code>openspec/changes/&lt;name&gt;/</code> 下的文件夹。一个变更持有关于该工作的一切：其提案、设计、任务和它引入的规格编辑。一个变更，一个功能或修复。</p>
+
+        <p><strong>制品（Artifact）。</strong>变更内部的一个文档。标准制品是提案、增量规格、设计和任务。它们按依赖顺序创建并互相输入。</p>
+
+        <p><strong>增量规格（Delta spec）。</strong>变更内的一个规格，只描述什么在变化，使用 <code>ADDED</code>、<code>MODIFIED</code> 和 <code>REMOVED</code> 部分，而非重述整个规格。这就是让 OpenSpec 干净编辑现有系统的原因。参见<a href="concepts.html#delta-specs">概念：增量规格</a>。</p>
+
+        <p><strong>领域（Domain）。</strong>规格的逻辑分组，如 <code>auth/</code>、<code>payments/</code> 或 <code>ui/</code>。你选择匹配你思考系统方式的领域。</p>
+
+        <h2>规格内部</h2>
+
+        <p><strong>需求（Requirement）。</strong>系统必须有的单个行为，通常用 RFC 2119 关键词编写："The system SHALL expire sessions after 30 minutes." 需求陈述<em>什么</em>，不是<em>如何</em>。</p>
+
+        <p><strong>场景（Scenario）。</strong>需求的一个具体、可测试的示例，通常为 Given/When/Then 格式。场景使需求可验证：你可以从中写一个自动化测试。</p>
+
+        <p><strong>RFC 2119 关键词。</strong>MUST、SHALL、SHOULD 和 MAY 这些词，携带关于需求有多严格的标准含义。MUST 和 SHALL 是绝对的。SHOULD 是推荐的，有例外余地。MAY 是可选的。名称来自定义它们的互联网标准文档。</p>
+
+        <h2>制品</h2>
+
+        <p><strong>提案（<code>proposal.md</code>）。</strong>变更的<em>为什么</em>和<em>什么</em>：其意图、范围和高层方案。你创建的第一个制品。</p>
+
+        <p><strong>设计（<code>design.md</code>）。</strong><em>如何做</em>：技术方案、架构决策和你预期要触碰的文件。对于简单变更可选。</p>
+
+        <p><strong>任务（<code>tasks.md</code>）。</strong>实现清单，带复选框。AI 在 <code>/opsx:apply</code> 期间遍历它并在完成时勾选。</p>
+
+        <h2>生命周期</h2>
+
+        <p><strong>归档（Archive）。</strong>完成一个变更的行为。其增量规格合并到主规格，变更文件夹移到 <code>openspec/changes/archive/YYYY-MM-DD-&lt;name&gt;/</code>。归档后，你的规格描述新的现实。参见<a href="concepts.html#archive">概念：归档</a>。</p>
+
+        <p><strong>同步（Sync）。</strong>将变更的增量规格合并到主规格<em>但不归档</em>变更。通常是自动的（归档会提议做），但作为 <code>/opsx:sync</code> 独立提供用于长时间运行的变更。参见<a href="commands.html#opsxsync">命令</a>。</p>
+
+        <h2>工作流和命令</h2>
+
+        <p><strong>OPSX。</strong>OpenSpec 当前标准工作流，围绕流动动作而非僵硬阶段构建。其斜杠命令都以 <code>/opsx:</code> 开头。参见<a href="opsx.html">OPSX 工作流</a>。</p>
+
+        <p><strong>斜杠命令（Slash command）。</strong>你在 AI 助手聊天中输入的命令，如 <code>/opsx:propose</code>。斜杠命令驱动工作流。它们不是终端命令。参见<a href="how-commands-work.html">命令工作原理</a>。</p>
+
+        <p><strong>探索（<code>/opsx:explore</code>）。</strong>思考伙伴命令。它读取你的代码库，比较选项，将模糊想法提炼成具体计划，不创建任何制品也不写代码。当你有问题但还没有计划时的推荐起点。参见<a href="explore.html">探索优先</a>。</p>
+
+        <p><strong>CLI。</strong>你在终端运行的 <code>openspec</code> 程序。它设置项目、列出和验证变更、打开仪表板和归档。OpenSpec 的终端那一半。参见<a href="cli.html">CLI</a>。</p>
+
+        <p><strong>技能（Skill）。</strong>你的 AI 助手自动检测和遵循的指令文件夹（<code>.../skills/openspec-*/SKILL.md</code>）。Skills 是向你的助手交付 OpenSpec 工作流的新兴跨工具标准。</p>
+
+        <p><strong>命令文件（Command file）。</strong>每工具的斜杠命令文件（<code>.../commands/opsx-*</code>）。较旧的交付机制，仍与 skills 并行支持。你很少直接接触这些。</p>
+
+        <p><strong>Profile。</strong>安装在你项目中的斜杠命令集合。<strong>Core</strong>（默认）是 <code>propose</code>、<code>explore</code>、<code>apply</code>、<code>sync</code>、<code>archive</code>。<strong>扩展</strong>集添加 <code>new</code>、<code>continue</code>、<code>ff</code>、<code>verify</code>、<code>bulk-archive</code>、<code>onboard</code>。用 <code>openspec config profile</code> 更改。</p>
+
+        <p><strong>交付（Delivery）。</strong>OpenSpec 是否为你的工具安装 skills、命令文件或两者。全局配置并用 <code>openspec update</code> 应用。</p>
+
+        <h2>自定义</h2>
+
+        <p><strong>模式（Schema）。</strong>工作流有哪些制品及其如何相互依赖的定义。内置默认是 <code>spec-driven</code>（proposal → specs → design → tasks）。你可以 fork 它或写自己的。参见<a href="customization.html#custom-schemas">自定义配置</a>。</p>
+
+        <p><strong>模板（Template）。</strong>模式内的一个 Markdown 文件，塑造 AI 为给定制品生成什么。编辑模板会立即改变 AI 的输出，无需重新构建。</p>
+
+        <p><strong>项目配置（<code>openspec/config.yaml</code>）。</strong>按项目的设置：默认模式、注入到每个规划请求的 <code>context:</code>、以及按制品的 <code>rules:</code>。最简单的教 OpenSpec 关于你的技术栈和约定的方式。参见<a href="customization.html#project-configuration">自定义配置</a>。</p>
+
+        <p><strong>上下文注入（Context injection）。</strong>将项目背景放在 <code>config.yaml</code> 的 <code>context:</code> 字段中，使其自动添加到 AI 生成的每个制品。比期望 AI 读取一个单独文件更可靠。</p>
+
+        <p><strong>依赖图（Dependency graph）。</strong>由制品 <code>requires:</code> 关系形成的有向图。它是 DAG（有向无环图：箭头只指向前方，绝不成环），OpenSpec 用它知道你接下来可以创建什么。</p>
+
+        <p><strong>使能器，不是门（Enablers, not gates）。</strong>制品依赖显示下一步什么变<em>可能</em>，而非下一步什么<em>必需</em>。你可以随时重新审视和编辑任何制品。参见<a href="overview.html#enablers-not-gates">核心概念一览</a>。</p>
+
+        <h2>跨仓库协调（beta）</h2>
+
+        <p>这些术语仅在你的规划跨多个仓库时适用。它们处于 beta。大多数用户可以忽略。参见<a href="stores-beta-user-guide.html">Stores 用户指南</a>。</p>
+
+        <p><strong>Store。</strong>一个独立仓库，其全部工作是规划。它有你已熟悉的 <code>openspec/</code> 结构（specs 和 changes）加上一个小型身份文件。你在你的机器上注册一次，按名称，然后任何 OpenSpec 命令都可以从任何地方在其中操作。</p>
+
+        <p><strong>引用（Reference）。</strong>在代码仓库的 <code>openspec/config.yaml</code> 中，声明该仓库依赖的一个 store。引用是只读的：仓库保持自己的根，<code>openspec instructions</code> 获得引用 store 规格的索引，每个都有获取的确切命令。</p>
+
+        <p><strong>工作上下文（Working context）。</strong><code>openspec context</code> 为当前仓库组装的内容：其 OpenSpec 根加上它引用的每个 store，每个带如何获取它。对"我在和什么一起工作？"的回答。</p>
+
+        <p><strong>工作集（Workset）。</strong>一个个人的、机器本地的一组文件夹，你一起打开（一个 store 和你一起工作的代码仓库）。用 <code>openspec workset create</code> 显式创建；这些本地路径的任何内容都不提交到共享规划仓库。</p>
+
+        <h2>参见</h2>
+
+        <ul>
+          <li><a href="overview.html">核心概念一览</a>：一页上的五个理念</li>
+          <li><a href="concepts.html">概念详解</a>：长篇解释</li>
+          <li><a href="how-commands-work.html">命令工作原理</a>：斜杠命令 vs CLI</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="opsx.html">← 上一页：OPSX 工作流</a>
+        </div>
+        <div>
+          <a href="customization.html">下一页：自定义配置 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

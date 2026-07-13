@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>探索优先 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>探索优先</span>
+      </div>
+
+      <div class="page-header">
+        <h1>探索优先</h1>
+        <p class="subtitle">在确定方案之前先用 /opsx:explore 理清思路</p>
+      </div>
+
+      <article>
+        <p><strong><code>/opsx:explore</code> 是你的思考伙伴。当你有问题但还没有方案时，就使用它。</strong>它会调查你的代码库，与你一起权衡选项，并澄清你真正想要什么——所有这些都在创建任何工件或编写一行代码之前完成。当画面清晰后，它会交接给 <code>/opsx:propose</code>。</p>
+
+        <p>如果你从这些文档中只养成一个习惯，那就养成这个：<strong>当你不确定时，先探索再提议。</strong></p>
+
+        <p>这很重要。AI 编程助手很积极。你模糊地提出请求，它们会自信地构建<em>某些东西</em>，但可能不是你需要的东西。探索就是解药。它是一个零成本的对话，你和 AI 一起弄清楚正确的做法，这样到提议时，你提议的就是正确的东西。</p>
+
+        <h2>何时探索</h2>
+        <p>探索作为第一步的正确性，比人们预期的更常见。以下任一情况成立时，就使用它：</p>
+        <ul>
+          <li>你知道<em>问题</em>但不知道<em>方案</em>。（"页面感觉很慢。""认证一团糟。""总是出现重复订单。"）</li>
+          <li>你在不同方案之间做选择，希望权衡基于你的实际代码。</li>
+          <li>你对代码库不熟悉，在修改之前需要了解某些东西的工作原理。</li>
+          <li>需求模糊，你希望在确定之前把它们磨砺清晰。</li>
+          <li>你怀疑工作量比看起来更大或更小，希望如实评估范围。</li>
+        </ul>
+        <p>只有当你确切知道要做什么以及怎么做时，才跳过探索。这种情况下直接使用 <a href="commands.html#opsxpropose"><code>/opsx:propose</code></a>。</p>
+
+        <h2>它做什么（和不做什么）</h2>
+        <p>探索是一个<strong>对话</strong>，不是生成器。</p>
+
+        <p><strong>它会：</strong></p>
+        <ul>
+          <li>阅读和搜索你的代码库来回答实际问题。</li>
+          <li>比较选项并指出每个选项的权衡。</li>
+          <li>绘制图表使设计更易理解。</li>
+          <li>帮助你将模糊想法收窄为具体的、可构建的范围。</li>
+          <li>在你准备好时交接给 <code>/opsx:propose</code>。</li>
+        </ul>
+
+        <p><strong>它不会：</strong></p>
+        <ul>
+          <li>创建变更文件夹。</li>
+          <li>编写任何工件（不写提案、规格、设计或任务）。</li>
+          <li>编写或修改代码。</li>
+        </ul>
+
+        <p>这正是关键所在。探索不花成本，也不做承诺。你可以探索三个死胡同，从每个中学到东西，然后只提议幸存的方案。</p>
+
+        <h2>它已经安装好了</h2>
+        <p>好消息：<code>/opsx:explore</code> 包含在默认的 <strong>core</strong> 配置中，与 <code>propose</code>、<code>apply</code>、<code>sync</code> 和 <code>archive</code> 并列。你不需要额外启用任何东西。如果 OpenSpec 已在你的项目中设置好，探索就在你的 AI 聊天中准备好了。（与所有 <code>/opsx:*</code> 命令一样，你在助手的聊天中输入，而不是终端。参见 <a href="how-commands-work.html">命令工作原理</a>。）</p>
+
+        <h2>一个完整示例</h2>
+        <p>看看一个模糊的担忧如何变成一个清晰的、可构建的变更。</p>
+        <pre><code>You: /opsx:explore
+
+AI:  What would you like to explore?
+
+You: Our checkout sometimes creates duplicate orders. I don't know why
+     and I don't know how to fix it safely.
+
+AI:  Let me dig into the checkout path...
+     [reads the order service, the payment webhook handler, and the
+      client submit logic]
+
+     Here's what I found. There are two ways a duplicate can happen:
+
+     1. The client can submit twice (double-click, retry on slow network).
+        Nothing debounces it.
+     2. The payment webhook can fire more than once, and the handler
+        creates an order each time. There's no idempotency key.
+
+     Cause #2 is the dangerous one: it can charge and fulfill twice.
+
+     Three ways to fix it, roughly in order of robustness:
+     - Idempotency key on the order-creation endpoint (handles both causes)
+     - Dedup on the webhook by payment-intent id (handles #2 only)
+     - Client-side debounce (handles #1 only, papers over the real bug)
+
+     Given your code already stores the payment-intent id, the
+     idempotency-key approach is a small change with the biggest payoff.
+     Want me to scope that?
+
+You: Yes, let's do the idempotency key.
+
+You: /opsx:propose add-order-idempotency-key
+
+AI:  Created openspec/changes/add-order-idempotency-key/, with a proposal
+     and delta spec grounded in what we just found. Ready for implementation.</code></pre>
+        <p>注意发生了什么。起点是"出了问题，我害怕碰它"。二十秒的探索将其转变为一个被命名的根因、三个排序的选项、一个与现有代码关联的建议，以及一个精确的变更。之后的提案之所以犀利，是因为思考在前面已经发生了。</p>
+
+        <h2>交接给 propose</h2>
+        <p>探索不会归档为任何东西。当你准备好时，只需启动一个变更，AI 会将对话中的上下文带入工件中。</p>
+        <pre><code>explore  ──►  propose  ──►  apply  ──►  archive
+ (think)     (agree)       (build)     (record)</code></pre>
+        <p>你可以用自然语言表达（"让我们把这个变成一个变更"）或直接运行 <code>/opsx:propose &lt;name&gt;</code>。无论哪种方式，你刚刚做的探索都将成为提案的基础，而不是一次性对话。</p>
+
+        <p>如果你使用扩展命令集，探索也可以交接给 <code>/opsx:new</code>，用于逐步创建工件。参见 <a href="workflows.html">工作流</a>。</p>
+
+        <h2>做好探索的技巧</h2>
+        <ul>
+          <li><strong>带着问题来，而不是带着方案来。</strong>"登录感觉很慢"给了 AI 调查的空间。"加一个 Redis 缓存"则让你提前承诺了一个你还没测试过的答案。</li>
+          <li><strong>大声要求权衡。</strong>"每个选项的缺点是什么？"能让你得到更诚实的比较。</li>
+          <li><strong>让它先阅读。</strong>最好的探索始于 AI 真正查看你的代码，而不是猜测。如果有帮助，可以指向相关区域。</li>
+          <li><strong>可以放弃。</strong>如果探索揭示了想法不值得，那就是赢了。你用很低的成本学到了这一点。</li>
+          <li><strong>在变更中途再探索。</strong>在 <code>/opsx:apply</code> 过程中卡住了？你可以退一步探索一个子问题，然后回来。</li>
+        </ul>
+
+        <h2>诚实的权衡</h2>
+        <p><strong>你获得的是：</strong>探索在成本最低的时刻——在任何工件存在之前——就抓住了错误方向。在不熟悉的代码中尤其强大，AI 阅读和总结系统的能力可以省去你半天的时间。</p>
+
+        <p><strong>你付出的是：</strong>一点耐心。探索是对话，所以比直接发 <code>/opsx:propose</code> 并抱着希望要慢一些。对于你真正已经理解的工作，那额外的一步纯属开销，你应该跳过它。</p>
+
+        <p>经验法则：任务越模糊，探索的价值越大。任务越清晰，你越可以跳过探索直接提议。</p>
+
+        <h2>接下来去哪里</h2>
+        <ul>
+          <li><a href="commands.html#opsxexplore">命令：<code>/opsx:explore</code></a>：精确的参考文档</li>
+          <li><a href="workflows.html">工作流</a>：探索作为日常循环的一部分</li>
+          <li><a href="examples.html#recipe-3-exploring-before-you-commit">示例与配方</a>：探索的完整走查</li>
+          <li><a href="getting-started.html">快速开始</a>：首次变更指南，包含探索</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="getting-started.html">← 上一页：快速开始</a>
+        </div>
+        <div>
+          <a href="how-commands-work.html">下一页：命令工作原理 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>迁移指南 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item active"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>迁移指南</span>
+      </div>
+
+      <div class="page-header">
+        <h1>迁移到 OPSX</h1>
+        <p class="subtitle">从旧版 OpenSpec 工作流过渡到 OPSX 的完整指南</p>
+      </div>
+
+      <article>
+        <p>本指南帮助你从旧版 OpenSpec 工作流过渡到 OPSX。迁移设计为平滑的——你现有的工作会被保留，新系统提供更多灵活性。</p>
+
+        <h2 id="whats-changing">有什么变化？</h2>
+
+        <p>OPSX 用流畅的、基于动作的方法取代了旧的阶段锁定工作流。以下是关键转变：</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>方面</th>
+              <th>旧版</th>
+              <th>OPSX</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>命令</strong></td>
+              <td><code>/openspec:proposal</code>, <code>/openspec:apply</code>, <code>/openspec:archive</code></td>
+              <td>默认：<code>/opsx:propose</code>, <code>/opsx:apply</code>, <code>/opsx:sync</code>, <code>/opsx:archive</code>（扩展工作流命令可选）</td>
+            </tr>
+            <tr>
+              <td><strong>工作流</strong></td>
+              <td>一次创建所有产物</td>
+              <td>逐步创建或一次全部创建——你的选择</td>
+            </tr>
+            <tr>
+              <td><strong>回退</strong></td>
+              <td>别扭的阶段门控</td>
+              <td>自然——随时更新任何产物</td>
+            </tr>
+            <tr>
+              <td><strong>自定义</strong></td>
+              <td>固定结构</td>
+              <td>Schema 驱动，完全可修改</td>
+            </tr>
+            <tr>
+              <td><strong>配置</strong></td>
+              <td><code>CLAUDE.md</code> 带标记 + <code>project.md</code></td>
+              <td>在 <code>openspec/config.yaml</code> 中的干净配置</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><strong>理念变化：</strong>工作不是线性的。OPSX 不再假装它是。</p>
+
+        <hr>
+
+        <h2 id="before-you-begin">开始之前</h2>
+
+        <h3 id="existing-work-safe">你现有的工作是安全的</h3>
+
+        <p>迁移过程以保留为设计原则：</p>
+
+        <ul>
+          <li><strong><code>openspec/changes/</code> 中的活跃变更</strong> — 完全保留。你可以用 OPSX 命令继续它们。</li>
+          <li><strong>已归档的变更</strong> — 不动。你的历史保持完整。</li>
+          <li><strong><code>openspec/specs/</code> 中的主规格</strong> — 不动。这些是你的真相来源。</li>
+          <li><strong>你在 CLAUDE.md、AGENTS.md 等中的内容</strong> — 保留。只移除 OpenSpec 标记块；你写的一切都保留。</li>
+        </ul>
+
+        <h3 id="what-gets-removed">什么会被移除</h3>
+
+        <p>只有正在被替换的 OpenSpec 管理的文件：</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>内容</th>
+              <th>原因</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>旧版斜杠命令目录/文件</td>
+              <td>被新的技能系统取代</td>
+            </tr>
+            <tr>
+              <td><code>openspec/AGENTS.md</code></td>
+              <td>过时的工作流触发器</td>
+            </tr>
+            <tr>
+              <td><code>CLAUDE.md</code>、<code>AGENTS.md</code> 等中的 OpenSpec 标记</td>
+              <td>不再需要</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><strong>按工具的旧版命令位置</strong>（示例——你的工具可能不同）：</p>
+
+        <ul>
+          <li>Claude Code：<code>.claude/commands/openspec/</code></li>
+          <li>Cursor：<code>.cursor/commands/openspec-*.md</code></li>
+          <li>Windsurf：<code>.windsurf/workflows/openspec-*.md</code></li>
+          <li>Cline：<code>.clinerules/workflows/openspec-*.md</code></li>
+          <li>Roo：<code>.roo/commands/openspec-*.md</code></li>
+          <li>GitHub Copilot：<code>.github/prompts/openspec-*.prompt.md</code>（仅 IDE 扩展；Copilot CLI 不支持）</li>
+          <li>其他（Augment、Continue、Amazon Q 等）</li>
+        </ul>
+
+        <p>迁移会检测你配置了哪些工具并清理它们的旧版文件。</p>
+
+        <p>移除列表可能看起来很长，但这些都是 OpenSpec 原本创建的文件。你自己的内容永远不会被删除。</p>
+
+        <h3 id="what-needs-attention">需要你注意的内容</h3>
+
+        <p>有一个文件需要手动迁移：</p>
+
+        <p><strong><code>openspec/project.md</code></strong> — 这个文件不会自动删除，因为它可能包含你写的项目上下文。你需要：</p>
+
+        <ol>
+          <li>审查其内容</li>
+          <li>将有用的上下文移动到 <code>openspec/config.yaml</code>（参见下面的指导）</li>
+          <li>准备好后删除该文件</li>
+        </ol>
+
+        <p><strong>为什么我们做了这个改变：</strong></p>
+
+        <p>旧的 <code>project.md</code> 是被动的——代理可能读它，可能不读，可能忘了读的内容。我们发现可靠性不一致。</p>
+
+        <p>新的 <code>config.yaml</code> 上下文<strong>被主动注入到每个 OpenSpec 计划请求中</strong>。这意味着你的项目约定、技术栈和规则在 AI 创建产物时总是存在的。更高的可靠性。</p>
+
+        <p><strong>权衡：</strong></p>
+
+        <p>因为上下文被注入到每个请求中，你会想要简洁。专注于真正重要的内容：</p>
+        <ul>
+          <li>技术栈和关键约定</li>
+          <li>AI 需要知道的不明显约束</li>
+          <li>之前经常被忽略的规则</li>
+        </ul>
+
+        <p>不要担心做到完美。我们还在这里学习什么最有效，随着实验我们会改进上下文注入的工作方式。</p>
+
+        <hr>
+
+        <h2 id="running-the-migration">运行迁移</h2>
+
+        <p><code>openspec init</code> 和 <code>openspec update</code> 都会检测旧版文件并引导你完成相同的清理过程。使用适合你情况的那个：</p>
+
+        <ul>
+          <li>新安装默认使用配置 <code>core</code>（<code>propose</code>、<code>explore</code>、<code>apply</code>、<code>sync</code>、<code>archive</code>）。</li>
+          <li>迁移的安装通过在需要时写入 <code>custom</code> 配置来保留你之前安装的工作流。</li>
+        </ul>
+
+        <h3 id="using-openspec-init">使用 <code>openspec init</code></h3>
+
+        <p>如果你想添加新工具或重新配置设置了哪些工具，运行这个：</p>
+
+<pre><code>openspec init
+</code></pre>
+
+        <p>init 命令检测旧版文件并引导你完成清理：</p>
+
+<pre><code>Upgrading to the new OpenSpec
+
+OpenSpec now uses agent skills, the emerging standard across coding
+agents. This simplifies your setup while keeping everything working
+as before.
+
+Files to remove
+No user content to preserve:
+  • .claude/commands/openspec/
+  • openspec/AGENTS.md
+
+Files to update
+OpenSpec markers will be removed, your content preserved:
+  • CLAUDE.md
+  • AGENTS.md
+
+Needs your attention
+  • openspec/project.md
+    We won't delete this file. It may contain useful project context.
+
+    The new openspec/config.yaml has a "context:" section for planning
+    context. This is included in every OpenSpec request and works more
+    reliably than the old project.md approach.
+
+    Review project.md, move any useful content to config.yaml's context
+    section, then delete the file when ready.
+
+? Upgrade and clean up legacy files? (Y/n)
+</code></pre>
+
+        <p><strong>当你说"是"时会发生什么：</strong></p>
+
+        <ol>
+          <li>旧版斜杠命令目录被移除</li>
+          <li>OpenSpec 标记从 <code>CLAUDE.md</code>、<code>AGENTS.md</code> 等中移除（你的内容保留）</li>
+          <li><code>openspec/AGENTS.md</code> 被删除</li>
+          <li>新技能被安装到 <code>.claude/skills/</code></li>
+          <li><code>openspec/config.yaml</code> 以默认 Schema 创建</li>
+        </ol>
+
+        <h3 id="using-openspec-update">使用 <code>openspec update</code></h3>
+
+        <p>如果你只想迁移并刷新现有工具到最新版本，运行这个：</p>
+
+<pre><code>openspec update
+</code></pre>
+
+        <p>update 命令也会检测并清理旧版产物，然后刷新生成的技能/命令以匹配你当前的配置和交付设置。</p>
+
+        <h3 id="non-interactive-ci">非交互式 / CI 环境</h3>
+
+        <p>用于脚本化迁移：</p>
+
+<pre><code>openspec init --force --tools claude
+</code></pre>
+
+        <p><code>--force</code> 标志跳过提示并自动接受清理。</p>
+
+        <hr>
+
+        <h2 id="migrating-projectmd-to-configyaml">将 project.md 迁移到 config.yaml</h2>
+
+        <p>旧的 <code>openspec/project.md</code> 是一个自由格式的 Markdown 文件，用于项目上下文。新的 <code>openspec/config.yaml</code> 是结构化的，而且——关键的是——<strong>被注入到每个计划请求中</strong>，所以你的约定在 AI 工作时总是存在的。</p>
+
+        <h3 id="before-project-md">之前（project.md）</h3>
+
+<pre><code># Project Context
+
+This is a TypeScript monorepo using React and Node.js.
+We use Jest for testing and follow strict ESLint rules.
+Our API is RESTful and documented in docs/api.md.
+
+## Conventions
+
+- All public APIs must maintain backwards compatibility
+- New features should include tests
+- Use Given/When/Then format for specifications
+</code></pre>
+
+        <h3 id="after-config-yaml">之后（config.yaml）</h3>
+
+<pre><code>schema: spec-driven
+
+context: |
+  Tech stack: TypeScript, React, Node.js
+  Testing: Jest with React Testing Library
+  API: RESTful, documented in docs/api.md
+  We maintain backwards compatibility for all public APIs
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then format for scenarios
+    - Reference existing patterns before inventing new ones
+  design:
+    - Include sequence diagrams for complex flows
+</code></pre>
+
+        <h3 id="key-differences">关键区别</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>project.md</th>
+              <th>config.yaml</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>自由格式 Markdown</td>
+              <td>结构化 YAML</td>
+            </tr>
+            <tr>
+              <td>一大段文本</td>
+              <td>分离的上下文和按产物的规则</td>
+            </tr>
+            <tr>
+              <td>不清楚何时使用</td>
+              <td>上下文出现在所有产物中；规则仅出现在匹配的产物中</td>
+            </tr>
+            <tr>
+              <td>没有 Schema 选择</td>
+              <td>显式的 <code>schema:</code> 字段设置默认工作流</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="what-to-keep-drop">保留什么，舍弃什么</h3>
+
+        <p>迁移时要有选择性。问自己："AI 是否在<em>每个</em>计划请求中都需要这个？"</p>
+
+        <p><strong>适合放在 <code>context:</code> 中的</strong></p>
+        <ul>
+          <li>技术栈（语言、框架、数据库）</li>
+          <li>关键架构模式（monorepo、微服务等）</li>
+          <li>不明显的约束（"我们不能使用库 X 因为..."）</li>
+          <li>经常被忽略的关键约定</li>
+        </ul>
+
+        <p><strong>移到 <code>rules:</code> 中的</strong></p>
+        <ul>
+          <li>特定产物的格式要求（"在规格说明中使用 Given/When/Then"）</li>
+          <li>审查标准（"提议必须包含回退计划"）</li>
+          <li>这些仅出现在匹配的产物中，使其他请求更轻量</li>
+        </ul>
+
+        <p><strong>完全舍弃</strong></p>
+        <ul>
+          <li>AI 已经知道的通用最佳实践</li>
+          <li>可以精简的冗长解释</li>
+          <li>不影响当前工作的历史上下文</li>
+        </ul>
+
+        <h3 id="migration-steps">迁移步骤</h3>
+
+        <ol>
+          <li><strong>创建 config.yaml</strong>（如果 init 还没有创建）：
+<pre><code>schema: spec-driven
+</code></pre>
+          </li>
+
+          <li><strong>添加你的上下文</strong>（要精简——这会进入每个请求）：
+<pre><code>context: |
+  Your project background goes here.
+  Focus on what the AI genuinely needs to know.
+</code></pre>
+          </li>
+
+          <li><strong>添加按产物的规则</strong>（可选）：
+<pre><code>rules:
+  proposal:
+    - Your proposal-specific guidance
+  specs:
+    - Your spec-writing rules
+</code></pre>
+          </li>
+
+          <li><strong>删除 project.md</strong>，一旦你移动了所有有用的内容。</li>
+        </ol>
+
+        <p><strong>不要想太多。</strong> 从基本内容开始并迭代。如果你注意到 AI 遗漏了重要的东西，添加它。如果上下文感觉臃肿，精简它。这是一个活文档。</p>
+
+        <h3 id="need-help-prompt">需要帮助？使用这个提示词</h3>
+
+        <p>如果你不确定如何精炼你的 project.md，问你的 AI 助手：</p>
+
+<pre><code>I'm migrating from OpenSpec's old project.md to the new config.yaml format.
+
+Here's my current project.md:
+[paste your project.md content]
+
+Please help me create a config.yaml with:
+1. A concise `context:` section (this gets injected into every planning request, so keep it tight—focus on tech stack, key constraints, and conventions that often get ignored)
+2. `rules:` for specific artifacts if any content is artifact-specific (e.g., "use Given/When/Then" belongs in specs rules, not global context)
+
+Leave out anything generic that AI models already know. Be ruthless about brevity.
+</code></pre>
+
+        <p>AI 会帮助你识别什么是必要的，什么可以精简。</p>
+
+        <hr>
+
+        <h2 id="the-new-commands">新命令</h2>
+
+        <p>命令可用性取决于配置：</p>
+
+        <p><strong>默认（<code>core</code> 配置）：</strong></p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>命令</th>
+              <th>用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/opsx:propose</code></td><td>一步创建变更并生成计划产物</td></tr>
+            <tr><td><code>/opsx:explore</code></td><td>无结构地思考想法</td></tr>
+            <tr><td><code>/opsx:apply</code></td><td>从 tasks.md 实现任务</td></tr>
+            <tr><td><code>/opsx:archive</code></td><td>完成并归档变更</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>扩展工作流（自定义选择）：</strong></p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>命令</th>
+              <th>用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/opsx:new</code></td><td>开始新变更脚手架</td></tr>
+            <tr><td><code>/opsx:continue</code></td><td>创建下一个产物（一次一个）</td></tr>
+            <tr><td><code>/opsx:ff</code></td><td>快进——一次性创建计划产物</td></tr>
+            <tr><td><code>/opsx:verify</code></td><td>验证实现是否匹配规格</td></tr>
+            <tr><td><code>/opsx:sync</code></td><td>将 delta 规格合并到主规格中</td></tr>
+            <tr><td><code>/opsx:bulk-archive</code></td><td>一次归档多个变更</td></tr>
+            <tr><td><code>/opsx:onboard</code></td><td>引导式端到端入职工作流</td></tr>
+          </tbody>
+        </table>
+
+        <p>用 <code>openspec config profile</code> 启用扩展命令，然后运行 <code>openspec update</code>。</p>
+
+        <h3 id="command-mapping-from-legacy">从旧版映射的命令</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>旧版</th>
+              <th>OPSX 等效</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/openspec:proposal</code></td><td><code>/opsx:propose</code>（默认）或 <code>/opsx:new</code> 然后 <code>/opsx:ff</code>（扩展）</td></tr>
+            <tr><td><code>/openspec:apply</code></td><td><code>/opsx:apply</code></td></tr>
+            <tr><td><code>/openspec:archive</code></td><td><code>/opsx:archive</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="new-capabilities">新功能</h3>
+
+        <p>这些功能是扩展工作流命令集的一部分。</p>
+
+        <p><strong>粒度产物创建：</strong></p>
+<pre><code>/opsx:continue
+</code></pre>
+        <p>基于依赖一次创建一个产物。当你想审查每个步骤时使用这个。</p>
+
+        <p><strong>探索模式：</strong></p>
+<pre><code>/opsx:explore
+</code></pre>
+        <p>在提交变更之前与伙伴一起思考想法。</p>
+
+        <hr>
+
+        <h2 id="understanding-new-architecture">理解新架构</h2>
+
+        <h3 id="from-phase-locked-to-fluid">从阶段锁定到流畅</h3>
+
+        <p>旧版工作流强制线性推进：</p>
+
+<pre><code>┌──────────────┐      ┌──────────────┐      ┌──────────────┐
+│   PLANNING   │ ───► │ IMPLEMENTING │ ───► │   ARCHIVING  │
+│    PHASE     │      │    PHASE     │      │    PHASE     │
+└──────────────┘      └──────────────┘      └──────────────┘
+
+If you're in implementation and realize the design is wrong?
+Too bad. Phase gates don't let you go back easily.
+</code></pre>
+
+        <p>OPSX 使用动作，而不是阶段：</p>
+
+<pre><code>         ┌───────────────────────────────────────────────┐
+         │           ACTIONS (not phases)                │
+         │                                               │
+         │     new ◄──► continue ◄──► apply ◄──► archive │
+         │      │          │           │             │   │
+         │      └──────────┴───────────┴─────────────┘   │
+         │                    any order                  │
+         └───────────────────────────────────────────────┘
+</code></pre>
+
+        <h3 id="dependency-graph">依赖图</h3>
+
+        <p>产物形成有向图。依赖是促成条件，而不是门控：</p>
+
+<pre><code>                        proposal
+                       (root node)
+                            │
+              ┌─────────────┴─────────────┐
+              │                           │
+              ▼                           ▼
+           specs                       design
+        (requires:                  (requires:
+         proposal)                   proposal)
+              │                           │
+              └─────────────┬─────────────┘
+                            │
+                            ▼
+                         tasks
+                     (requires:
+                     specs, design)
+</code></pre>
+
+        <p>当你运行 <code>/opsx:continue</code> 时，它会检查什么准备好了并提供下一个产物。你也可以按任何顺序创建多个就绪的产物。</p>
+
+        <h3 id="skills-vs-commands">技能 vs 命令</h3>
+
+        <p>旧版系统使用特定工具的命令文件：</p>
+
+<pre><code>.claude/commands/openspec/
+├── proposal.md
+├── apply.md
+└── archive.md
+</code></pre>
+
+        <p>OPSX 使用新兴的<strong>技能</strong>标准：</p>
+
+<pre><code>.claude/skills/
+├── openspec-explore/SKILL.md
+├── openspec-new-change/SKILL.md
+├── openspec-continue-change/SKILL.md
+├── openspec-apply-change/SKILL.md
+└── ...
+</code></pre>
+
+        <p>技能被多个 AI 编码工具识别，并提供更丰富的元数据。</p>
+
+        <hr>
+
+        <h2 id="continuing-existing-changes">继续现有变更</h2>
+
+        <p>你进行中的变更与 OPSX 命令无缝协作。</p>
+
+        <p><strong>有一个来自旧版工作流的活跃变更？</strong></p>
+
+<pre><code>/opsx:apply add-my-feature
+</code></pre>
+
+        <p>OPSX 读取现有产物并从你停下的地方继续。</p>
+
+        <p><strong>想给现有变更添加更多产物？</strong></p>
+
+<pre><code>/opsx:continue add-my-feature
+</code></pre>
+
+        <p>基于已存在的内容显示什么已准备好创建。</p>
+
+        <p><strong>需要查看状态？</strong></p>
+
+<pre><code>openspec status --change add-my-feature
+</code></pre>
+
+        <hr>
+
+        <h2 id="the-new-config-system">新配置系统</h2>
+
+        <h3 id="config-yaml-structure">config.yaml 结构</h3>
+
+<pre><code># Required: Default schema for new changes
+schema: spec-driven
+
+# Optional: Project context (max 50KB)
+# Injected into ALL artifact instructions
+context: |
+  Your project background, tech stack,
+  conventions, and constraints.
+
+# Optional: Per-artifact rules
+# Only injected into matching artifacts
+rules:
+  proposal:
+    - Include rollback plan
+  specs:
+    - Use Given/When/Then format
+  design:
+    - Document fallback strategies
+  tasks:
+    - Break into 2-hour maximum chunks
+</code></pre>
+
+        <h3 id="schema-resolution">Schema 解析</h3>
+
+        <p>当确定使用哪个 Schema 时，OPSX 按顺序检查：</p>
+
+        <ol>
+          <li><strong>CLI 标志</strong>：<code>--schema &lt;name&gt;</code>（最高优先级）</li>
+          <li><strong>变更元数据</strong>：变更目录中的 <code>.openspec.yaml</code></li>
+          <li><strong>项目配置</strong>：<code>openspec/config.yaml</code></li>
+          <li><strong>默认值</strong>：<code>spec-driven</code></li>
+        </ol>
+
+        <h3 id="available-schemas">可用 Schema</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Schema</th>
+              <th>产物</th>
+              <th>适用于</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>spec-driven</code></td>
+              <td>proposal → specs → design → tasks</td>
+              <td>大多数项目</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>列出所有可用的 Schema：</p>
+
+<pre><code>openspec schemas
+</code></pre>
+
+        <h3 id="custom-schemas">自定义 Schema</h3>
+
+        <p>创建你自己的工作流：</p>
+
+<pre><code>openspec schema init my-workflow
+</code></pre>
+
+        <p>或 fork 一个现有的：</p>
+
+<pre><code>openspec schema fork spec-driven my-workflow
+</code></pre>
+
+        <p>参见<a href="customization.html">自定义配置</a>了解详情。</p>
+
+        <hr>
+
+        <h2 id="troubleshooting">故障排除</h2>
+
+        <h3 id="legacy-files-non-interactive">"Legacy files detected in non-interactive mode"</h3>
+        <p>你在 CI 或非交互式环境中运行。使用：</p>
+
+<pre><code>openspec init --force
+</code></pre>
+
+        <h3 id="commands-not-appearing">迁移后命令不出现</h3>
+        <p>重启你的 IDE。技能在启动时检测。</p>
+
+        <h3 id="unknown-artifact-id-rules">"Unknown artifact ID in rules"</h3>
+        <p>检查你的 <code>rules:</code> 键是否匹配你的 Schema 的产物 ID：</p>
+
+        <ul>
+          <li><strong>spec-driven</strong>：<code>proposal</code>, <code>specs</code>, <code>design</code>, <code>tasks</code></li>
+        </ul>
+
+        <p>运行这个查看有效的产物 ID：</p>
+
+<pre><code>openspec schemas --json
+</code></pre>
+
+        <h3 id="config-not-applied-migration">配置没有生效</h3>
+        <ol>
+          <li>确保文件在 <code>openspec/config.yaml</code>（不是 <code>.yml</code>）</li>
+          <li>验证 YAML 语法</li>
+          <li>配置更改立即生效——不需要重启</li>
+        </ol>
+
+        <h3 id="project-md-not-migrated-migration">project.md 没有被迁移</h3>
+        <p>系统有意保留 <code>project.md</code>，因为它可能包含你的自定义内容。手动审查它，将有用的部分移动到 <code>config.yaml</code>，然后删除它。</p>
+
+        <h3 id="see-what-would-be-cleaned">想看看什么会被清理？</h3>
+        <p>运行 init 并拒绝清理提示——你会看到完整的检测摘要，不会做任何更改。</p>
+
+        <hr>
+
+        <h2 id="quick-reference">快速参考</h2>
+
+        <h3 id="files-after-migration">迁移后的文件</h3>
+
+<pre><code>project/
+├── openspec/
+│   ├── specs/                    # Unchanged
+│   ├── changes/                  # Unchanged
+│   │   └── archive/              # Unchanged
+│   └── config.yaml               # NEW: Project configuration
+├── .claude/
+│   └── skills/                   # NEW: OPSX skills
+│       ├── openspec-propose/     # default core profile
+│       ├── openspec-explore/
+│       ├── openspec-apply-change/
+│       ├── openspec-sync-specs/
+│       └── ...                   # expanded profile adds new/continue/ff/etc.
+├── CLAUDE.md                     # OpenSpec markers removed, your content preserved
+└── AGENTS.md                     # OpenSpec markers removed, your content preserved
+</code></pre>
+
+        <h3 id="whats-gone">什么消失了</h3>
+
+        <ul>
+          <li><code>.claude/commands/openspec/</code> — 被 <code>.claude/skills/</code> 取代</li>
+          <li><code>openspec/AGENTS.md</code> — 过时</li>
+          <li><code>openspec/project.md</code> — 迁移到 <code>config.yaml</code>，然后删除</li>
+          <li><code>CLAUDE.md</code>、<code>AGENTS.md</code> 等中的 OpenSpec 标记块</li>
+        </ul>
+
+        <h3 id="command-cheatsheet">命令速查表</h3>
+
+<pre><code>/opsx:propose      Start quickly (default core profile)
+/opsx:apply        Implement tasks
+/opsx:archive      Finish and archive
+
+# Expanded workflow (if enabled):
+/opsx:new          Scaffold a change
+/opsx:continue     Create next artifact
+/opsx:ff           Create planning artifacts
+</code></pre>
+
+        <hr>
+
+        <h2 id="getting-help">获取帮助</h2>
+
+        <ul>
+          <li><strong>Discord</strong>：<a href="https://discord.gg/YctCnvvshC">discord.gg/YctCnvvshC</a></li>
+          <li><strong>GitHub Issues</strong>：<a href="https://github.com/Fission-AI/OpenSpec/issues">github.com/Fission-AI/OpenSpec/issues</a></li>
+          <li><strong>文档</strong>：<a href="opsx.html">docs/opsx.md</a> 完整的 OPSX 参考</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="troubleshooting.html">← 上一页：故障排除</a>
+        </div>
+        <div>
+          <a href="stores-beta-user-guide.html">下一页：Stores 用户指南 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

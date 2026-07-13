@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent 契约 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item active"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>Agent 契约</span>
+      </div>
+
+      <div class="page-header">
+        <h1>OpenSpec Agent 契约</h1>
+        <p class="subtitle">openspec CLI 的机器可读接口规范</p>
+      </div>
+
+      <article>
+        <p><code>openspec</code> CLI 的机器可读接口，针对 <code>src/</code> 进行验证（capstone 审计，2026-06-11）。下面的每个结构都从发出代码中文档化。</p>
+
+        <h2 id="1-general-conventions">1. 通用约定</h2>
+
+        <ul>
+          <li><strong>每次调用一个 JSON 文档。</strong>在 <code>--json</code> 模式下，stdout 携带恰好一个 JSON 文档（2 空格美化打印）。人类散文、进度条和 store 横幅输出到 stderr。</li>
+          <li><strong>Store 横幅。</strong>在人类模式下，store 选择的根会在 stderr 打印 <code>Using OpenSpec root: &lt;id&gt; (&lt;path&gt;)</code>。JSON 模式下从不打印。</li>
+          <li><strong>键大小写取决于接口</strong>（参见已知不一致）：store/doctor/context 负载使用 <code>snake_case</code>；工作流负载（<code>status</code>、<code>instructions</code>、<code>new change</code>、<code>validate</code>、<code>list</code>）使用 <code>camelCase</code>，除了嵌入的 <code>root</code> 对象始终使用 <code>store_id</code>。</li>
+          <li><strong>可选键被省略，而不是 null</strong>，在大多数负载中（例如 <code>root.store_id</code>、<code>member.path</code>）。使用显式 <code>null</code> 的例外按结构逐一说明（store doctor <code>git.*</code>、失败负载）。</li>
+        </ul>
+
+        <h2 id="2-the-diagnostic-envelope">2. 诊断信封</h2>
+
+        <p>每个机器可读诊断（<code>StoreDiagnostic</code>）共享一个信封结构：</p>
+
+<pre><code>{
+  "severity": "error" | "warning" | "info",
+  "code": "snake_case_string",
+  "message": "human sentence",
+  "target": "dotted.surface (optional)",
+  "fix": "one actionable sentence/command (optional)"
+}
+</code></pre>
+
+        <p>诊断出现在两个位置：<strong>status 数组</strong>（顶层或每条目的 <code>status: StoreDiagnostic[]</code>）用于健康发现，以及<strong>抛出错误</strong>在命令失败时转换为单元素 <code>status</code> 数组。</p>
+
+        <h2 id="3-root-selection-and-rootoutput">3. 根选择和 <code>RootOutput</code></h2>
+
+        <p>所有根解析命令（<code>list</code>、<code>show</code>、<code>validate</code>、<code>status</code>、<code>instructions</code>、<code>instructions apply</code>、<code>new change</code>、<code>archive</code>、<code>doctor</code>、<code>context</code>）按一个优先级解析一个 OpenSpec 根：</p>
+
+        <ol>
+          <li><code>--store &lt;id&gt;</code> → 已注册 store 的根（<code>source: "store"</code>）。</li>
+          <li>否则，有 <code>openspec/</code> 的最近祖先：规划结构 → <code>source: "nearest"</code>（<code>store:</code> 指针被忽略并发出 stderr 警告）；仅有有效 <code>store:</code> 指针的配置目录 → 该 store，<code>source: "declared"</code>。</li>
+          <li>没有最近的根 + 存在已注册的 stores → 错误 <code>no_root_with_registered_stores</code>。</li>
+          <li>没有根，没有 stores：脚手架命令将 cwd 视为 <code>source: "implicit"</code>；诊断命令（<code>doctor</code>、<code>context</code>）以 <code>no_openspec_root</code> 失败——它们检查，从不搭建。</li>
+        </ol>
+
+        <p>成功的 JSON 负载嵌入根：</p>
+
+<pre><code>"root": { "path": "/abs/path", "source": "store" | "declared" | "nearest" | "implicit", "store_id": "id (only when store-selected)" }
+</code></pre>
+
+        <p><strong>根失败契约</strong>：在 JSON 模式下，解析失败在 stdout 打印 <code>{ ...commandNullShape, "status": [diagnostic] }</code> 并退出 1。</p>
+
+        <h2 id="4-command-json-shapes">4. 命令 JSON 结构</h2>
+
+        <h3 id="4-1-list-json">4.1 <code>list --json</code></h3>
+        <p><code>{ "changes": [ { "name", "completedTasks", "totalTasks", "lastModified", "status": "no-tasks"|"complete"|"in-progress" } ], "root": RootOutput }</code> — 注意每个变更的 <code>status</code> 这里是字符串枚举。<code>--specs</code>：<code>{ "specs": [ { "id", "requirementCount" } ], "root" }</code>。</p>
+
+        <h3 id="4-2-show-json">4.2 <code>show &lt;item&gt; --json</code></h3>
+        <p>Change：<code>{ "id", "title", "deltaCount", "deltas": [...], "root" }</code>。Spec：<code>{ "id", "title", "overview", "requirementCount", "requirements": [...], "metadata": { "version", "format", "sourcePath"? }, "root" }</code>。</p>
+
+        <h3 id="4-3-validate-json">4.3 <code>validate --json</code></h3>
+        <p><code>{ "items": [ { "id", "type": "change"|"spec", "valid", "issues": [ { "level", "path", "message", "line"?, "column"? } ], "durationMs" } ], "summary": { "totals": {items,passed,failed}, "byType": {...} }, "version": "1.0", "root" }</code>。当任何条目失败时退出 1。</p>
+
+        <h3 id="4-4-status-json">4.4 <code>status --json</code></h3>
+        <p><code>{ "changeName", "schemaName", "planningHome"?: { "kind", "root", "changesDir", "defaultSchema" }, "changeRoot", "artifactPaths": { "&lt;id&gt;": {outputPath, resolvedOutputPath, existingOutputPaths} }, "nextSteps": ["..."], "actionContext": { "mode": "repo-local", "sourceOfTruth": "repo", "planningArtifacts", "linkedContext", "allowedEditRoots", "requiresAffectedAreaSelection", "constraints" }, "isComplete", "applyRequires", "artifacts": [ {id, outputPath, status: "done"|"ready"|"blocked", missingDeps?} ], "root" }</code>。没有活跃变更：<code>{ "changes": [], "message", "root" }</code>，退出 0。</p>
+
+        <h3 id="4-5-instructions-json">4.5 <code>instructions &lt;artifact&gt; --json</code></h3>
+        <p><code>{ "changeName", "artifactId", "schemaName", "changeDir", "planningHome"?, "outputPath", "resolvedOutputPath", "existingOutputPaths", "description", "instruction"?, "context"?, "rules"?, "references"?: ReferenceIndexEntry[], "template", "dependencies": [{id,done,path,description}], "unlocks", "root" }</code>。</p>
+
+        <p><code>ReferenceIndexEntry</code>：<code>{ "store_id", "root"?, "specs"?: [{id,summary}], "fetch"?, "status": [] }</code> — 已解析的条目携带 root/specs/fetch；未解析的携带 store_id + 警告状态。索引上限 50KB（<code>reference_index_truncated</code>）。</p>
+
+        <h3 id="4-6-instructions-apply-json">4.6 <code>instructions apply --json</code></h3>
+        <p><code>{ "changeName", "changeDir", "schemaName", "contextFiles": { "&lt;artifactId&gt;": ["/abs", ...] }, "progress": {total,complete,remaining}, "tasks": [{id,description,done}], "state": "blocked"|"all_done"|"ready", "missingArtifacts"?, "instruction", "references"?, "root" }</code>。</p>
+
+        <h3 id="4-7-new-change-json">4.7 <code>new change &lt;name&gt; --json</code></h3>
+        <p>成功：<code>{ "change": { "id", "path", "metadataPath", "schema" }, "root" }</code>。失败：<code>{ "change": null, "status": [d] }</code>，退出 1。</p>
+
+        <h3 id="4-8-archive-json">4.8 <code>archive &lt;name&gt; --json</code></h3>
+        <p>成功：<code>{ "archive": { "change", "archivedAs": "YYYY-MM-DD-name", "path", "specsUpdated", "totals"? }, "root" }</code>。失败：<code>{ "archive": null, "root"?, "status": [d] }</code>，退出 1。JSON 模式严格非交互式：每个提示点变为 <code>archive_*</code> 代码。</p>
+
+        <h3 id="4-9-doctor-json">4.9 <code>doctor --json</code></h3>
+        <p><code>{ "root": { "path", "source", "store_id"?, "healthy", "status": [] }, "store": { "id", "metadata": {present,valid,remote?}, "origin_url"?, "status": [] } | null, "references": [...], "status": [] }</code>。任何严重程度的健康发现退出 0。失败负载：<code>{ "root": null, "store": null, "references": [], "status": [d] }</code>，退出 1。</p>
+
+        <h3 id="4-10-context-json">4.10 <code>context --json</code></h3>
+        <p><code>{ "root": { "path", "source", "store_id"?, "role": "openspec_root" }, "members": [ { "role": "referenced_store", "id", "path"?, "remote"?, "fetch"?, "status": [] } ], "status": [] }</code>。AVAILABLE = path 存在且 status 为空。<code>--code-workspace &lt;path&gt;</code> 写入 <code>{folders:[{name,path}]}</code>（仅可用引用的 stores，<code>ref:</code> 前缀）；在 JSON 模式下，写入在打印之前运行，所以 stdout 恰好持有一个文档即使在写入失败时。失败：<code>{ "root": null, "members": [], "status": [d] }</code>，退出 1。</p>
+
+        <h3 id="4-11-store-json">4.11 <code>store ... --json</code></h3>
+        <p>setup/register：<code>{ "store": {id, root, metadata_path?}, "registry": {path, registered, already_registered}, "git": {is_repository, initialized, committed}, "created_files": [], "status": [] }</code>。unregister/remove：<code>{ "store", "registry": {path, removed}, "files": {deleted, deleted_path, left_on_disk}, "status": [] }</code>。list：<code>{ "stores": [{id, root}], "status": [] }</code>。doctor：<code>{ "stores": [ { id, root, metadata_path?, openspec_root: {...healthy, status}, metadata: {present, valid, id?, remote}, git: {is_repository, has_commits, has_uncommitted_changes, has_remote, origin_url}, status } ], "status": [] }</code>（<code>null</code> = 未知/未探测）。健康发现退出 0；失败退出 1 并带匹配的 null 结构。提示取消退出 130。</p>
+
+        <h3 id="4-12-schemas-templates-json">4.12 <code>schemas --json</code> / <code>templates --json</code></h3>
+        <p><code>schemas</code>：裸数组 <code>[ {name, description, artifacts, source} ]</code>。<code>templates</code>：键控对象 <code>{ "&lt;artifactId&gt;": {path, source} }</code>。两者都基于 cwd，没有 root/status 键。</p>
+
+        <h2 id="5-exit-code-contract">5. 退出码契约</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>情况</th>
+              <th>退出码</th>
+              <th>Stdout</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>成功，包括健康发现（doctor/context/store doctor）</td>
+              <td>0</td>
+              <td>负载</td>
+            </tr>
+            <tr>
+              <td><code>--json</code> 模式下的命令失败</td>
+              <td>1</td>
+              <td>一个带有 <code>status: [d]</code> 和命令 null 结构的 JSON 文档</td>
+            </tr>
+            <tr>
+              <td><code>validate</code> 有失败条目</td>
+              <td>1</td>
+              <td>完整报告</td>
+            </tr>
+            <tr>
+              <td>提示取消（<code>store</code> 组，人类模式）</td>
+              <td>130</td>
+              <td>仅 stderr</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="6-diagnostic-code-catalog">6. 诊断代码目录</h2>
+
+        <h3 id="resolution">解析</h3>
+        <p><code>no_openspec_root</code>, <code>no_root_with_registered_stores</code>, <code>no_registered_stores</code>, <code>unknown_store</code>, <code>store_identity_mismatch</code>, <code>unhealthy_store_root</code>, <code>store_path_not_supported</code>, <code>invalid_store_pointer</code>, <code>initiative_option_removed</code>, <code>areas_option_removed</code>；传递：<code>invalid_store_id</code>, <code>invalid_store_registry</code>, <code>invalid_store_metadata</code>。</p>
+
+        <h3 id="openspec-root-health">OpenSpec 根健康（错误，无修复）</h3>
+        <p><code>openspec_store_root_missing</code>, <code>openspec_store_root_not_directory</code>, <code>openspec_root_missing</code>, <code>openspec_root_not_directory</code>, <code>openspec_config_missing</code>, <code>openspec_config_not_file</code>, <code>openspec_specs_not_directory</code>, <code>openspec_changes_not_directory</code>, <code>openspec_archive_not_directory</code>。在 stores beta 期间，<code>openspec/specs/</code>、<code>openspec/changes/</code> 和 <code>openspec/changes/archive/</code> 在健康根中可以不存在；它们只在存在但不是目录时才是健康错误。</p>
+
+        <h3 id="store-registry-identity-state">Store 注册表/身份/状态</h3>
+        <p><code>invalid_store_id</code>, <code>invalid_store_registry</code>, <code>invalid_store_metadata</code>, <code>store_registry_busy</code>, <code>store_not_found</code>, <code>no_store_registry</code>, <code>store_registry_changed</code>, <code>store_metadata_missing</code>, <code>store_metadata_id_mismatch</code>, <code>store_metadata_invalid</code>, <code>store_id_conflict</code>, <code>store_path_conflict</code>, <code>store_already_registered</code>（info）。</p>
+
+        <h3 id="store-setup-register-remove">Store 设置/注册/移除</h3>
+        <p><code>store_setup_id_required</code>, <code>store_setup_path_required</code>, <code>store_setup_path_not_directory</code>, <code>store_setup_inside_git_repo</code>, <code>store_setup_non_empty_directory</code>, <code>store_setup_cancelled</code>, <code>store_path_required</code>, <code>store_path_missing</code>, <code>store_path_not_directory</code>, <code>store_root_pointer_declared</code>, <code>store_register_root_unhealthy</code>, <code>store_register_identity_confirmation_required</code>, <code>store_register_cancelled</code>, <code>store_remote_empty</code>, <code>store_remote_requires_hand_edit</code>, <code>store_remove_confirmation_required</code>, <code>store_remove_cancelled</code>, <code>store_remove_path_not_directory</code>, <code>store_remove_metadata_missing</code>, <code>store_root_missing</code>（移除中为警告，doctor 中为错误）, <code>store_root_not_directory</code>。</p>
+
+        <h3 id="store-git">Store git</h3>
+        <p><code>store_git_init_failed</code>, <code>store_git_identity_missing</code>, <code>store_git_commit_failed</code>, <code>store_git_no_commits</code>（警告）, <code>store_clone_fragile_directories</code>（警告）, <code>store_remote_divergence</code>（info, doctor）。</p>
+
+        <h3 id="references">References（警告）</h3>
+        <p><code>reference_invalid_id</code>, <code>reference_registry_unreadable</code>, <code>reference_unresolved</code>, <code>reference_root_unhealthy</code>, <code>reference_index_truncated</code>。</p>
+
+        <h3 id="relationships">关系（警告；doctor；context 仅保留注册表的那个）</h3>
+        <p><code>relationship_registry_unreadable</code>, <code>root_pointer_ignored</code>, <code>root_pointer_invalid</code>, <code>pointer_declarations_inert</code>。</p>
+
+        <h3 id="archive">归档（JSON 模式）</h3>
+        <p><code>archive_change_name_required</code>, <code>archive_change_not_found</code>, <code>archive_validation_failed</code>, <code>archive_confirmation_required</code>, <code>archive_tasks_incomplete</code>, <code>archive_spec_update_failed</code>, <code>archive_spec_validation_failed</code>, <code>archive_target_exists</code>, <code>archive_error</code>。</p>
+
+        <h3 id="context-writes">Context 写入</h3>
+        <p><code>context_file_exists</code>, <code>context_output_dir_missing</code>。</p>
+
+        <h3 id="fallbacks">回退</h3>
+        <p><code>doctor_failed</code>, <code>context_failed</code>, <code>store_error</code>, <code>change_error</code>, <code>archive_error</code>。</p>
+
+        <h2 id="known-inconsistencies">已知不一致</h2>
+
+        <p>由 capstone 审计记录；已发布键重命名是推迟到此版本之后的产品决策：</p>
+
+        <ol>
+          <li><s>在 <code>--json</code> 模式下，几个失败路径只打印 stderr 没有 JSON 文档。</s> 在 capstone gauntlet 轮中修复：<code>show</code>/<code>validate</code> 未知和模糊条目发出 <code>{status:[{code: unknown_item | ambiguous_item, ...}]}</code>；<code>status</code>/<code>instructions</code>/<code>list</code>/<code>show</code>/<code>validate</code> 中的抛出错误通过 JSON 感知的失败助手路由（命令的 null 结构 + <code>status</code>）；<code>store &lt;unknown subcommand&gt; --json</code> 发出 <code>{status:[{code: unknown_store_subcommand}]}</code>；<code>list</code> 在解析失败时携带其 <code>{changes|specs: [], root: null}</code> null 结构。</li>
+          <li><code>store_root_missing</code> 以两种严重度发出（移除中为警告，store doctor 中为错误）——取决于上下文，如上所述。</li>
+          <li>snake_case（store 系列）vs camelCase（工作流系列）键大小写；<code>root.store_id</code> 到处都是 snake_case。</li>
+          <li>src 中存在四个平行的信封类型声明；archive 诊断从不携带 <code>target</code>。</li>
+          <li><code>list --json</code> 将 <code>status</code> 键作为每个变更的字符串枚举重用。</li>
+          <li>只有 <code>validate</code> 输出携带 <code>version</code> 字段。</li>
+          <li><code>schemas</code>/<code>templates</code> 忽略根选择（基于 cwd，没有 <code>--store</code>）。</li>
+          <li>已弃用的名词形式（<code>change</code>/<code>spec</code> 子命令）发出不带 <code>root</code>/<code>status</code> 的未封装负载。</li>
+        </ol>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="stores-beta-user-guide.html">← 上一页：Stores 用户指南</a>
+        </div>
+        <div>
+          <span>已是最后一页</span>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

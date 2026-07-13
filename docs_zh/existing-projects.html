@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在现有项目中使用 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item active"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>在现有项目中使用</span>
+      </div>
+
+      <div class="page-header">
+        <h1>在现有项目中使用</h1>
+        <p class="subtitle">无需为整个代码库编写文档——只为即将变更的部分编写规格</p>
+      </div>
+
+      <article>
+        <p><strong>你不需要一开始就为整个代码库编写文档。你只为即将变更的内容编写规格。</strong>这是在现有项目上采用 OpenSpec 时最重要的一点，也是 OpenSpec 以"棕地优先"构建的原因。</p>
+
+        <p>一个常见的担忧是这样的："我的应用有 80,000 行旧代码。在 OpenSpec 有用之前我需要为所有内容编写规格吗？"不需要。你会讨厌那样，我们也是。OpenSpec 每次变更增加一份规格。你的第一次变更记录它涉及的部分，下一次变更记录它的部分，几个月后你的规格在你实际做的工作周围自然地填满了。</p>
+
+        <p>本指南展示了如何在第一天开始而不至于力不从心。</p>
+
+        <h2>30 秒版本</h2>
+
+<pre><code>$ cd your-existing-project
+$ openspec init          # 添加 openspec/ 和你的 AI 工具的命令
+</code></pre>
+
+        <p>然后，在你的 AI 聊天中：</p>
+
+<pre><code>/opsx:explore            # 可选：让 AI 阅读你即将触碰的区域
+/opsx:propose &lt;一个你真正需要的真实小变更&gt;
+/opsx:apply
+/opsx:archive
+</code></pre>
+
+        <p>你的规格现在准确描述了该变更触碰的系统部分，仅此而已。这是正确的。你不再需要担心其他 80,000 行了。</p>
+
+        <h2>为什么增量优先是全部诀窍</h2>
+
+        <p>OpenSpec 变更被编写为<strong>增量</strong>：<code>ADDED</code>、<code>MODIFIED</code>、<code>REMOVED</code>。增量描述相对于当前行为的变化，而不是整个系统。</p>
+
+        <p>这正是棕地工作所需要的。你很少从零开始构建。你在添加一个字段、修复一个重定向、收紧一个超时。增量让你精确地指定那一个变更，而不需要先写一个 40 页的周边所有内容的规格。</p>
+
+        <p>所以你的 <code>openspec/specs/</code> 目录一开始不是完整齐全的。它几乎是空的并逐步积累。每个归档的变更合并其增量。<code>auth/</code> 的规格只有在你做了几次认证变更后才变得全面，而这恰好是你需要它全面的时候。</p>
+
+        <p>如果你想了解更深入的机制，参见<a href="concepts.html#delta-specs">概念：增量规格</a>。</p>
+
+        <h2>在真实代码库上的第一次变更</h2>
+
+        <p>选择一些小而真实的东西。不是玩具，不是重写。一个你这周本来就要做的变更。小的第一次变更以低风险教你工作流。</p>
+
+        <p><strong>步骤 1：让 AI 阅读相关区域。</strong>这就是 <code>/opsx:explore</code> 在不熟悉或大型代码库上的价值所在。指向你即将触碰的部分，让它在提议任何东西之前先理清工作方式。</p>
+
+<pre><code>You: /opsx:explore
+
+AI:  What would you like to explore?
+
+You: I need to add rate limiting to our public API, but I'm not sure
+     how requests currently flow through the middleware.
+
+AI:  Let me trace it... [reads the router, middleware stack, and config]
+     Requests hit Express, pass through auth middleware, then your
+     controllers. There's no rate-limiting layer today. The cleanest
+     insertion point is a middleware right after auth. Want me to scope it?
+</code></pre>
+
+        <p>注意 AI 现在理解了你的实际结构，所以它写的提案会适合你的代码，而不是通用模板。在大型代码库上，这一个习惯能节省最多的痛苦。参见<a href="explore.html">探索优先</a>。</p>
+
+        <p><strong>步骤 2：提议变更。</strong>提案和它的增量规格只捕获这一个变更。</p>
+
+<pre><code>You: /opsx:propose add-api-rate-limiting
+</code></pre>
+
+        <p><strong>步骤 3：构建并归档</strong>使用 <code>/opsx:apply</code> 和 <code>/opsx:archive</code>，和任何变更一样。归档后，你拥有一个关于速率限制行为的真实规格，源于一个你本来就需要做的变更。</p>
+
+        <h2>想要引导式游览？使用 onboard</h2>
+
+        <p>如果你更愿意在自己的代码上观看整个循环带着解说发生，扩展命令 <code>/opsx:onboard</code> 正是为此设计的：它扫描你的代码库寻找一个小的、安全的改进，然后引导你完成提议、构建和归档，解释每一步。</p>
+
+        <p>先开启扩展命令：</p>
+
+<pre><code>$ openspec config profile      # 选择扩展工作流
+$ openspec update              # 应用到此项目
+</code></pre>
+
+        <p>然后在聊天中：</p>
+
+<pre><code>/opsx:onboard
+</code></pre>
+
+        <p>这是在真实项目上最温和的入门方式，它留给你一个真正的（小的）变更，你可以保留或丢弃。参见<a href="commands.html#opsxonboard">命令：<code>/opsx:onboard</code></a>。</p>
+
+        <h2>"但我已经有需求文档了"</h2>
+
+        <p>也许你有一个 PRD、一个 SRS、一个正式规格，甚至 TLA+ 模型。很好。你不需要整体导入它们，也不需要扔掉它们。</p>
+
+        <p>将现有文档视为<strong>探索的源材料</strong>，而不是要转换的规格。当你开始一个变更时，粘贴或指向 AI 到相关部分，让它从中提炼一个聚焦的 OpenSpec 增量。增量以 OpenSpec 的可测试需求加场景形式捕获你现在正在变更的行为。你的原始文档留在原地作为背景。</p>
+
+        <p>诚实的原因：OpenSpec 规格是刻意以行为为先、范围限于变更的。一个 40 页的 PRD 是一种不同的产物，有不同的工作。强制一次性批量转换往往产生一个大而陈旧的没人信任的规格。让规格从真实变更中生长保持它们的准确性。</p>
+
+<pre><code>You: /opsx:explore
+You: Here's the section of our PRD about checkout. I'm implementing the
+     "guest checkout" requirement next.
+     [paste the relevant requirement]
+AI:  [reads it, asks clarifying questions, then helps scope a change]
+You: /opsx:propose add-guest-checkout
+</code></pre>
+
+        <h2>在大型代码库中组织规格</h2>
+
+        <p>规格存放在 <code>openspec/specs/</code> 下，按<strong>领域</strong>分组：一个与你的团队思考系统方式匹配的逻辑区域。你不需要预先设计整个分类法。当你在该区域的第一次变更需要一个领域文件夹时就创建它。</p>
+
+        <p>常见的领域划分方式：</p>
+
+        <ul>
+          <li><strong>按功能区域：</strong><code>auth/</code>、<code>payments/</code>、<code>search/</code></li>
+          <li><strong>按组件：</strong><code>api/</code>、<code>frontend/</code>、<code>workers/</code></li>
+          <li><strong>按限界上下文：</strong><code>ordering/</code>、<code>fulfillment/</code>、<code>inventory/</code></li>
+        </ul>
+
+        <p>选择任何能让新人点头的方式。你可以在之后调整。参见<a href="concepts.html#specs">概念：规格</a>。</p>
+
+        <h2>Monorepo 和跨仓库工作</h2>
+
+        <p>对于 monorepo，最简单的模型是在仓库根目录放一个 <code>openspec/</code> 目录，领域映射到你的包或服务。这覆盖了大多数团队。</p>
+
+        <p>如果你的工作真正跨越<strong>多个仓库</strong>（或你视为独立的多个包），OpenSpec 有一个 beta <strong>stores</strong> 功能：规划存在于自己的独立仓库中，你的任何代码仓库都可以引用，因此计划不必存在于某个仓库的 <code>openspec/</code> 文件夹中。它是 beta，所以将其命令和状态视为发展中。从<a href="stores-beta-user-guide.html">Stores 用户指南</a>了解心智模型和最小可用路径。</p>
+
+        <h2>一些诚实的告诫</h2>
+
+        <ul>
+          <li><strong>抵制回填一切的冲动。</strong>为你不打算变更的代码编写规格感觉很有成效，但通常不是。这些规格会过时，因为没有什么强制它们追踪现实。让真实变更驱动你的规格。</li>
+          <li><strong>保持早期变更小。</strong>你的前几次变更很大程度上是在学习节奏和交付。紧凑的范围使循环快、教训廉价。</li>
+          <li><strong>将 <code>openspec/</code> 提交到 git。</strong>你的规格和归档应该与它们描述的代码一起在版本控制中。</li>
+          <li><strong>给 AI 上下文。</strong>在具有强约定的大型代码库上，填写 <code>openspec/config.yaml</code> 的 <code>context:</code>，这样每个提案都尊重你的技术栈和模式。参见<a href="customization.html#project-configuration">自定义配置</a>。</li>
+        </ul>
+
+        <h2>接下来去哪里</h2>
+
+        <ul>
+          <li><a href="explore.html">探索优先</a> - 在变更代码之前理解代码的关键习惯</li>
+          <li><a href="getting-started.html">快速开始</a> - 完整的首次变更演练</li>
+          <li><a href="editing-changes.html">编辑与迭代变更</a> - 在学习中调整变更</li>
+          <li><a href="concepts.html#delta-specs">概念：增量规格</a> - 为什么增量使棕地工作干净</li>
+          <li><a href="customization.html">自定义配置</a> - 教 OpenSpec 你项目的约定</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="team-workflow.html">← 上一页：团队协作</a>
+        </div>
+        <div>
+          <a href="editing-changes.html">下一页：编辑与迭代变更 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

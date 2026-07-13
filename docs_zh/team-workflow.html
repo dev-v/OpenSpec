@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>团队协作 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item active"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>团队协作</span>
+      </div>
+
+      <div class="page-header">
+        <h1>团队协作</h1>
+        <p class="subtitle">OpenSpec 在团队中的使用：规格说明放在哪里，如何在 PR 中审查，以及如何融入你现有的工作流</p>
+      </div>
+
+      <article>
+        <p>其他指南中的所有内容，无论你是独立工作还是在 20 人的团队中，工作方式都一样。在团队中变化的是边缘性的问题：规格说明放在哪里，团队成员如何审查计划，以及这些如何融入我们已有的拉取请求流程？</p>
+
+        <p>简短回答：一个变更就是文件，而 OpenSpec 从不触碰 git。所以它融入你现有的工作流而不是取代它。本页说明了行之有效的约定。</p>
+
+        <h2>一条规则：OpenSpec 不触碰 git</h2>
+
+        <p>OpenSpec 在 <code>openspec/</code> 下读取和写入纯 Markdown。它从不在你的项目中提交、分支、推送或拉取——也从不自行克隆或同步<a href="stores-beta-user-guide.html">store</a>。这意味着：</p>
+
+        <ul>
+          <li><strong>你像对待任何源代码一样提交 <code>openspec/</code>。</strong>规格说明、活动变更和归档是你项目历史的一部分。（是的，提交整个文件夹——参见<a href="faq.html#should-i-commit-the-openspec-folder-to-git">FAQ</a>。）</li>
+          <li><strong>一个变更是你像代码一样版本控制的文件夹。</strong><code>openspec/changes/add-dark-mode/</code> 就是分支上的文件。</li>
+          <li><strong>以下所有都是约定，不是强制。</strong>OpenSpec 不会要求你这样做；它只是很自然地契合。</li>
+        </ul>
+
+        <h2>日常工作循环</h2>
+
+        <p>行之有效的工作流将一个变更映射到一个分支和一个拉取请求：</p>
+
+<pre><code>git switch -c add-dark-mode        开始一个分支，照常
+   │
+/opsx:propose add-dark-mode        起草计划（提案 + 规格 + 任务）
+   │
+审查计划                            你在编写代码前阅读它——参见审查变更
+   │
+/opsx:apply                        构建它；制品 + 代码同时变更
+   │
+git commit && 打开 PR            PR 包含规格增量 AND 代码
+   │
+队友审查，合并
+   │
+/opsx:archive                      将增量折叠进 specs/，将变更移至 archive/
+</code></pre>
+
+        <p>计划和代码并排存在于同一个分支中，因此你的队友同时审查两者，六个月后归档的规格仍然解释了代码为什么是这个样子。</p>
+
+        <h2>在拉取请求中审查规格</h2>
+
+        <p>这是团队感受到回报的地方。当 PR 包含变更的增量规格时，审查者获得了原始 diff 永远不会给他们的东西：<strong>一个用通俗语言描述这个变更应该做什么的声明</strong>，在他们阅读一行代码之前。</p>
+
+        <p>审查者的良好审查顺序：</p>
+
+        <ol>
+          <li><strong>阅读 <code>proposal.md</code></strong>——这是正确的问题和范围吗？</li>
+          <li><strong>阅读 <code>specs/</code> 下的增量</strong>——"完成"定义正确吗？（这就是<a href="reviewing-changes.html">审查变更</a>的两分钟审查，现在在 PR 中进行。）</li>
+          <li><strong>然后阅读代码 diff</strong>——它是否恰好交付了那些需求？</li>
+        </ol>
+
+        <p>一个不同意<em>方案</em>的审查者可以对着提案说出来，成本很低，而不是在 300 行代码中重新争论。把增量规格放在 PR 描述顶部附近，或指引审查者到变更文件夹，让他们从那里开始。</p>
+
+        <h2>何时归档</h2>
+
+        <p>归档将一个变更的增量折叠进你的主 <code>openspec/specs/</code>，并将变更文件夹移至 <code>openspec/changes/archive/YYYY-MM-DD-&lt;name&gt;/</code>。因为 <code>specs/</code> 是<strong>共享的真相来源</strong>，在团队中时时机很重要。两种可行的约定：</p>
+
+        <ul>
+          <li><strong>PR 合并后归档（推荐）。</strong>分支承载活动变更；一旦它合并到你的主分支，就在那里归档（通常是一个小的后续提交或计划清理）。这确保共享的 <code>specs/</code> 只随实际交付的工作前进。</li>
+          <li><strong>在 PR 内归档。</strong>对小团队更简单：添加代码的同一个 PR 也同步并归档。权衡是你的 <code>specs/</code> diff 和代码 diff 同时落地，可能使 PR 更嘈杂。</li>
+        </ul>
+
+        <p>选择一种并保持一致。无论哪种方式，<code>/opsx:archive</code> 都会检查任务是否完成并提议先同步，所以不会意外地半成品合并。</p>
+
+        <h2>两人，并行变更</h2>
+
+        <p>因为变更是独立的文件夹，它们不会冲突：</p>
+
+        <ul>
+          <li><strong>不同变更，不同人——没问题。</strong><code>add-dark-mode</code> 和 <code>rate-limit-login</code> 是不同分支上的不同文件夹；它们在归档前互不干扰。</li>
+          <li><strong>一个变更，一个负责人。</strong>两个人编辑同一个变更文件夹就像两个人编辑同一个文件一样冲突。保持一个变更为单一作者，或拆分为两个变更（又一个<a href="writing-specs.html#right-size-the-change">适当大小</a>的理由）。</li>
+          <li><strong>冲突出现的唯一地方是 <code>specs/</code>。</strong>如果两个变更都修改<em>同一个</em>需求，归档第二个时会在 <code>openspec/specs/…/spec.md</code> 中冲突——像任何合并冲突一样解决，保留反映现实的那个需求。这很少见，而且这是一个特性：git 在告诉你两个变更对系统应该如何行为有不同意见。</li>
+        </ul>
+
+        <h2>当规划超出单个仓库时</h2>
+
+        <p>以上所有内容都假设计划存在于代码仓库自己的 <code>openspec/</code> 文件夹中，这是正确的默认选择。当你的规划真正跨多个仓库或团队——一个功能涉及三个服务，或需求由一个团队拥有而其他团队消费——这就是 beta <strong>stores</strong> 功能的用途：规划拥有自己的仓库，任何代码仓库都可以指向它。从<a href="stores-beta-user-guide.html">Stores 用户指南</a>开始。</p>
+
+        <h2>接下来去哪里</h2>
+
+        <ul>
+          <li><a href="reviewing-changes.html">审查变更</a>——审查流程，现在在你的 PR 内进行。</li>
+          <li><a href="writing-specs.html">编写优质规格说明</a>——包括如何使变更大小适合一个分支。</li>
+          <li><a href="stores-beta-user-guide.html">Stores 用户指南</a>——跨仓库和团队的规划。</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="reviewing-changes.html">← 上一页：审查变更</a>
+        </div>
+        <div>
+          <a href="existing-projects.html">下一页：在现有项目中使用 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

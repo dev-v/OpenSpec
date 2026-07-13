@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自定义配置 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item active"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>自定义配置</span>
+      </div>
+
+      <div class="page-header">
+        <h1>自定义配置</h1>
+        <p class="subtitle">三个层级的定制方式：项目配置、自定义 Schema 和全局覆盖</p>
+      </div>
+
+      <article>
+        <p>OpenSpec 提供三个层级的自定义配置：</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>层级</th>
+              <th>功能</th>
+              <th>适用场景</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>项目配置（Project Config）</strong></td>
+              <td>设置默认值，注入上下文/规则</td>
+              <td>大多数团队</td>
+            </tr>
+            <tr>
+              <td><strong>自定义 Schema（Custom Schemas）</strong></td>
+              <td>定义自己的工作流产物</td>
+              <td>有独特流程的团队</td>
+            </tr>
+            <tr>
+              <td><strong>全局覆盖（Global Overrides）</strong></td>
+              <td>在所有项目中共享 Schema</td>
+              <td>高级用户</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2 id="project-configuration">项目配置</h2>
+
+        <p><code>openspec/config.yaml</code> 文件是为你的团队自定义 OpenSpec 最简单的方式。它可以：</p>
+
+        <ul>
+          <li><strong>设置默认 Schema</strong> - 省去每次命令都加 <code>--schema</code></li>
+          <li><strong>注入项目上下文</strong> - 让 AI 了解你的技术栈、约定等</li>
+          <li><strong>添加按产物的规则</strong> - 为特定产物自定义规则</li>
+        </ul>
+
+        <h3 id="quick-setup">快速设置</h3>
+
+<pre><code>openspec init
+</code></pre>
+
+        <p>这会以交互方式引导你创建配置文件。也可以手动创建：</p>
+
+<pre><code># openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Tech stack: TypeScript, React, Node.js, PostgreSQL
+  API style: RESTful, documented in docs/api.md
+  Testing: Jest + React Testing Library
+  We value backwards compatibility for all public APIs
+
+rules:
+  proposal:
+    - Include rollback plan
+    - Identify affected teams
+  specs:
+    - Use Given/When/Then format
+    - Reference existing patterns before inventing new ones
+</code></pre>
+
+        <h3 id="how-it-works">工作原理</h3>
+
+        <p><strong>默认 Schema：</strong></p>
+
+<pre><code># Without config
+openspec new change my-feature --schema spec-driven
+
+# With config - schema is automatic
+openspec new change my-feature
+</code></pre>
+
+        <p><strong>上下文和规则注入：</strong></p>
+
+        <p>在生成任何产物时，你的上下文和规则会被注入到 AI 提示词中：</p>
+
+<pre><code>&lt;context&gt;
+Tech stack: TypeScript, React, Node.js, PostgreSQL
+...
+&lt;/context&gt;
+
+&lt;rules&gt;
+- Include rollback plan
+- Identify affected teams
+&lt;/rules&gt;
+
+&lt;template&gt;
+[Schema's built-in template]
+&lt;/template&gt;
+</code></pre>
+
+        <ul>
+          <li><strong>Context（上下文）</strong>出现在所有产物中</li>
+          <li><strong>Rules（规则）</strong>仅出现在匹配的产物中</li>
+        </ul>
+
+        <h3 id="schema-resolution-order">Schema 解析顺序</h3>
+
+        <p>当 OpenSpec 需要 Schema 时，按以下顺序检查：</p>
+
+        <ol>
+          <li>CLI 标志：<code>--schema &lt;name&gt;</code></li>
+          <li>变更元数据（变更文件夹中的 <code>.openspec.yaml</code>）</li>
+          <li>项目配置（<code>openspec/config.yaml</code>）</li>
+          <li>默认值（<code>spec-driven</code>）</li>
+        </ol>
+
+        <hr>
+
+        <h2 id="custom-schemas">自定义 Schema</h2>
+
+        <p>当项目配置不够用时，可以创建完全自定义工作流的 Schema。自定义 Schema 存放在项目的 <code>openspec/schemas/</code> 目录中，与代码一起进行版本控制。</p>
+
+<pre><code>your-project/
+├── openspec/
+│   ├── config.yaml        # Project config
+│   ├── schemas/           # Custom schemas live here
+│   │   └── my-workflow/
+│   │       ├── schema.yaml
+│   │       └── templates/
+│   └── changes/           # Your changes
+└── src/
+</code></pre>
+
+        <h3 id="fork-an-existing-schema">Fork 现有 Schema</h3>
+
+        <p>最快的自定义方式是 fork 一个内置 Schema：</p>
+
+<pre><code>openspec schema fork spec-driven my-workflow
+</code></pre>
+
+        <p>这会将整个 <code>spec-driven</code> Schema 复制到 <code>openspec/schemas/my-workflow/</code>，你可以自由编辑。</p>
+
+        <p><strong>你将得到：</strong></p>
+
+<pre><code>openspec/schemas/my-workflow/
+├── schema.yaml           # Workflow definition
+└── templates/
+    ├── proposal.md       # Template for proposal artifact
+    ├── spec.md           # Template for specs
+    ├── design.md         # Template for design
+    └── tasks.md          # Template for tasks
+</code></pre>
+
+        <p>现在编辑 <code>schema.yaml</code> 来改变工作流，或编辑模板来改变 AI 生成的内容。</p>
+
+        <h3 id="create-a-schema-from-scratch">从零创建 Schema</h3>
+
+        <p>如果需要全新的工作流：</p>
+
+<pre><code># Interactive
+openspec schema init research-first
+
+# Non-interactive
+openspec schema init rapid \
+  --description "Rapid iteration workflow" \
+  --artifacts "proposal,tasks" \
+  --default
+</code></pre>
+
+        <h3 id="schema-structure">Schema 结构</h3>
+
+        <p>Schema 定义了工作流中的产物以及它们之间的依赖关系：</p>
+
+<pre><code># openspec/schemas/my-workflow/schema.yaml
+name: my-workflow
+version: 1
+description: My team's custom workflow
+
+artifacts:
+  - id: proposal
+    generates: proposal.md
+    description: Initial proposal document
+    template: proposal.md
+    instruction: |
+      Create a proposal that explains WHY this change is needed.
+      Focus on the problem, not the solution.
+    requires: []
+
+  - id: design
+    generates: design.md
+    description: Technical design
+    template: design.md
+    instruction: |
+      Create a design document explaining HOW to implement.
+    requires:
+      - proposal    # Can't create design until proposal exists
+
+  - id: tasks
+    generates: tasks.md
+    description: Implementation checklist
+    template: tasks.md
+    requires:
+      - design
+
+apply:
+  requires: [tasks]
+  tracks: tasks.md
+</code></pre>
+
+        <p><strong>关键字段：</strong></p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>字段</th>
+              <th>用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>id</code></td>
+              <td>唯一标识符，用于命令和规则</td>
+            </tr>
+            <tr>
+              <td><code>generates</code></td>
+              <td>输出文件名（支持通配符如 <code>specs/**/*.md</code>）</td>
+            </tr>
+            <tr>
+              <td><code>template</code></td>
+              <td><code>templates/</code> 目录中的模板文件</td>
+            </tr>
+            <tr>
+              <td><code>instruction</code></td>
+              <td>创建该产物的 AI 指令</td>
+            </tr>
+            <tr>
+              <td><code>requires</code></td>
+              <td>依赖项 - 哪些产物必须先存在</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="templates">模板</h3>
+
+        <p>模板是引导 AI 的 Markdown 文件。在创建产物时，它们会被注入到提示词中。</p>
+
+<pre><code>&lt;!-- templates/proposal.md --&gt;
+## Why
+
+&lt;!-- Explain the motivation for this change. What problem does this solve? --&gt;
+
+## What Changes
+
+&lt;!-- Describe what will change. Be specific about new capabilities or modifications. --&gt;
+
+## Impact
+
+&lt;!-- Affected code, APIs, dependencies, systems --&gt;
+</code></pre>
+
+        <p>模板可以包含：</p>
+        <ul>
+          <li>AI 应填写的章节标题</li>
+          <li>带有 AI 指导的 HTML 注释</li>
+          <li>展示预期结构的示例格式</li>
+        </ul>
+
+        <h3 id="validate-your-schema">验证你的 Schema</h3>
+
+        <p>在使用自定义 Schema 之前，请先验证：</p>
+
+<pre><code>openspec schema validate my-workflow
+</code></pre>
+
+        <p>这会检查：</p>
+        <ul>
+          <li><code>schema.yaml</code> 语法是否正确</li>
+          <li>所有引用的模板是否存在</li>
+          <li>没有循环依赖</li>
+          <li>产物 ID 是否有效</li>
+        </ul>
+
+        <h3 id="use-your-custom-schema">使用你的自定义 Schema</h3>
+
+        <p>创建完成后，通过以下方式使用：</p>
+
+<pre><code># Specify on command
+openspec new change feature --schema my-workflow
+
+# Or set as default in config.yaml
+schema: my-workflow
+</code></pre>
+
+        <h3 id="debug-schema-resolution">调试 Schema 解析</h3>
+
+        <p>不确定正在使用哪个 Schema？通过以下命令检查：</p>
+
+<pre><code># See where a specific schema resolves from
+openspec schema which my-workflow
+
+# List all available schemas
+openspec schema which --all
+</code></pre>
+
+        <p>输出会显示它来自你的项目、用户目录还是包：</p>
+
+<pre><code>Schema: my-workflow
+Source: project
+Path: /path/to/project/openspec/schemas/my-workflow
+</code></pre>
+
+        <hr>
+
+        <blockquote>
+          <p><strong>注意：</strong>OpenSpec 也支持用户级别的 Schema，位于 <code>~/.local/share/openspec/schemas/</code>，可在不同项目间共享。但建议使用 <code>openspec/schemas/</code> 中的项目级 Schema，因为它们与代码一起进行版本控制。</p>
+        </blockquote>
+
+        <hr>
+
+        <h2 id="examples">示例</h2>
+
+        <h3 id="rapid-iteration-workflow">快速迭代工作流</h3>
+
+        <p>一个用于快速迭代的最简工作流：</p>
+
+<pre><code># openspec/schemas/rapid/schema.yaml
+name: rapid
+version: 1
+description: Fast iteration with minimal overhead
+
+artifacts:
+  - id: proposal
+    generates: proposal.md
+    description: Quick proposal
+    template: proposal.md
+    instruction: |
+      Create a brief proposal for this change.
+      Focus on what and why, skip detailed specs.
+    requires: []
+
+  - id: tasks
+    generates: tasks.md
+    description: Implementation checklist
+    template: tasks.md
+    requires: [proposal]
+
+apply:
+  requires: [tasks]
+  tracks: tasks.md
+</code></pre>
+
+        <h3 id="adding-a-review-artifact">添加审查产物</h3>
+
+        <p>Fork 默认 Schema 并添加审查步骤：</p>
+
+<pre><code>openspec schema fork spec-driven with-review
+</code></pre>
+
+        <p>然后编辑 <code>schema.yaml</code> 添加：</p>
+
+<pre><code>  - id: review
+    generates: review.md
+    description: Pre-implementation review checklist
+    template: review.md
+    instruction: |
+      Create a review checklist based on the design.
+      Include security, performance, and testing considerations.
+    requires:
+      - design
+
+  - id: tasks
+    # ... existing tasks config ...
+    requires:
+      - specs
+      - design
+      - review    # Now tasks require review too
+</code></pre>
+
+        <hr>
+
+        <h2 id="community-schemas">社区 Schema</h2>
+
+        <p>OpenSpec 还支持通过独立仓库分发的社区维护 Schema。它们提供将 OpenSpec 与其他工具或系统集成的定制化工作流，类似于 <a href="https://github.com/github/spec-kit/tree/main/extensions">github/spec-kit 的社区扩展目录</a>对 spec-kit 的作用。</p>
+
+        <p>社区 Schema 不会内置到 OpenSpec 核心中——它们存在于自己的仓库中，有自己的发布节奏。要使用一个社区 Schema，将 Schema 包复制到你项目的 <code>openspec/schemas/&lt;schema-name&gt;/</code> 目录中（每个仓库的 README 都有安装说明）。</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Schema</th>
+              <th>维护者</th>
+              <th>仓库</th>
+              <th>描述</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>superpowers-bridge</code></td>
+              <td>@JiangWay</td>
+              <td><a href="https://github.com/JiangWay/openspec-schemas/tree/main/superpowers-bridge">JiangWay/openspec-schemas</a></td>
+              <td>将 OpenSpec 的产物治理与 <a href="https://github.com/obra/superpowers">obra/superpowers</a> 执行技能（头脑风暴、编写计划、通过子代理进行 TDD、代码审查、收尾）集成。添加了一个以证据为先的 <code>retrospective</code> 产物，填补了 Superpowers 原生不覆盖的空白。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <blockquote>
+          <p>想要贡献一个社区 Schema？开一个 issue 附上你的仓库链接，或者提交一个 PR 将一行记录添加到此表中。</p>
+        </blockquote>
+
+        <hr>
+
+        <h2 id="see-also">另请参阅</h2>
+
+        <ul>
+          <li><a href="cli.html#schema-commands">CLI 参考：Schema 命令</a> - 完整命令文档</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="glossary.html">← 上一页：术语表</a>
+        </div>
+        <div>
+          <a href="multi-language.html">下一页：多语言支持 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

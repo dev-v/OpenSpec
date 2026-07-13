@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多语言支持 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item active"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>多语言支持</span>
+      </div>
+
+      <div class="page-header">
+        <h1>多语言指南</h1>
+        <p class="subtitle">配置 OpenSpec 以生成英语以外的语言产物</p>
+      </div>
+
+      <article>
+        <p>配置 OpenSpec 以生成英语以外的语言产物。</p>
+
+        <h2 id="quick-setup">快速设置</h2>
+
+        <p>在你的 <code>openspec/config.yaml</code> 中添加语言指令：</p>
+
+<pre><code>schema: spec-driven
+
+context: |
+  Language: Portuguese (pt-BR)
+  All artifacts must be written in Brazilian Portuguese.
+
+  # Your other project context below...
+  Tech stack: TypeScript, React, Node.js
+</code></pre>
+
+        <p>就是这样。所有生成的产物现在都将是葡萄牙语的。</p>
+
+        <h2 id="language-examples">语言示例</h2>
+
+        <h3 id="portuguese-brazil">葡萄牙语（巴西）</h3>
+
+<pre><code>context: |
+  Language: Portuguese (pt-BR)
+  All artifacts must be written in Brazilian Portuguese.
+</code></pre>
+
+        <h3 id="spanish">西班牙语</h3>
+
+<pre><code>context: |
+  Idioma: Español
+  Todos los artefactos deben escribirse en español.
+</code></pre>
+
+        <h3 id="chinese-simplified">中文（简体）</h3>
+
+<pre><code>context: |
+  语言：中文（简体）
+  所有产出物必须用简体中文撰写。
+</code></pre>
+
+        <h3 id="japanese">日语</h3>
+
+<pre><code>context: |
+  言語：日本語
+  すべての成果物は日本語で作成してください。
+</code></pre>
+
+        <h3 id="french">法语</h3>
+
+<pre><code>context: |
+  Langue : Français
+  Tous les artefacts doivent être rédigés en français.
+</code></pre>
+
+        <h3 id="german">德语</h3>
+
+<pre><code>context: |
+  Sprache: Deutsch
+  Alle Artefakte müssen auf Deutsch verfasst werden.
+</code></pre>
+
+        <h2 id="tips">技巧</h2>
+
+        <h3 id="handle-technical-terms">处理技术术语</h3>
+
+        <p>决定如何处理技术术语：</p>
+
+<pre><code>context: |
+  Language: Japanese
+  Write in Japanese, but:
+  - Keep technical terms like "API", "REST", "GraphQL" in English
+  - Code examples and file paths remain in English
+</code></pre>
+
+        <h3 id="combine-with-other-context">与其他上下文结合</h3>
+
+        <p>语言设置可与你的其他项目上下文一起使用：</p>
+
+<pre><code>schema: spec-driven
+
+context: |
+  Language: Portuguese (pt-BR)
+  All artifacts must be written in Brazilian Portuguese.
+
+  Tech stack: TypeScript, React 18, Node.js 20
+  Database: PostgreSQL with Prisma ORM
+</code></pre>
+
+        <h2 id="verification">验证</h2>
+
+        <p>要验证你的语言配置是否生效：</p>
+
+<pre><code># Check the instructions - should show your language context
+openspec instructions proposal --change my-change
+
+# Output will include your language context
+</code></pre>
+
+        <h2 id="related-documentation">相关文档</h2>
+
+        <ul>
+          <li><a href="customization.html">自定义配置指南</a> - 项目配置选项</li>
+          <li><a href="workflows.html">工作流指南</a> - 完整的工作流文档</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="customization.html">← 上一页：自定义配置</a>
+        </div>
+        <div>
+          <a href="supported-tools.html">下一页：支持的工具 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

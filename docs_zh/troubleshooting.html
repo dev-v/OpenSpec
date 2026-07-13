@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>故障排除 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item active"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>故障排除</span>
+      </div>
+
+      <div class="page-header">
+        <h1>故障排除</h1>
+        <p class="subtitle">具体问题的具体修复方案</p>
+      </div>
+
+      <article>
+        <p>具体问题的具体修复方案。每一条都命名一个症状，用一句话解释可能的原因，并给出修复方法。如果你在这里找不到你的问题，<a href="faq.html">常见问题</a>可能有帮助，<a href="https://discord.gg/YctCnvvshC">Discord</a>肯定有帮助。</p>
+
+        <h2 id="installation-and-setup">安装和设置</h2>
+
+        <h3 id="command-not-found"><code>openspec: command not found</code></h3>
+        <p>CLI 没有安装，或者你的 shell 找不到它。全局安装并检查：</p>
+
+<pre><code>npm install -g @fission-ai/openspec@latest
+openspec --version
+</code></pre>
+
+        <p>如果安装了但仍然找不到，你的全局 npm bin 目录可能不在 <code>PATH</code> 中。运行 <code>npm bin -g</code> 查看全局二进制文件的位置，确保该路径在你的 shell 配置文件中。</p>
+
+        <h3 id="requires-node">"Requires Node.js 20.19.0 or higher"</h3>
+        <p>OpenSpec 需要 Node 20.19.0+。检查你的版本并在需要时升级：</p>
+
+<pre><code>node --version
+</code></pre>
+
+        <p>如果你使用 bun 安装 OpenSpec，注意 OpenSpec 仍然在 Node 上<em>运行</em>，所以无论如何你都需要在 <code>PATH</code> 中有 Node 20.19.0+。参见<a href="installation.html">安装指南</a>。</p>
+
+        <h3 id="init-didnt-configure"><code>openspec init</code> 没有配置我的 AI 工具</h3>
+        <p>Init 会询问要设置哪些工具。如果你跳过了你的工具或想添加另一个，再运行一次，或使用非交互式形式：</p>
+
+<pre><code>openspec init --tools claude,cursor
+</code></pre>
+
+        <p>完整的工具 ID 列表见<a href="supported-tools.html">支持的工具</a>。使用 <code>--tools all</code> 配置所有工具，<code>--tools none</code> 跳过工具设置。</p>
+
+        <h2 id="commands-dont-show-up">命令不出现</h2>
+
+        <p>如果 <code>/opsx:propose</code>（或你的工具的等效命令）不出现或不起作用，按以下列表排查。它们按检查速度从快到慢排列。</p>
+
+        <ol>
+          <li><strong>你可能搞错了地方。</strong> 斜杠命令在 AI 助手的聊天中运行，而不是你的终端。如果你在 shell 中输入了 <code>/opsx:propose</code>，那就是问题所在。参见<a href="how-commands-work.html">命令工作原理</a>。</li>
+
+          <li><strong>重新生成文件。</strong> 从你的项目根目录：
+
+<pre><code>openspec update
+</code></pre>
+
+          这会为你配置的每个工具重写技能和命令文件。</li>
+
+          <li><strong>重启你的助手。</strong> 大多数工具在启动时扫描技能和命令。一个新窗口通常就能搞定。</li>
+
+          <li><strong>确认文件存在。</strong> 对于 Claude Code，检查 <code>.claude/skills/</code> 是否包含 <code>openspec-*</code> 文件夹。其他工具有自己的目录，全部列在<a href="supported-tools.html">支持的工具</a>中。</li>
+
+          <li><strong>检查你是否初始化了该项目。</strong> 技能是按项目写入的。如果你克隆了一个仓库或切换了文件夹，在那里运行 <code>openspec init</code>（或 <code>openspec update</code>）。</li>
+
+          <li><strong>确认你的工具支持命令文件。</strong> 少数工具（Kimi CLI、ForgeCode、Mistral Vibe）不生成 <code>opsx-*</code> 命令文件；它们使用基于技能的调用。格式因工具而异：参见<a href="supported-tools.html">支持的工具</a>和<a href="how-commands-work.html#slash-command-syntax-by-tool">命令工作原理</a>。</li>
+        </ol>
+
+        <h2 id="working-with-changes">处理变更</h2>
+
+        <h3 id="change-not-found">"Change not found"</h3>
+        <p>命令无法判断你指的是哪个变更。明确命名它，或检查有什么：
+
+<pre><code>openspec list                    # see active changes
+/opsx:apply add-dark-mode        # name the change in chat
+</code></pre>
+
+        <p>同时确认你在正确的项目目录中。</p>
+
+        <h3 id="no-artifacts-ready">"No artifacts ready"</h3>
+        <p>每个产物要么已经创建，要么在等待依赖项。查看什么在阻塞：
+
+<pre><code>openspec status --change &lt;name&gt;
+</code></pre>
+
+        <p>然后先创建缺失的依赖项。记住顺序：proposal 启用 specs 和 design；specs 和 design 一起启用 tasks。</p>
+
+        <h3 id="validate-warnings"><code>openspec validate</code> 报告警告或错误</h3>
+        <p>验证会检查你的规格说明和变更是否有结构性问题。阅读消息：它会命名文件和问题。</p>
+
+<pre><code>openspec validate &lt;name&gt;           # validate one item
+openspec validate --all            # validate everything
+openspec validate --all --strict   # stricter checks, good for CI
+</code></pre>
+
+        <p>常见原因包括缺少必需章节（如没有场景的规格说明）或格式错误的 delta 头。修复文件并重新运行。<a href="cli.html#openspec-validate">CLI 参考</a>文档了输出格式。</p>
+
+        <h3 id="ai-created-incomplete">AI 创建了不完整或错误的产物</h3>
+        <p>AI 没有足够的上下文。几个手段有帮助：</p>
+
+        <ul>
+          <li>在 <code>openspec/config.yaml</code> 中添加项目上下文，使你的技术栈和约定注入到每个请求中。参见<a href="customization.html#project-configuration">自定义配置</a>。</li>
+          <li>添加按产物的 <code>rules:</code> 用于仅适用于例如规格说明的指导。</li>
+          <li>在提议时给出更详细的描述。</li>
+          <li>使用扩展的 <code>/opsx:continue</code> 一次创建一个产物并逐一审查，而不是用 <code>/opsx:ff</code> 一次性全部创建。</li>
+        </ul>
+
+        <h3 id="archive-wont-finish">归档无法完成，或警告未完成的任务</h3>
+        <p>归档不会因为未完成的任务而<em>阻塞</em>，但会警告你，因为归档通常意味着工作已完成。如果任务是有意保留的（你在归档部分变更），继续。否则先完成任务。归档还会提议将你的 delta 规格合并到主规格中（如果你还没有同步）；除非你有理由不这样做，否则选择是。</p>
+
+        <h2 id="configuration">配置</h2>
+
+        <h3 id="config-not-applied">我的 <code>config.yaml</code> 没有生效</h3>
+        <p>三个常见嫌疑：</p>
+
+        <ol>
+          <li><strong>文件名错误。</strong> 必须是 <code>openspec/config.yaml</code>，而不是 <code>.yml</code>。</li>
+          <li><strong>无效的 YAML。</strong> 用任何 YAML 验证器运行；CLI 也会报告带行号的语法错误。</li>
+          <li><strong>你期望需要重启。</strong> 不需要。配置更改立即生效。</li>
+        </ol>
+
+        <h3 id="unknown-artifact-id">"Unknown artifact ID in rules: X"</h3>
+        <p><code>rules:</code> 下的一个键与你的 Schema 中的任何产物都不匹配。对于默认的 <code>spec-driven</code> Schema，有效的 ID 是 <code>proposal</code>、<code>specs</code>、<code>design</code>、<code>tasks</code>。查看任何 Schema 的 ID：</p>
+
+<pre><code>openspec schemas --json
+</code></pre>
+
+        <h3 id="context-too-large">"Context too large"</h3>
+        <p><code>context:</code> 字段限制为 50KB，这是有意为之的，因为它被注入到每个请求中。精简它，或链接到更长的文档而不是粘贴。精简的上下文也会产生更好、更快的结果。</p>
+
+        <h3 id="schema-not-found">"Schema not found"</h3>
+        <p>你引用的 Schema 名称不存在。列出可用的并检查拼写：</p>
+
+<pre><code>openspec schemas                    # list available schemas
+openspec schema which &lt;name&gt;        # see where a schema resolves from
+openspec schema init &lt;name&gt;         # create a custom one
+</code></pre>
+
+        <p>参见<a href="customization.html#custom-schemas">自定义配置</a>。</p>
+
+        <h2 id="migration-from-legacy">从旧工作流迁移</h2>
+
+        <h3 id="legacy-files-non-interactive">"Legacy files detected in non-interactive mode"</h3>
+        <p>你在 CI 或非交互式 shell 中运行，OpenSpec 发现有旧文件需要清理但无法提示你。自动批准：</p>
+
+<pre><code>openspec init --force
+</code></pre>
+
+        <h3 id="commands-didnt-appear-after-migrating">迁移后命令没出现</h3>
+        <p>重启你的 IDE。技能在启动时检测。如果仍然不出现，运行 <code>openspec update</code> 并检查<a href="supported-tools.html">支持的工具</a>中的文件位置。</p>
+
+        <h3 id="project-md-not-migrated">我的旧 <code>project.md</code> 没有被迁移</h3>
+        <p>那是有意为之的。OpenSpec 从不自动删除 <code>project.md</code>，因为它可能包含你写的上下文。将有用的部分移动到 <code>config.yaml</code> 的 <code>context:</code> 部分，然后自己删除它。<a href="migration-guide.html#migrating-projectmd-to-configyaml">迁移指南</a>详细介绍了这个过程，包括一个你可以交给 AI 来做精炼的提示词。</p>
+
+        <h2 id="still-stuck">仍然卡住了？</h2>
+
+        <ul>
+          <li><strong>Discord：</strong> <a href="https://discord.gg/YctCnvvshC">discord.gg/YctCnvvshC</a></li>
+          <li><strong>GitHub Issues：</strong> <a href="https://github.com/Fission-AI/OpenSpec/issues">github.com/Fission-AI/OpenSpec/issues</a></li>
+          <li><strong>从终端：</strong> <code>openspec feedback "what went wrong"</code> 会为你打开一个 issue。</li>
+        </ul>
+
+        <p>当你报告问题时，请包含你的 OpenSpec 版本（<code>openspec --version</code>）、你的 Node 版本（<code>node --version</code>）、你的 AI 工具，以及确切的命令和输出。这会让帮助快得多。</p>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="faq.html">← 上一页：常见问题</a>
+        </div>
+        <div>
+          <a href="migration-guide.html">下一页：迁移指南 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

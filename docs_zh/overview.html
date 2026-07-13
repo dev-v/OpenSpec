@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>核心概念一览 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>核心概念一览</span>
+      </div>
+
+      <div class="page-header">
+        <h1>核心概念一览</h1>
+        <p class="subtitle">一页纸呈现整个心智模型</p>
+      </div>
+
+      <article>
+        <p><strong>OpenSpec 是你与 AI 之间的一个轻量级协议层。</strong>你写下变更应该做什么，AI 草拟细节，你们一起看同一份计划，然后才开始写代码。本页是整个心智模型的一屏概览。想要详细版本，<a href="concepts.html">概念</a>有。</p>
+
+        <p>整个想法用五个字概括：<strong>先达成共识，再放心构建。</strong></p>
+
+        <h2>五个核心理念</h2>
+        <p>OpenSpec 的一切都由五个概念构建而成。学会这些，其余都是细节。</p>
+
+        <p><strong>1. 规格即真相。</strong>规格描述你的系统<em>现在</em>的行为。它位于 <code>openspec/specs/</code>，按领域组织（<code>auth/</code>、<code>payments/</code>、<code>ui/</code>）。规格由需求（"系统 SHALL 在 30 分钟后过期会话"）和场景（具体的 given/when/then 示例）组成。把规格想成"这个软件做什么？"的唯一共识答案。</p>
+
+        <p><strong>2. 变更是一个工作单元。</strong>当你想添加、修改或删除行为时，你创建一个变更：<code>openspec/changes/</code> 中的一个文件夹，包含关于该工作的所有内容。一个提案、一个设计、一个任务清单和规格编辑。一个变更，一个文件夹，一个功能。</p>
+
+        <p><strong>3. 增量规格描述变化，而不是整个世界。</strong>在变更内部，你不需要重写整个规格。你写一个小增量：<code>ADDED</code> 这个需求，<code>MODIFIED</code> 那个需求，<code>REMOVED</code> 另一个。这就是让 OpenSpec 擅长编辑现有系统的技巧，而不仅仅是全新系统。你描述差异，而非终态。</p>
+
+        <p><strong>4. 工件之间相互构建。</strong>一个变更包含几个文档，按自然顺序创建，每个喂养下一个：</p>
+        <pre><code>proposal ──► specs ──► design ──► tasks ──► implement
+   why        what       how       steps      do it</code></pre>
+        <p>你可以随时回看任何一个。它们是使能者，不是关卡。（下面有更多说明。）</p>
+
+        <p><strong>5. 归档将变更折叠回真相。</strong>当工作完成后，你归档变更。它的增量规格合并到你的主规格中，变更文件夹移至 <code>changes/archive/</code> 并加上日期戳。现在你的规格描述了新的现实，你准备好开始下一个变更了。循环闭合。</p>
+
+        <h2>全貌图</h2>
+        <pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                          openspec/                              │
+│                                                                 │
+│   ┌──────────────────┐         ┌──────────────────────────┐    │
+│   │     specs/       │         │        changes/          │    │
+│   │                  │ ◄─────  │                          │    │
+│   │ source of truth  │  merge  │ one folder per change    │    │
+│   │ how things work  │  on     │ proposal · design ·      │    │
+│   │ today            │ archive │ tasks · delta specs      │    │
+│   └──────────────────┘         └──────────────────────────┘    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+        <p>两个文件夹。<code>specs/</code> 是真相。<code>changes/</code> 是你提议的。归档将提案移入真相。</p>
+
+        <h2>你实际运行的循环</h2>
+        <p>在默认设置下，你的一天是这样的。可选地先理清思路；然后一个命令草拟计划，你阅读它，下一个构建它，最后一个归档。</p>
+        <pre><code>/opsx:explore                   →  (optional) think it through with the AI first
+/opsx:propose add-dark-mode     →  AI drafts proposal, specs, design, tasks
+        (you read and adjust the plan)
+/opsx:apply                     →  AI builds it, checking off tasks
+/opsx:archive                   →  specs updated, change archived</code></pre>
+
+        <p><strong>不确定时，先探索。</strong><code>/opsx:explore</code> 是一个零成本的思考伙伴：它阅读你的代码、列出选项，并在任何工件存在之前将模糊想法变成具体计划。它是应对 AI 从模糊提示中构建<em>某些东西</em>的最佳解药。已经确切知道要什么？直接跳到 <code>/opsx:propose</code>。无论哪种方式，探索包含在默认配置中，随时可用。参见 <a href="explore.html">探索指南</a>。</p>
+
+        <p>这些是斜杠命令，在 AI 助手的聊天中输入。设置（<code>openspec init</code>）在终端中完成。如果这个分离对你来说是新的，先读 <a href="how-commands-work.html">命令工作原理</a>；这是最常见的困惑点。</p>
+
+        <h2>"使能者，不是关卡"</h2>
+        <p>这句话在 OpenSpec 中随处可见，所以这里用通俗的语言解释它的含义。</p>
+
+        <p>传统规格流程是瀑布式的：完成规划，<em>然后</em>才允许实现，回退很痛苦。OpenSpec 拒绝这样做。<code>proposal → specs → design → tasks</code> 的顺序展示的是接下来<em>可以</em>做什么，而不是你<em>被迫</em>接下来做什么。</p>
+
+        <p>在实现过程中发现设计错了？编辑 <code>design.md</code> 然后继续。发现范围应该缩小？更新提案。没有什么是锁定的。依赖关系之所以存在，只是为了让 AI 有它需要的上下文（没有规格作为基础，你写不出好的任务），而不是为了限制你。</p>
+
+        <p>这里的优势是诚实：真实工作是杂乱和迭代的，OpenSpec 允许它如此。代价是自律：因为没有东西强迫你向前，所以保持变更聚焦而非任其蔓延取决于你自己。<a href="workflows.html">工作流</a>指南有好的习惯建议。</p>
+
+        <h2>为什么这点小开销值得</h2>
+        <p>简单的事实：OpenSpec 增加了一个步骤。你在构建前写一个简短计划。那么你能得到什么？</p>
+        <ul>
+          <li><strong>在付出代价之前抓住错误方向。</strong>在一段话的提案中修复误解是免费的。在 AI 写了 400 行代码后修复就不是了。</li>
+          <li><strong>计划和代码在同一个仓库中。</strong>六个月后，规格告诉你（以及下一个 AI 会话）系统为什么这样工作。</li>
+          <li><strong>变更可审查。</strong>变更文件夹是一个整洁的包：读提案、浏览增量、检查任务。无需在聊天历史中考古。</li>
+          <li><strong>适配现有代码库。</strong>增量意味着你可以为 50,000 行的应用指定一个变更，而不必先记录整个系统。</li>
+        </ul>
+        <p>诚实的权衡是：对于真正琐碎的一行修复，这些流程可能不划算，那也没关系。OpenSpec 设计为轻量级，但不是免费的。在共识重要的地方使用它——当你与一个会自信地构建你模糊要求的任何东西的 AI 协作时，这基本上是大部分时候。</p>
+
+        <h2>接下来去哪里</h2>
+        <ul>
+          <li>第一次来？<a href="getting-started.html">快速开始</a>完整走完第一个变更。</li>
+          <li>不确定要构建什么？<a href="explore.html">探索优先</a>是开始的地方。</li>
+          <li>对命令在哪里运行感到困惑？<a href="how-commands-work.html">命令工作原理</a>。</li>
+          <li>想要上面所有内容的深入版本？<a href="concepts.html">概念</a>。</li>
+          <li>通过示例学习？<a href="examples.html">示例与配方</a>。</li>
+          <li>需要术语定义？<a href="glossary.html">术语表</a>。</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="how-commands-work.html">← 上一页：命令工作原理</a>
+        </div>
+        <div>
+          <a href="installation.html">下一页：安装指南 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

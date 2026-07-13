@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>编辑与迭代变更 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item active"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>编辑与迭代变更</span>
+      </div>
+
+      <div class="page-header">
+        <h1>编辑与迭代变更</h1>
+        <p class="subtitle">变更是活文件——随时编辑提案、设计、规格和任务</p>
+      </div>
+
+      <article>
+        <p><strong>变更中的每个制品都是你可以随时编辑的 Markdown 文件。</strong>没有锁定的"规划阶段"，没有审批门，没有需要进入的特殊编辑模式。想在开始构建后修改提案？打开 <code>proposal.md</code> 改就是了。实现中途发现设计有误？修改 <code>design.md</code> 然后继续。这就是全部答案，而且是刻意的。</p>
+
+        <p>本页针对你觉得"等等，我可以回去改那个吗？"的时刻。是的。以下是每种常见情况的做法。</p>
+
+        <h2>编辑任何东西的两种方式</h2>
+
+        <p>你总是有这两种选择：</p>
+
+        <ol>
+          <li><strong>直接编辑文件。</strong>制品是 <code>openspec/changes/&lt;name&gt;/</code> 中的纯 Markdown。在你的编辑器中打开 <code>proposal.md</code>、<code>design.md</code>、<code>tasks.md</code> 或 <code>specs/</code> 下的增量规格并修改它。不需要其他操作。</li>
+
+          <li><strong>让 AI 修改。</strong>在聊天中，直接说出你想要的："更新提案去掉缓存方案并加一个速率限制部分"，或者"设计应该用队列而不是轮询"。AI 使用变更的其余部分作为上下文编辑制品。</li>
+        </ol>
+
+        <p>选择适合当前时刻的方式。小措辞调整？编辑文件。实质性重新思考？让 AI 在完整上下文中修改。</p>
+
+        <h2>"开始后如何更新提案（或规格）？"</h2>
+
+        <p>直接更新它。同一个变更，精炼后的。</p>
+
+        <p>如果你使用扩展命令，自然的流程是：编辑制品，然后运行 <code>/opsx:continue</code> 从新状态继续，或 <code>/opsx:apply</code> 继续按更新后的计划实现。如果你在默认 <code>core</code> 命令上，编辑制品并运行 <code>/opsx:apply</code>；它读取当前文件，所以它按照制品现在说的内容构建。</p>
+
+        <p>心智模型：制品是活计划，不是签署的合同。AI 总是从它们的当前内容工作，所以编辑它们就是在引导工作。</p>
+
+<pre><code>You: I want to change the approach in this change.
+
+You: [edit design.md, or tell the AI:]
+     Update design.md to use a background job instead of a synchronous call.
+
+AI:  Updated design.md. The task list still fits; want me to continue applying?
+
+You: /opsx:apply
+</code></pre>
+
+        <p>这回答了一个非常常见的问题：没有单独的"更新提案"命令，因为你不需要一个。文件就是真相来源，编辑它（手动或通过 AI）就是更新。</p>
+
+        <h2>"实现后如何回到审查？"</h2>
+
+        <p>你不需要"回去"，因为你从未离开。工作流是流动的：审查、编辑和实现不是你被困住的顺序阶段。</p>
+
+        <p>具体来说，在一些 <code>/opsx:apply</code> 工作之后：</p>
+
+        <ul>
+          <li>想重新检查计划？打开制品阅读它们，或在终端运行 <code>openspec show &lt;change&gt;</code> 获取整合视图。</li>
+          <li>发现要修改的？编辑制品（或让 AI 来做），然后继续。</li>
+          <li>想要一个结构化的检查看代码是否匹配计划？运行 <code>/opsx:verify</code>（扩展命令）。它报告完整性、正确性和一致性，不阻止任何东西。参见<a href="workflows.html#verify-check-your-work">工作流：验证</a>。</li>
+        </ul>
+
+        <p>没有要返回的"审查阶段"，因为审查是你随时可以做的事，包括在实现之后。</p>
+
+        <h2>"我手动编辑了代码。如何与 OpenSpec 协调？"</h2>
+
+        <p>这经常发生而且没关系。你在编辑器中调整了一些东西，现在代码和制品不一致了。以哪个方向为真就让它们重新同步：</p>
+
+        <ul>
+          <li><strong>代码现在是正确的，规格过时了。</strong>更新增量规格（和相关任务，如果有）来描述你实际交付的行为。规格在归档前应该匹配现实，因为归档将规格合并到你的真相来源中。</li>
+          <li><strong>规格是正确的，代码偏移了。</strong>继续构建或修复直到代码匹配规格。</li>
+        </ul>
+
+        <p>快速发现不匹配的方法是 <code>/opsx:verify</code>：它读取你的制品和代码并告诉你它们在哪里分歧。把它的输出当作协调的待办清单，然后等它们一致后归档。</p>
+
+        <p>原则是：在归档时，你的规格成为记录的真相。所以在归档之前，让规格如实反映代码做了什么。手动编辑是受欢迎的；只是不要让它们悄悄地使规格脱节。</p>
+
+        <h2>精炼你不满意的提案</h2>
+
+        <p>如果生成的提案没命中目标，你有三个好动作：</p>
+
+        <ul>
+          <li><strong>就地迭代。</strong>告诉 AI 哪里不对（"范围太宽，去掉管理功能"）让它修改。最便宜而且通常正确。</li>
+          <li><strong>先探索再重新提议。</strong>如果问题是想法本身不清晰，退回 <code>/opsx:explore</code>，想清楚，让更清晰的提案从中产出。参见<a href="explore.html">探索优先</a>。</li>
+          <li><strong>重新开始。</strong>如果意图已经根本改变，一个新的变更可能比修补旧的更清晰。</li>
+        </ul>
+
+        <p>最后一个动作有它自己的决策指南，接下来。</p>
+
+        <h2>何时更新 vs. 开始新变更</h2>
+
+        <p>简短版本：<strong>当是同一工作的精炼时更新；当意图根本改变或范围爆炸成不同的工作时开始新的。</strong></p>
+
+        <ul>
+          <li>相同目标，更好的方案？更新。</li>
+          <li>范围缩小（现在先交付 MVP，更多以后）？更新，然后归档，然后新变更做第二阶段。</li>
+          <li>问题本身变了（"添加暗色模式"变成"构建完整的主题系统"）？新变更。</li>
+        </ul>
+
+        <p>在<a href="workflows.html#when-to-update-vs-start-fresh">工作流：何时更新 vs 开始新变更</a>中有完整的流程图和实例，在<a href="opsx.html#when-to-update-vs-start-fresh">OPSX：何时更新 vs. 开始新变更</a>中有更深入的处理。</p>
+
+        <h2>关于任务的一点说明</h2>
+
+        <p><code>tasks.md</code> 是一个活清单，不是冻结的计划。随着你实施，你可以添加发现的任务，删除结果不必要的任务，或重新排序。AI 在 <code>/opsx:apply</code> 期间完成时勾选项，如果你之后回来它会从第一个未勾选的任务恢复。中途编辑列表是预期的。</p>
+
+        <h2>接下来去哪里</h2>
+
+        <ul>
+          <li><a href="workflows.html">工作流</a> - 模式，以及更新 vs 新建的决策指南</li>
+          <li><a href="reviewing-changes.html">审查变更</a> - 构建前对计划的两分钟审查</li>
+          <li><a href="explore.html">探索优先</a> - 当一个想法需要重新思考时退回去的地方</li>
+          <li><a href="commands.html">命令</a> - <code>/opsx:continue</code>、<code>/opsx:apply</code> 和 <code>/opsx:verify</code> 的详细说明</li>
+          <li><a href="concepts.html#artifacts">概念：制品</a> - 每个制品的用途</li>
+        </ul>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="existing-projects.html">← 上一页：在现有项目中使用</a>
+        </div>
+        <div>
+          <a href="commands.html">下一页：命令参考 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>

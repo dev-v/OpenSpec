@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>常见问题 - OpenSpec 中文文档</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>OpenSpec</h1>
+        <p>中文文档</p>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="搜索文档...">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-group">
+          <div class="nav-group-title">从这里开始</div>
+          <ul>
+            <li class="nav-item"><a href="getting-started.html">快速开始</a></li>
+            <li class="nav-item"><a href="explore.html">探索优先</a></li>
+            <li class="nav-item"><a href="how-commands-work.html">命令工作原理</a></li>
+            <li class="nav-item"><a href="overview.html">核心概念一览</a></li>
+            <li class="nav-item"><a href="installation.html">安装指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">日常使用</div>
+          <ul>
+            <li class="nav-item"><a href="workflows.html">工作流</a></li>
+            <li class="nav-item"><a href="examples.html">示例与配方</a></li>
+            <li class="nav-item"><a href="writing-specs.html">编写优质规格说明</a></li>
+            <li class="nav-item"><a href="reviewing-changes.html">审查变更</a></li>
+            <li class="nav-item"><a href="team-workflow.html">团队协作</a></li>
+            <li class="nav-item"><a href="existing-projects.html">在现有项目中使用</a></li>
+            <li class="nav-item"><a href="editing-changes.html">编辑与迭代变更</a></li>
+            <li class="nav-item"><a href="commands.html">命令参考</a></li>
+            <li class="nav-item"><a href="cli.html">CLI 参考</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">深入理解</div>
+          <ul>
+            <li class="nav-item"><a href="concepts.html">概念详解</a></li>
+            <li class="nav-item"><a href="opsx.html">OPSX 工作流</a></li>
+            <li class="nav-item"><a href="glossary.html">术语表</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">个性化定制</div>
+          <ul>
+            <li class="nav-item"><a href="customization.html">自定义配置</a></li>
+            <li class="nav-item"><a href="multi-language.html">多语言支持</a></li>
+            <li class="nav-item"><a href="supported-tools.html">支持的工具</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">获取帮助</div>
+          <ul>
+            <li class="nav-item active"><a href="faq.html">常见问题</a></li>
+            <li class="nav-item"><a href="troubleshooting.html">故障排除</a></li>
+            <li class="nav-item"><a href="migration-guide.html">迁移指南</a></li>
+          </ul>
+        </li>
+        <li class="nav-group">
+          <div class="nav-group-title">跨仓库协作（Beta）</div>
+          <ul>
+            <li class="nav-item"><a href="stores-beta-user-guide.html">Stores 用户指南</a></li>
+            <li class="nav-item"><a href="agent-contract.html">Agent 契约</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span>常见问题</span>
+      </div>
+
+      <div class="page-header">
+        <h1>常见问题</h1>
+        <p class="subtitle">人们最常问的问题的快速解答</p>
+      </div>
+
+      <article>
+        <p>人们最常问的问题的快速解答。如果你的问题其实是"某个东西坏了"的问题，<a href="troubleshooting.html">故障排除</a>页面更合适。如果你想查找术语定义，请参阅<a href="glossary.html">术语表</a>。</p>
+
+        <h2 id="the-basics">基础知识</h2>
+
+        <h3 id="what-is-openspec">一句话概括，OpenSpec 是什么？</h3>
+        <p>一个轻量级层，让你和你的 AI 编码助手在编写任何代码之前，以书面形式就构建什么达成一致。</p>
+
+        <h3 id="why-want-it">为什么我需要它？</h3>
+        <p>因为 AI 助手即使错了也很自信。当需求只存在于聊天线程中时，AI 会用猜测来填补空白，而你要等到代码写完后才发现问题。OpenSpec 将达成一致的时机提前到修复成本很低的地方。完整论述参见<a href="overview.html">核心概念一览</a>。</p>
+
+        <h3 id="use-for-everything">我必须在所有事情上都用它吗？</h3>
+        <p>不。在达成一致重要的地方使用它，也就是大多数非简单的工作。对于一个单字符拼写错误的修复，这个流程可能不值得，那完全没问题。</p>
+
+        <h3 id="big-existing-codebase">我可以在大型现有代码库上使用它吗，还是只能用于新项目？</h3>
+        <p>现有代码库是主要场景。OpenSpec 是棕地优先的：你不需要预先文档化整个应用。你只为每个变更触及的部分编写规格说明，你的规格说明会随着你实际做的工作逐渐积累。有专门的指南：<a href="existing-projects.html">在现有项目中使用 OpenSpec</a>。</p>
+
+        <h3 id="tied-to-one-tool">它与某个 AI 工具绑定吗？</h3>
+        <p>不。OpenSpec 与 25+ 助手兼容，包括 Claude Code、Cursor、Windsurf、GitHub Copilot、Gemini CLI、Codex 等。完整列表和各工具详情见<a href="supported-tools.html">支持的工具</a>。</p>
+
+        <h2 id="running-commands">运行命令</h2>
+
+        <h3 id="where-type-slash-command">我在哪里输入 <code>/opsx:propose</code>？</h3>
+        <p>在你的 AI 助手的聊天中，而不是你的终端。这是最常见的混淆点，所以它有专门的页面：<a href="how-commands-work.html">命令工作原理</a>。简短版本：<code>openspec ...</code> 在终端运行，<code>/opsx:...</code> 在聊天中运行。</p>
+
+        <h3 id="start-interactive-mode">如何"启动交互模式"？</h3>
+        <p>没有一个单独的模式要启动。你像平时一样打开 AI 助手，在它的聊天中输入斜杠命令。斜杠命令就是你"进入" OpenSpec 的方式。（唯一真正交互式的终端功能是 <code>openspec view</code>，一个浏览规格说明和变更的仪表板。）完整说明见<a href="how-commands-work.html">命令工作原理</a>。</p>
+
+        <h3 id="slash-command-nothing-happened">我输入了斜杠命令但什么都没发生。为什么？</h3>
+        <p>很可能你在终端而不是 AI 聊天中输入了它，或者命令还没安装。在你的项目中运行 <code>openspec update</code>，重启助手，然后在聊天中尝试输入 <code>/opsx</code> 并查看自动补全。<a href="troubleshooting.html#commands-dont-show-up">故障排除</a>有完整的检查清单。</p>
+
+        <h3 id="syntax-difference">为什么在一个工具中语法是 <code>/opsx:propose</code>，而在另一个工具中是 <code>/opsx-propose</code>？</h3>
+        <p>每个 AI 工具展示自定义命令的方式略有不同。意图是相同的；只是标点符号不同。在聊天中输入一个斜杠，自动补全会显示你的工具期望的格式。各工具的对照表见<a href="how-commands-work.html#slash-command-syntax-by-tool">命令工作原理</a>。</p>
+
+        <h3 id="skill-vs-command">技能和命令有什么区别？</h3>
+        <p>两者都是 OpenSpec 写入的文件，以便你的助手可以运行工作流。Skills（<code>.../skills/openspec-*/SKILL.md</code>）是较新的跨工具标准；Commands（<code>.../commands/opsx-*</code>）是较早的每工具斜杠文件。你不需要选择。你只需输入斜杠命令，OpenSpec 会安装你的工具使用的那种。</p>
+
+        <h2 id="the-workflow">工作流</h2>
+
+        <h3 id="where-to-start">如果我不确定要构建什么，应该从哪里开始？</h3>
+        <p>从 <code>/opsx:explore</code> 开始。它是一个无风险的思考伙伴，读取你的代码库，列出选项，将模糊的问题转化为具体计划——所有这些都在任何变更或代码存在之前进行。它在默认配置中，所以总是可用的。当计划清晰后，它会交接给 <code>/opsx:propose</code>。这是你应该养成的最佳习惯，因为它阻止了一个急切的 AI 自信地构建错误的东西。参见<a href="explore.html">探索优先</a>。</p>
+
+        <h3 id="simplest-flow">最简单的流程是什么？</h3>
+
+<pre><code>/opsx:explore (optional)   then   /opsx:propose &lt;what you want&gt;   then   /opsx:apply   then   /opsx:archive
+</code></pre>
+
+        <p>探索来思考，提议来起草计划，应用来构建它，归档来收尾。当你已经确切知道你想要什么时，可以跳过探索。</p>
+
+        <h3 id="propose-vs-new"><code>/opsx:propose</code> 和 <code>/opsx:new</code> 有什么区别？</h3>
+        <p><code>/opsx:propose</code> 是默认的一步命令：它创建变更并一次性起草所有计划产物。<code>/opsx:new</code> 是扩展命令集的一部分，只搭建一个空变更，让你用 <code>/opsx:continue</code> 逐个创建产物（或用 <code>/opsx:ff</code> 一次性创建）。除非你想要逐步控制，否则使用 propose。参见<a href="commands.html">命令</a>。</p>
+
+        <h3 id="core-and-expanded-profiles">什么是 <code>core</code> 和扩展配置？</h3>
+        <p>配置决定安装哪些斜杠命令。<strong>Core</strong>（默认）提供 <code>propose</code>、<code>explore</code>、<code>apply</code>、<code>sync</code>、<code>archive</code>。<strong>扩展</strong>集添加了 <code>new</code>、<code>continue</code>、<code>ff</code>、<code>verify</code>、<code>bulk-archive</code> 和 <code>onboard</code>，用于更精细的控制。用 <code>openspec config profile</code> 切换，然后用 <code>openspec update</code> 应用。</p>
+
+        <h3 id="need-to-run-sync">我需要运行 <code>/opsx:sync</code> 吗？</h3>
+        <p>通常不需要。Sync 将变更的 delta 规格合并到你的主规格中，而 <code>/opsx:archive</code> 会提议帮你做。仅在你想在归档之前合并规格时手动运行 sync，例如在长时间运行的变更上。参见<a href="commands.html#opsxsync">命令</a>。</p>
+
+        <h3 id="edit-after-starting">我已经开始了，如何编辑提议、规格或任务？</h3>
+        <p>直接编辑文件即可。每个产物都是 <code>openspec/changes/&lt;name&gt;/</code> 中的纯 Markdown，没有锁定的阶段或特殊的编辑模式。手动更改，或要求你的 AI 修改它（"将设计更新为使用队列"），然后继续。AI 总是从当前文件内容工作。完整指南：<a href="editing-changes.html">编辑与迭代变更</a>。</p>
+
+        <h3 id="go-back-change-plan">我可以在实现了一部分后回去改变计划吗？</h3>
+        <p>可以，随时都可以。工作流是流动的，所以审查和编辑不是你会被锁出的阶段。编辑产物，然后继续。如果你想要一个结构化的检查来确认代码是否仍然匹配计划，运行 <code>/opsx:verify</code>。参见<a href="editing-changes.html#how-do-i-go-back-to-review-after-implementing">编辑与迭代变更</a>。</p>
+
+        <h3 id="reconcile-hand-edit">我手动编辑了代码。如何与规格说明协调？</h3>
+        <p>在归档之前将它们重新同步，因为归档使你的规格说明成为记录的真相。如果代码现在是正确的，更新 delta 规格以匹配你发布的内容；如果规格说明是正确的，继续构建直到代码一致。<code>/opsx:verify</code> 会显示不匹配之处。参见<a href="editing-changes.html">编辑与迭代变更</a>。</p>
+
+        <h3 id="update-vs-start-fresh">什么时候应该更新现有变更，什么时候应该开始新的？</h3>
+        <p>当是相同工作的改进时更新。当意图根本改变或范围膨胀成不同的工作时重新开始。<a href="workflows.html#when-to-update-vs-start-fresh">工作流</a>中有决策流程图和示例。</p>
+
+        <h3 id="context-runs-out">如果我的会话上下文用完了，或者需求在实现过程中发生变化怎么办？</h3>
+        <p>这正是规格说明发挥作用的地方。因为计划存在于文件中（而不仅仅在聊天历史中），你可以清除上下文，启动新的 AI 会话，用 <code>/opsx:apply</code> 继续；它会读取产物并从第一个未完成的任务恢复。如果需求变化，编辑产物以匹配新的现实并继续。保持干净的上下文窗口也会产生更好的结果；在实现之前清除它。</p>
+
+        <h3 id="commit-to-git">我应该将 <code>openspec/</code> 文件夹提交到 git 吗？</h3>
+        <p>是的。你的规格说明、活跃变更和归档是你的项目历史的一部分。像任何其他源代码一样提交它们。归档特别成为你的系统为何这样工作的持久记录。</p>
+
+        <h2 id="specs-and-changes">规格说明和变更</h2>
+
+        <h3 id="spec-vs-design">什么放在规格说明中，什么放在设计中？</h3>
+        <p>规格说明描述可观察的行为：系统做什么、它的输入、输出和错误条件。设计描述你将如何构建它：技术方案、架构决策、文件变更。如果实现在不改变外部可见行为的情况下可以改变，它应该属于设计而不是规格说明。<a href="concepts.html#what-a-spec-is-and-is-not">概念详解</a>有更深入的讨论。</p>
+
+        <h3 id="what-is-delta-spec">什么是 delta 规格？</h3>
+        <p>一种仅描述变化内容的规格说明，使用 <code>ADDED</code>、<code>MODIFIED</code> 和 <code>REMOVED</code> 章节，而不是重述整个规格。这是 OpenSpec 干净处理对现有系统编辑的方式。参见<a href="concepts.html#delta-specs">概念详解</a>。</p>
+
+        <h3 id="where-archived-changes-go">归档的变更去了哪里？</h3>
+        <p>到 <code>openspec/changes/archive/YYYY-MM-DD-&lt;name&gt;/</code>，所有产物都保留。没有东西被删除；变更只是从你的活跃列表中移出。</p>
+
+        <h2 id="configuration-and-customization">配置和自定义</h2>
+
+        <h3 id="tell-ai-tech-stack">如何告诉 AI 我的技术栈？</h3>
+        <p>把它放在 <code>openspec/config.yaml</code> 的 <code>context:</code> 下。该文本被注入到每个计划请求中，所以 AI 总是知道你的技术栈和约定。参见<a href="customization.html#project-configuration">自定义配置</a>。</p>
+
+        <h3 id="specs-in-other-language">我可以用英语以外的语言生成规格说明吗？</h3>
+        <p>可以。在你的配置的 <code>context:</code> 中添加语言指令。<a href="multi-language.html">多语言支持</a>有几种语言的复制粘贴片段。</p>
+
+        <h3 id="change-workflow">我可以改变工作流本身吗？</h3>
+        <p>可以，用自定义 Schema。Schema 定义了存在哪些产物以及它们如何相互依赖。用 <code>openspec schema fork spec-driven my-workflow</code> fork 默认 Schema，然后编辑它。参见<a href="customization.html#custom-schemas">自定义配置</a>。</p>
+
+        <h2 id="models-privacy-upgrades">模型、隐私和升级</h2>
+
+        <h3 id="which-ai-model">我应该使用哪个 AI 模型？</h3>
+        <p>OpenSpec 与高推理能力的模型配合效果最好。README 推荐像 Codex 5.5 和 Opus 4.7 这样的模型用于计划和实现。同时保持你的上下文窗口干净：在实现之前清除它以获得最佳结果。</p>
+
+        <h3 id="collect-data">OpenSpec 收集数据吗？</h3>
+        <p>它收集匿名使用统计：仅命令名和版本。没有参数、路径、内容或个人数据，并且在 CI 中默认关闭。用 <code>export OPENSPEC_TELEMETRY=0</code> 或 <code>export DO_NOT_TRACK=1</code> 退出。</p>
+
+        <h3 id="how-to-upgrade">如何升级？</h3>
+        <p>两步。升级包（<code>npm install -g @fission-ai/openspec@latest</code>），然后在每个项目中运行 <code>openspec update</code> 刷新生成的技能和命令。</p>
+
+        <h3 id="how-to-uninstall">如何卸载 OpenSpec？</h3>
+        <p>没有卸载命令，因为它只是一个全局包加上你项目中的文件。删除包（<code>npm uninstall -g @fission-ai/openspec</code>>），并可选地删除 <code>openspec/</code> 目录和生成的工具文件。逐步说明，包括什么可以安全保留，见<a href="installation.html#uninstalling">安装指南：卸载</a>。</p>
+
+        <h2 id="getting-help">获取帮助</h2>
+
+        <h3 id="where-to-ask-questions">在哪里提问或报告 bug？</h3>
+        <ul>
+          <li><strong>Discord：</strong> <a href="https://discord.gg/YctCnvvshC">discord.gg/YctCnvvshC</a></li>
+          <li><strong>GitHub Issues：</strong> <a href="https://github.com/Fission-AI/OpenSpec/issues">github.com/Fission-AI/OpenSpec/issues</a></li>
+          <li><strong>从终端：</strong> <code>openspec feedback "your message"</code> 会为你打开一个 GitHub issue。</li>
+        </ul>
+
+        <h3 id="docs-wrong-or-confusing">这些文档有误或令人困惑。怎么办？</h3>
+        <p>告诉我们，或修复它。文档 PR 欢迎且受到重视。开一个 issue 或发送一个 pull request。</p>
+      </article>
+
+      <div class="doc-footer">
+        <div>
+          <a href="supported-tools.html">← 上一页：支持的工具</a>
+        </div>
+        <div>
+          <a href="troubleshooting.html">下一页：故障排除 →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="sidebar-toggle" aria-label="切换侧边栏">≡</button>
+  <script src="js/main.js"></script>
+</body>
+</html>
